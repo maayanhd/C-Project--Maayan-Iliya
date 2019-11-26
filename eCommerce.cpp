@@ -1,6 +1,6 @@
 #include "eCommerce.h"
 
-Customer** reallocCustomersArr(Customer*** customers, unsigned int& updatedNumOfCustomers, unsigned int& currentNumOfCustomers)
+Customer** reallocCustomersArr(Customer** customers, unsigned int& updatedNumOfCustomers, unsigned int& currentNumOfCustomers)
 { // Sending the address of the array of pointers to class objects to release it after allocating the new array by the updated size
 	Customer** updatedCustomers= new Customer*[updatedNumOfCustomers]; 
 	for (int i=0; i<currentNumOfCustomers; i++)
@@ -11,7 +11,7 @@ Customer** reallocCustomersArr(Customer*** customers, unsigned int& updatedNumOf
 	delete [] * (customers); // Deleting the old array - its elements have been used in the updated array
 
 }
-Seller** reallocSellersArr(Seller*** sellers, unsigned int& updatedNumOfSellers, unsigned int& currentNumOfSellers)
+Seller** reallocSellersArr(Seller** sellers, unsigned int& updatedNumOfSellers, unsigned int& currentNumOfSellers)
 {// Sending the address of the array of pointers to class objects to release it after allocating the new array by the updated size
 	Seller** updatedSellers = new Seller*[updatedNumOfSellers];
 	for (int i = 0; i < currentNumOfSellers; i++)
