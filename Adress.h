@@ -11,6 +11,7 @@ using namespace std;
 const int houseNumInd = 0;
 const int entranceInd = 1;
 
+// Test comment
 class Adress {
 	
 public: 
