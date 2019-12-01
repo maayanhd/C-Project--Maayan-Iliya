@@ -1,5 +1,4 @@
 ﻿#include "Product.h"
-
 Product::Product(const char* prodName, float price, const char * serial_number, Category ctg) {
 	this->name = NULL; 
 	setName(prodName);

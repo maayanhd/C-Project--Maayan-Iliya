@@ -1,8 +1,10 @@
 #include "ShoppingCart.h"
+#include "Customer.h"
 
-ShoppingCart::ShoppingCart() { // We want an empty cart
+ShoppingCart::ShoppingCart(Customer* customer) { // We want an empty cart
 	products = nullptr; // empty shopping cart
 	numOfProducts = 0;
+	this->customer = customer;
 }
 
 ShoppingCart::~ShoppingCart() {
@@ -20,19 +22,48 @@ bool ShoppingCart::setNumOfProducts(int updatedCountOfProducts) {
 }
 
 void ShoppingCart:: add(Product* prod) {
-	const Product** newProdArr = changeArrSize(numOfProducts+1); // add one more slot for new product
+	Product** newProdArr = changeArrSize(numOfProducts+1); // add one more slot for new product
 	newProdArr[numOfProducts] = prod; // add the new product 
 	delete[] products;
 	products = newProdArr;
 }
 
-const Product** ShoppingCart ::changeArrSize(int newSize) {
-	const Product** newProdArr = new const Product*[newSize];
+Product** ShoppingCart ::changeArrSize(int newSize) {
+	Product** newProdArr = new Product*[newSize];
 	for (int i = 0; i < numOfProducts; i++)
 		newProdArr[i] = products[i];
 	return newProdArr;
 }
+void ShoppingCart :: toEmpty() {
+	delete[] products;
+	products = nullptr;
+};
 
+
+void ShoppingCart::Order() {
+	int totalPrice = 0;
+	char ch;
+	history.add(products, numOfProducts);
+	cout << "Customer details: " << customer->print;
+	for (int i = 0; i < numOfProducts, i++) {
+		totalPrice += products[i]->getPrice;
+		cout << "Product details: " << products[i]->print;
+	}
+	cout << "Total price: " << totalPrice << endl;
+	cout << "Do you want to make a payment: y/n?" << endl;
+	cin >> ch;
+	if (ch == 'y') {
+		history.add(products, numOfProducts);
+		toEmpty();
+	}
+	else
+	{
+		cout << "Do you want to empty the shopping cart: y/n?" << endl;
+		cin << ch;
+		if (ch == 'y')
+			toEmpty();
+	}
+}
 bool ShoppingCart::remove(int indToRemove) {
 	if (numOfProducts <= 0 || indToRemove >= numOfProducts)
 	{

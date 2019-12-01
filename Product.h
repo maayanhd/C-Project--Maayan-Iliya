@@ -10,11 +10,17 @@ using namespace std;
 const char * const categoryName [] = { "Children", "Electricity", "Clothing", "OfficeSupply" };
 const enum Category { CHILDREN = 0, ELECTRICITY, CLOTHING, OFFICESUPPLY };
 
+class Feedback {
+	//frwrd dclrtn
+};
+class Seller {
+
+	//Forward dclrtn
+};
 class Product
 {
 public:
 
-	
 	Product(const char* prodName, float price, const char * serial_number, Category ctg); // c'tor
 	Product(const Product&); // copy c'tor
 	Product(Product&&); // move c'tor
@@ -36,6 +42,8 @@ private:
 	float price; // in NIS
 	const char* serial_number; // 5 letters length
 	Category ctg;
+	Seller * prodSeller; // Pointer to the seller of this product //
+	Feedback** feedbacks;// Array of pointers to feedbacks of this product//
 };
 
 #endif
