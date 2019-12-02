@@ -14,7 +14,9 @@ public:
 	~PurchaseHistory();
 	void add(Product** products, int numOfProducts);
 	void setHistorySize(int size);
-
+	inline int getHistorySize() const {	return pHistorySize;};
+	inline Product** getPurchaseHistory() const { return prodArr; };
+	inline Feedback** getFeedbacks() const { return myFeedbacks; };
 	
 private:
 	int pHistorySize;

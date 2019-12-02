@@ -9,7 +9,7 @@ class ShoppingCart {
 
 public:
 	ShoppingCart(Customer* customer); // makes empty shopping cart
-	~ShoppingCart(); 
+	~ShoppingCart();
 
 public:
 	inline int getNumOfProducts() const { return numOfProducts; };
@@ -17,14 +17,13 @@ public:
 	void add(Product* prod); // add product to the shopping cart
 	bool remove(int indToRemove);// remove product from the shopping cart
 	void toEmpty(); // removes all the products from the shopping cart
-	void Order();
+	inline Product** getProducts() const { return products; };
 	
 private:
 	Customer* customer;
 	Product** changeArrSize(int newSize); // creates the copy of the ptr to products array but with the new size 
 	Product** products; //Cannot change the products, but can change the pointer //
 	int numOfProducts;
-	PurchaseHistory history;
 	
 };
 

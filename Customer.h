@@ -22,12 +22,15 @@ public:
 	inline const char* getName() const { return this->name; };
 	inline const char* getPassword() const { return this->password; };
 	void print();
+	void order();
+	void watchPurchaseHistory();
 private:
 
 	char* name;
 	char password[20];
 	Adress adress;
 	ShoppingCart sCart;
+	PurchaseHistory history;
 };
 
 
