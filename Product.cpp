@@ -1,10 +1,12 @@
 ﻿#include "Product.h"
+
 #include "Seller.h"
 #include "feedback.h"
 
 
 int Product::counter = 0; // counter for the serial numbers of products 
-Product::Product(const char* prodName, float price, const char * serial_number, Category ctg): feedback(NULL) {
+Product::Product(const char* prodName, float price, const char * serial_number, Category ctg):
+feedbacks(NULL) {
 	this->name = NULL; 
 	setName(prodName);
 	setPrice(price);

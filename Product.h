@@ -15,13 +15,10 @@ class Feedback;
 const char * const categoryName [] = { "Children", "Electricity", "Clothing", "OfficeSupply" };
 const enum Category { CHILDREN = 0, ELECTRICITY, CLOTHING, OFFICESUPPLY };
 
-//class Feedback;
-
 class Product
 {
 public:
 
-	
 	Product(const char* prodName, float price, const char * serial_number, Category ctg); // c'tor
 	Product(const Product&); // copy c'tor
 	Product(Product&&); // move c'tor
@@ -48,8 +45,9 @@ private:
 	//const char serial_number[MAX_SIZE_SERIAL_NUM]; // 1 Letter indicates the type of product and 4 digits for the number of product added
 	unsigned int serial_number; // Only using a common counter to produce the serial numbers 
 	Category ctg;
-	Feedback * feedback;
-	Seller * pSeller; // Pointing to the seller of the product
+
+	Seller * prodSeller; // Pointer to the seller of this product //
+	Feedback** feedbacks;// Array of pointers to feedbacks of this product//
 };
 
 #endif
