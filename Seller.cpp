@@ -1,9 +1,11 @@
 #include "Seller.h"
+#include "Product.h"
+#include "feedback.h"
+
 
 Seller::Seller(const char* name, const char* password, const char* countryName, const char* cityName, const char* streetName,
-	int houseNumber): address(countryName, cityName, streetName, houseNumber) // Using init line for initializing the address- reducing potential excessive copy c'tor calls
-{
-	this->name = nullptr;
+	int* house): address(countryName, cityName, streetName, house), availableProducts(NULL) // Using init line for initializing the address- 
+{	this->name = nullptr;																   // reducing potential excessive copy c'tor calls
 	this->password = nullptr;
 	setName(name);
 	setPassword(password);

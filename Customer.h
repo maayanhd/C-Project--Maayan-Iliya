@@ -10,7 +10,7 @@ public:
 	and overall it seems to me more logical */
 	/*The constructor */
 	Customer(const char* name, const char* password,const char* countryName, const char* cityName, const char* streetName, const int* house);
-	Customer(const Customer&) = delete; // copy c'tor;
+	Customer(const Customer&) = delete; // copy c'tor 
 	~Customer();
 
 public:

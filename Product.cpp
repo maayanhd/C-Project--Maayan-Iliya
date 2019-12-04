@@ -1,29 +1,32 @@
 ﻿#include "Product.h"
+#include "Seller.h"
+#include "feedback.h"
 
-Product::Product(const char* prodName, float price, const char * serial_number, Category ctg) {
+
+int Product::counter = 0; // counter for the serial numbers of products 
+Product::Product(const char* prodName, float price, const char * serial_number, Category ctg): feedback(NULL) {
 	this->name = NULL; 
 	setName(prodName);
 	setPrice(price);
 	setCategory(ctg);
-	setSerialNumber(serial_number);
+	//setSerialNumber(serial_number);
 }
-Product::Product(const Product& other) {
+Product::Product(const Product& other): serial_number(++counter) {
+	
 	setName(other.name);
 	setPrice(other.price);
-	setSerialNumber(other.serial_number);
+	//setSerialNumber(other.serial_number);
 	setCategory(other.ctg);
 }
-Product :: Product(Product&& other) {
+Product :: Product(Product&& other):serial_number(++counter) {
 	this->name = other.name;
-	this->serial_number = other.serial_number;
 	setCategory(other.ctg);
 	setPrice(other.price);
 	other.name = nullptr;
-	other.serial_number = nullptr;
 }
 Product::~Product() {
 	delete[] this->name;
-	delete[] this->serial_number;
+	//delete[] this->serial_number;
 }
 
 bool Product::setPrice(float price) {
@@ -43,7 +46,7 @@ void Product:: setName(const char* name) {
 	delete[] this->name;
 	this->name = strdup(name);
 }
-bool Product :: setSerialNumber(const char* serialNum) {
+/*bool Product :: setSerialNumber(const char* serialNum) {
 	if (checkSerial(serialNum)==false) {
 		cout << "The entered number doesn't support the format of serial number" << endl;
 		return false;
@@ -51,8 +54,8 @@ bool Product :: setSerialNumber(const char* serialNum) {
 	delete[] this->serial_number;
 	this->serial_number = strdup(serialNum);
 	return true;
-}
-void Product :: print() {
+}*/
+void Product :: print() const {
 	cout << "Product name: " << this->name << endl;
 	cout << "Price: " << this->price << " NIS" << endl;
 	cout << "Serial number: " << this->serial_number << endl;
