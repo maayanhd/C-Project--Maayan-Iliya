@@ -3,9 +3,6 @@
 #include "Adress.h"
 #include "ShoppingCart.h"
 
-class Feedback {
-	//Forward declaration //
-};
 class Customer {
 
 public:

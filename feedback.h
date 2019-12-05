@@ -1,11 +1,14 @@
-#ifndef __FEEDBACK_H
-#define __FEEDBACK_H
+//#ifndef __FEEDBACK_H
+//#define __FEEDBACK_H
+
+#pragma once 
 
 #include "Date.h"
 #include "Customer.h"
 
 class Seller;
 class Product;
+class Customer;
 // *** problem recognizing the classes - looks like infinite loop of includes- yet to be covered ***//
 class Feedback 
 {
@@ -27,8 +30,7 @@ class Feedback
 		// Default values for date 
 		static constexpr unsigned int default_0 = 0;
 		static constexpr unsigned int default_2 = 2;
-
 };
 
 
-#endif
+//#endif

@@ -23,4 +23,4 @@ private:
 	Product** prodArr;// Products purchased by the customer //
 	Feedback** myFeedbacks; // Pointers to feedbacks of purchased products, myFeedbacks[i] related to prodArr[i]//
 };
-#enfif
+#endif
