@@ -30,32 +30,50 @@ Address ::~Address() {
 	delete[] street;
 }
 
-bool Address::setCountry(const char*countryName)
-{
-	if (!onlyLetters(countryName)) {
-		
-		cout << "The name of country must contain letters only" << endl;
+bool Address::IsValid(const char* str) {
+
+	int len = strlen(str);
+	if (len > MAX_LENGTH) {
+		cout << "This field cannot contain more than 20 characters" << endl;
 		return false;
 	}
+	for (int i = 0; i < len; ++i) {
+		if (!((str[i] <= 'z' && str[i] >= 'a') || (str[i] <= 'Z' && str[i] >= 'A'))) {
+			cout << "Your input contains illegal characters" << endl;
+			return false;
+		}
+	}
+	return true;
+
+}
+bool Address::setCountry(const char*countryName)
+{
+	if (!IsValid(countryName))
+		return false;
 	delete[] country;
 	country = strdup(countryName);
 	return true;
 }
 bool Address:: setCity(const char*cityName)
 {
-	if (!onlyLetters(cityName)) {
-		cout << "The name of the city must contain letters only" << endl;
+
+	if (!IsValid(cityName))
 		return false;
-	}
 	delete[] this->city;
 	this->city = strdup(cityName);
 	return true;
 }
 
-void Address :: setStreet(const char* streetName) {
+bool Address :: setStreet(const char* streetName) {
 
+	if (strlen(streetName) > 20)
+	{
+		cout << "This field cannot contain more than 20 characters" << endl;
+		return false;
+	}
 	delete[] street;
 	street = strdup(streetName);
+	return true;
 }
 bool Address::setHouseInfo(const int* house) {
 	if (house[houseNumInd] <= 0 || house[entranceInd] <= 0) {

@@ -3,13 +3,9 @@
 
 #include <iostream>
 #include <string.h>
-#include "AuxMethods.h"
 using namespace std;
 
 #pragma warning(disable: 4996)
-
-const int houseNumInd = 0;
-const int entranceInd = 1;
 
 class Address {
 	
@@ -23,13 +19,14 @@ public:
 public: 
 	bool setCountry(const char* countryName);
 	bool setCity(const char* cityName);
-	void setStreet(const char* streetName);
+	bool setStreet(const char* streetName);
 	bool setHouseInfo(const int* house);
 	inline const char* getCountryName() const { return country; };
 	inline const char* getCityName() const { return city; };
 	inline const char* getStreetName() const { return street; };
 	inline const int* getHouseInfo() const { return house;};
 	void print()const;
+	bool IsValid(const char* str);
 
 private:
 	char* country; // country name
@@ -37,6 +34,9 @@ private:
 	char* street; // The name of the street
 	int house[2]; // The house and entrance numbers
 
+	static constexpr int houseNumInd = 0;
+	static constexpr int entranceInd = 1;
+	static constexpr int MAX_LENGTH = 20;
 };
 
 

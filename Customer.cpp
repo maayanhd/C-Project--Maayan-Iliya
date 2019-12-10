@@ -1,13 +1,13 @@
 #include "Customer.h"
 
-Customer::Customer(const char* name, const char* password,const char* countryName, const char* cityName, const char* streetName, const int* house)
+Customer::Customer(const char* username, const char* password,const char* countryName, const char* cityName, const char* streetName, const int* house)
 	:address(countryName,cityName,streetName,house), sCart(this){
-	setName(name);
+	setUsername(username);
 	setPassword(password);
 };	
 
 Customer::~Customer() {
-	delete[] this->name;
+	delete[] this->username;
 	delete[] this->password;
 	sCart.~ShoppingCart(); 
 }  
@@ -56,28 +56,30 @@ void Customer:: order() {
 			sCart.toEmpty();
 	}
 }
-bool Customer::setName(const char* name) {
-	if (!onlyLetters(name))
+bool Customer::setUsername(const char* username) {
+	if (strlen(username)>MAX_LENGTH)
 	{
-		cout << "The name must contain letters only" << endl;
+		cout << "Too many characters for username" << endl;
 		return false;
 	}
-	delete[] this->name;
-	this->name = strdup(name);
-	return true; // must check the name in the future
+	delete[] this->username;
+	this->username = strdup(username);
+	return true;
 };
 bool Customer::setPassword(const char* password) {
-	delete[] this->password;
-	if (strlen(password) >= 20)
+	
+	if (strlen(password) > MAX_LENGTH)
 	{
 		cout << "The password is too long" << endl;
 		return false;
 	}
-	strcpy(this->password, password);
+	delete[] this->password;
+	this->password=strdup(password);
+	return true;
 };
 
 void Customer:: print() {
-	cout << "Name: " << name << endl;
+	cout << "Name: " << username << endl;
 	cout << "Password: " << password << endl;
 	this->address.print();
 }
