@@ -15,6 +15,9 @@ Seller:: ~Seller()
 	delete[] this->name;
 	delete[] this->password;
 
+	for (int i = 0; i < numOfProducts; ++i)
+		delete this->availableProducts[i];
+
 }
 bool Seller::setName(const char * name)
 {

@@ -29,9 +29,12 @@ class Seller
 	private: 
 		char * name; // Name of Seller 
 		char* password; // Password of The seller for logging into the system
-		Adress address; // The Address of the seller
+		Address address; // The Address of the seller
 		Product **  availableProducts; // Preparation of array of pointers to products available for sale- no supply management
+		int numOfProducts; // Number of products available 
 		Feedback ** feedbacks; // Array of pointers to feedbacks of customers on the seller's products 
+		int numOfFeedbacks; // Number of given feedbacks to sellers 
+
 };
 
 #endif

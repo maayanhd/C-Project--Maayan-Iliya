@@ -2,12 +2,22 @@
 
 unsigned int Date::placeCounter = 1; // Initializing first the static (shared) variable outside the class 
 
-Date:: Date(unsigned int day[], unsigned int month[], unsigned int year[])
+Date:: Date(unsigned int* day, unsigned int* month, unsigned int* year)
 {
+	// Allocating the arrays represents the fields of date as needed 
+	day = new unsigned int[MAX_LENGTH_DAY];
+	month = new unsigned int[MAX_LENGTH_DAY];
+	year = new unsigned int[MAX_LENGTH_DAY];
 	setYear(year);
 	setMonth(month);
 	setDay(day, month, year);
 };
+Date::~Date() 
+{
+	delete[] day;
+	delete[] month;
+	delete[] year;
+}
 bool Date::setDay(unsigned int * day, unsigned int * month, unsigned int * year) 
 {
 	if (!dayIsValid(day, month, year))
