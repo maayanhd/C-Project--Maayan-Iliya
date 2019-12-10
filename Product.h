@@ -35,7 +35,7 @@ public:
 	void setCategory(Category ctg);
 	void setName(const char* name);
 	//bool setSerialNumber(const char* serialNum);
-	void print()														const;
+	void print()	const;
 
 private:
 	static int counter; // Keeps counting added products (in the entire system)

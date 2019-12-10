@@ -7,28 +7,42 @@
 // defined as arrays of pointers to class objects to avoid the need for default constructor- which will not 
 // be recommended logically
 
+
 class E_Commerce
 {
 	public:
-		E_Commerce(const char * name, Customer** customers, unsigned int currentCustomers, Seller** sellers, unsigned int currentSellers);
+		E_Commerce();
 		E_Commerce(const E_Commerce&) = delete; // No logic reason for copying the fields of the eCommerce 
 		// Logically the e-commerce system does not suppose to 'distract it self' - but we must deallocate the memory allocated during the program 
 		~E_Commerce(); 
 
-	public:
-		Customer** reallocCustomersArr(Customer** costumers, unsigned int& updatedNumOfCustomers, unsigned int& currentNumOfCustomers);
-		Seller** reallocSellersArr(Seller** sellers, unsigned int& updatedNumOfSellers, unsigned int& currentNumOfSellers);
-		const char * getName() const { return this->name; };
-		unsigned int getNumOfCustomers() const { return this->currentNumOfCustomers; };
-		unsigned int getNumOfSellers() const { return this->currentNumOfSellers; };
-		
-	private:
-		char * name; 
+private:
 		Customer** customers; // Array of Costumers objects 
-		unsigned int currentNumOfCustomers; 
+		unsigned int currentNumOfCustomers;
 		Seller** sellers; // Array of Costumers objects 	
 		unsigned int currentNumOfSellers;
 
+
+		static const enum strtype { LETTERS = 0, MIXED };
+		static constexpr int MAX_LENGTH = 21;
+	public:
+		Customer** changeCustomersArrSize(unsigned int newSize);
+		Seller** changeSellersArrSize(unsigned int newSize);
+		unsigned int getNumOfCustomers() const { return this->currentNumOfCustomers; };
+		unsigned int getNumOfSellers() const { return this->currentNumOfSellers; };
+		void setNumOfCustomers(int num);
+		void setNumOfSellers(int num);
+		void addCustomer();
+		void addSeller();
+		Customer* createCustomer();
+		Seller* createSeller();
+		void removeCustomer(const char* username);
+		void removeSeller(const char* username);
+		void emptyCustomers();
+		void emptySellers();
+		bool input(strtype type,char* str);
+		char* getData(strtype type);
+	
 };
 
 
