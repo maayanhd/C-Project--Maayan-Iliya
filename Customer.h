@@ -3,17 +3,15 @@
 #include "Address.h"
 #include "ShoppingCart.h"
 
-class Feedback {
-	//Forward declaration //
-};
 class Customer {
 
 public:
 	/* The idea of receiving the cityName etc and not the address object is to avoid unenecessary calls of copy constructor,
 	and overall it seems to me more logical */
 	/*The constructor */
-	Customer(const char* name, const char* password, const char* countryName, const char* cityName, const char* streetName, const int* house);
-	Customer(const Customer&) = delete; // copy c'tor;
+	Customer(const char* name, const char* password,const char* countryName, const char* cityName, const char* streetName, const int* house);
+	Customer(const Customer&) = delete; // copy c'tor 
+
 	~Customer();
 
 public:
