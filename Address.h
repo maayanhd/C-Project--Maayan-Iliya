@@ -1,5 +1,5 @@
-#ifndef __ADRESS_H
-#define __ADRESS_H
+#ifndef __ADDRESS_H
+#define __ADDRESS_H
 
 #include <iostream>
 #include <string.h>
@@ -11,13 +11,13 @@ using namespace std;
 const int houseNumInd = 0;
 const int entranceInd = 1;
 
-class Adress {
+class Address {
 	
 public: 
-	Adress(const char* countryName, const char* cityName, const char* streetName,const int* house); // c'tor
-	Adress(const Adress&); // copy c'tor
-	Adress(Adress&&); // move c'tor
-	~Adress();
+	Address(const char* countryName, const char* cityName, const char* streetName,const int* house); // c'tor
+	Address(const Address&); // copy c'tor
+	Address(Address&&); // move c'tor
+	~Address();
 
 
 public: 

@@ -1,20 +1,20 @@
-#include "Adress.h"
+#include "Address.h"
 
-Adress::Adress(const char* countryName, const char* cityName, const char* streetName,const int* house) {
+Address::Address(const char* countryName, const char* cityName, const char* streetName,const int* house) {
 	setCountry(countryName);
 	setCity(cityName);
 	setStreet(streetName);
 	setHouseInfo(house);
 }
 
-Adress::Adress(const Adress& other) {
+Address::Address(const Address& other) {
 	setCountry(other.country);
 	setCity(other.city);
 	setStreet(other.street);
 	setHouseInfo(house);
 }
 
-Adress::Adress(Adress && other) {
+Address::Address(Address && other) {
 	this->country = other.country;
 	this->city = other.city;
 	this->street = other.street;
@@ -24,13 +24,13 @@ Adress::Adress(Adress && other) {
 	other.street = nullptr;
 }
 
-Adress ::~Adress() {
+Address ::~Address() {
 	delete[] country;
 	delete[] city;
 	delete[] street;
 }
 
-bool Adress::setCountry(const char*countryName)
+bool Address::setCountry(const char*countryName)
 {
 	if (!onlyLetters(countryName)) {
 		
@@ -41,7 +41,7 @@ bool Adress::setCountry(const char*countryName)
 	country = strdup(countryName);
 	return true;
 }
-bool Adress:: setCity(const char*cityName)
+bool Address:: setCity(const char*cityName)
 {
 	if (!onlyLetters(cityName)) {
 		cout << "The name of the city must contain letters only" << endl;
@@ -52,12 +52,12 @@ bool Adress:: setCity(const char*cityName)
 	return true;
 }
 
-void Adress :: setStreet(const char* streetName) {
+void Address :: setStreet(const char* streetName) {
 
 	delete[] street;
 	street = strdup(streetName);
 }
-bool Adress::setHouseInfo(const int* house) {
+bool Address::setHouseInfo(const int* house) {
 	if (house[houseNumInd] <= 0 || house[entranceInd] <= 0) {
 		cout << "Oops! It must be a positive value" << endl;
 		return false;
@@ -67,8 +67,8 @@ bool Adress::setHouseInfo(const int* house) {
 	return true;
 }
 
-void Adress :: print() const {
-	cout << "Adress: " << street << " " << house[houseNumInd] << "/" << house[entranceInd];
+void Address :: print() const {
+	cout << "Address: " << street << " " << house[houseNumInd] << "/" << house[entranceInd];
 	cout <<", " << city << ", " << country << endl;
 	
 }
