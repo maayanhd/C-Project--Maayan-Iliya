@@ -1,8 +1,11 @@
 #pragma once
-#include "Address.h"
+
+//#include "Address.h"
+#include "Seller.h"
 #include "PurchaseHistory.h"
 
 class ShoppingCart;
+
 class Customer {
 
 public:
@@ -21,14 +24,21 @@ public:
 	inline const char* getPassword() const { return password; };
 	void print();
 	void order();
-	void watchPurchaseHistory();
-private:
+	void addFeedback();
+	bool optionIsValid(int option);
+	void  leaveFeedback(int maxSize, char * feedback);
 
+	// Helpers for input 
+	bool getString(char* str, int maxSize);
+	void cleanBuffer();
+
+
+private:
+	static constexpr int MAX_LENGTH = 21;
 	char* username;
 	char* password;
 	Address address;
 	ShoppingCart sCart;
 	PurchaseHistory history;
-
 };
 

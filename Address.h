@@ -1,5 +1,6 @@
-#ifndef __ADDRESS_H
-#define __ADDRESS_H
+//#ifndef __ADDRESS_H
+//#define __ADDRESS_H
+#pragma once 
 
 #include <iostream>
 #include <string.h>
@@ -40,4 +41,4 @@ private:
 };
 
 
-#endif
+//#endif
