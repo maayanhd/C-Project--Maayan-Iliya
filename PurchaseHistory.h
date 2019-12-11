@@ -3,10 +3,6 @@
 #pragma once
 #include "feedback.h"
 
-#include <iostream>
-
-using namespace std;
-
 class PurchaseHistory {
 	
 public:

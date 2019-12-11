@@ -1,12 +1,11 @@
 //#ifndef __ADDRESS_H
 //#define __ADDRESS_H
 #pragma once 
-
+#pragma warning (disable:4996)
 #include <iostream>
 #include <string.h>
 using namespace std;
 
-#pragma warning(disable: 4996)
 
 class Address {
 	

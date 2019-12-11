@@ -1,15 +1,7 @@
 //#ifndef __SELLER_H
 //#define __SELLER_H
 #pragma once 
-#include <iostream>
-#include <string.h>
-#include "Address.h"
-
-#include "feedback.h"
-using namespace std;
-
-class Product;
-class Feedback;
+#include "Customer.h"
 
 class Seller
 {	
@@ -35,8 +27,7 @@ class Seller
 		int numOfProducts; // Number of products available 
 		Feedback ** feedbacks; // Array of pointers to feedbacks of customers on the seller's products 
 		int numOfFeedbacks; // Number of given feedbacks to sellers 
-
-
+		
 };
 //
 //#endif

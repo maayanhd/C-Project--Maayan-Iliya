@@ -1,5 +1,9 @@
-#include "Customer.h"
-#include "ShoppingCart.h"
+//#include "Customer.h"
+// try 1 
+#include "Seller.h"
+
+// constant variable for the maximal length of the feedback string
+constexpr int MAX_LENGTH_FEEDBACK = 150;
 
 Customer::Customer(const char* username, const char* password,const char* countryName, const char* cityName, const char* streetName, const int* house)
 	:address(countryName,cityName,streetName,house), sCart(this){
@@ -13,11 +17,12 @@ Customer::~Customer() {
 	sCart.~ShoppingCart(); 
 }  
 
-void Customer::addFeedback() {
+void Customer::addFeedback() 
+{
 	int option, size = history.getHistorySize();
 	char ch;
 	bool isValid = false;
-	int maxSize = 150 , char* feedback;
+	int maxSize = MAX_LENGTH_FEEDBACK, char* feedback;
 	Product** pHistory = history.getPurchaseHistory();
 	Feedback** feedbacks = history.getFeedbacks();
 	
@@ -34,7 +39,9 @@ void Customer::addFeedback() {
 				cin >> ch;
 				if (ch == 'y') 
 				{
-					//char * str=  pHistory[option-1]->getSeller.//
+					Seller * relevantSeller = pHistory[option - 1]->getSeller();
+					 relevantSeller->getFeedbacks()
+					
 					//leaveFeedback(maxSize, str);
 				}
 			}
@@ -68,7 +75,8 @@ void  Customer::leaveFeedback(int maxSize, char * feedback)
 	
 }
 
-void Customer:: order() {
+void Customer:: order() 
+{
 	int totalPrice = 0;
 	char ch;
 	Product** products = sCart.getProducts();
@@ -93,7 +101,8 @@ void Customer:: order() {
 			sCart.toEmpty();
 	}
 }
-bool Customer::setUsername(const char* username) {
+bool Customer::setUsername(const char* username)
+{
 	if (strlen(username)>MAX_LENGTH)
 	{
 		cout << "Too many characters for username" << endl;
@@ -103,7 +112,8 @@ bool Customer::setUsername(const char* username) {
 	this->username = strdup(username);
 	return true;
 };
-bool Customer::setPassword(const char* password) {
+bool Customer::setPassword(const char* password)
+{
 	
 	if (strlen(password) > MAX_LENGTH)
 	{
@@ -115,13 +125,15 @@ bool Customer::setPassword(const char* password) {
 	return true;
 };
 
-void Customer:: print() {
+void Customer:: print() 
+{
 	cout << "Name: " << username << endl;
 	cout << "Password: " << password << endl;
 	this->address.print();
 }
 
-bool Customer::getString(char* str, int maxSize) {
+bool Customer::getString(char* str, int maxSize) 
+{
 
 	char* res = new char[maxSize];
 	cin.getline(res, maxSize);

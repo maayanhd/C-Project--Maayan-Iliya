@@ -1,6 +1,5 @@
 #include "eCommerce.h"
 
-
 Customer** E_Commerce:: changeCustomersArrSize(unsigned int newSize)
 { // Sending the address of the array of pointers to class objects to release it after allocating the new array by the updated size
 	Customer** updatedCustomers= new Customer*[currentNumOfCustomers+newSize]; 
@@ -11,7 +10,8 @@ Customer** E_Commerce:: changeCustomersArrSize(unsigned int newSize)
 	return updatedCustomers;
 }
 
-bool E_Commerce::onlyLetters(const char* str)const {
+bool E_Commerce::onlyLetters(const char* str) const
+{
 
 	int len = strlen(str);
 	for (int i = 0; i < len; i++) {
@@ -23,7 +23,8 @@ bool E_Commerce::onlyLetters(const char* str)const {
 
 }
 
-char* E_Commerce:: input(strtype type, int maxSize) {
+char* E_Commerce:: input(strtype type, int maxSize) 
+{
 	bool valid = false;
 	char* res;
 	int len;
@@ -38,7 +39,8 @@ char* E_Commerce:: input(strtype type, int maxSize) {
 	
 	return res;
 }
-Customer* E_Commerce::newCustomer() {
+Customer* E_Commerce::newCustomer() 
+{
 	char* username, *password, *country, *city, *street;
 	int house[2];
 	
@@ -62,7 +64,8 @@ Customer* E_Commerce::newCustomer() {
 	return res;
 }
 
-Seller* E_Commerce::newSeller() {
+Seller* E_Commerce::newSeller() 
+{
 
 	char* username, *password, *country, *city, *street;
 	int house[2];
@@ -86,7 +89,8 @@ Seller* E_Commerce::newSeller() {
 	Seller* res = new Seller(username, password, country, city, street, house);
 	return res;
 }
-void E_Commerce::addCustomer() {
+void E_Commerce::addCustomer()
+{
 	Customer** newCustomerArr;
 	Customer* res = newCustomer();
 	newCustomerArr = changeCustomersArrSize(++currentNumOfCustomers);
@@ -95,8 +99,8 @@ void E_Commerce::addCustomer() {
 	customers = newCustomerArr;
 } 
 
-void E_Commerce::addSeller() {
-
+void E_Commerce::addSeller() 
+{
 	Seller** newSellersArr;
 	Seller* res = newSeller();
 	newSellersArr = changeSellersArrSize(++currentNumOfSellers);
@@ -113,11 +117,13 @@ Seller** E_Commerce::changeSellersArrSize(unsigned int newSize)
 		updatedSellers[i] = sellers[i]; // Shallow copying of pointers 
 	return updatedSellers;
 }
-void E_Commerce :: setNumOfCustomers(int num) {
+void E_Commerce :: setNumOfCustomers(int num) 
+{
 	if(num>=0)
 	currentNumOfCustomers = num;
 }
-void E_Commerce::setNumOfSellers(int num) {
+void E_Commerce::setNumOfSellers(int num) 
+{
 	if(num>=0)
 	currentNumOfSellers = num;
 }
@@ -128,7 +134,8 @@ E_Commerce::E_Commerce()
 	customers = nullptr; sellers = nullptr;
 }
 
-void E_Commerce::removeCustomer(const char * username) {
+void E_Commerce::removeCustomer(const char * username)
+{
 	Customer** newCustomersArr;
 	int i = findCustomer(username);
 	if (i != NOT_FOUND)
@@ -142,7 +149,8 @@ void E_Commerce::removeCustomer(const char * username) {
 
 }
 
-bool E_Commerce::getString(char* str, int maxSize) {
+bool E_Commerce::getString(char* str, int maxSize) 
+{
 
 	char* res = new char[maxSize];
 	cin.getline(res, maxSize);
@@ -159,7 +167,8 @@ bool E_Commerce::getString(char* str, int maxSize) {
 	}
 }
 
-void E_Commerce::cleanBuffer() {
+void E_Commerce::cleanBuffer()
+{
 	
 	int c;
 	do
@@ -168,7 +177,8 @@ void E_Commerce::cleanBuffer() {
 	} while (c != EOF && c != '\n');
 }
 
-void E_Commerce::removeSeller(const char * username) {
+void E_Commerce::removeSeller(const char * username) 
+{
 	Seller** newSellersArr;
 	int i = findSeller(username);
 	if (i != NOT_FOUND)
@@ -181,14 +191,16 @@ void E_Commerce::removeSeller(const char * username) {
 	}
 }
 
-void E_Commerce::emptyCustomers() {
+void E_Commerce::emptyCustomers()
+{
 
 	for (int i = 0; i < currentNumOfCustomers; ++i)
 		delete customers[i];
 	delete[] customers;
 	currentNumOfCustomers = 0;
 }
-int E_Commerce::findCustomer(const char* username) const {
+int E_Commerce::findCustomer(const char* username) const 
+{
 
 	for (int i = 0; i < currentNumOfCustomers; ++i) {
 		if (!strcmp(username, customers[i]->getUsername))
@@ -198,7 +210,8 @@ int E_Commerce::findCustomer(const char* username) const {
 	return NOT_FOUND;
 }
 
-int E_Commerce::findSeller(const char* username) const{
+int E_Commerce::findSeller(const char* username) const
+{
 
 	for (int i = 0; i < currentNumOfSellers; ++i) {
 		if (!strcmp(username, sellers[i]->getName))
@@ -207,7 +220,8 @@ int E_Commerce::findSeller(const char* username) const{
 	cout << "This username wasn't found" << endl;
 	return NOT_FOUND;
 }
-void E_Commerce::emptySellers() {
+void E_Commerce::emptySellers() 
+{
 
 	for (int i = 0; i < currentNumOfSellers; ++i)
 		delete sellers[i];

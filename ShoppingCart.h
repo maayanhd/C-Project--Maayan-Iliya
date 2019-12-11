@@ -1,10 +1,12 @@
 //#ifndef __SHOPPINGCART_H
 //#define __SHOPPINGCART_H
 #pragma once
-#include "Product.h"
-#include "PurchaseHistory.h"
 
-class Customer;
+//#include "Product.h"
+//#include "PurchaseHistory.h"
+//class Customer;
+
+class product; // Avoiding including too many times headers
 
 class ShoppingCart {
 

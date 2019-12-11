@@ -1,3 +1,7 @@
+#pragma warning (disable:4996)
+#include <iostream>
+#include <string.h>
+using namespace std;
 #include "Date.h"
 
 unsigned int Date::placeCounter = 1; // Initializing first the static (shared) variable outside the class 

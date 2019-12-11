@@ -1,9 +1,10 @@
 #pragma once
 
-//#include "Address.h"
-#include "Seller.h"
+#include "Address.h"
+#include "ShoppingCart.h"
 #include "PurchaseHistory.h"
 
+// try 1
 class ShoppingCart;
 
 class Customer {
@@ -33,12 +34,12 @@ public:
 	void cleanBuffer();
 
 
-private:
-	static constexpr int MAX_LENGTH = 21;
-	char* username;
-	char* password;
-	Address address;
-	ShoppingCart sCart;
-	PurchaseHistory history;
+	private:
+		static constexpr int MAX_LENGTH = 21;
+		char* username;
+		char* password;
+		Address address;
+		ShoppingCart sCart;
+		PurchaseHistory history;
 };
 

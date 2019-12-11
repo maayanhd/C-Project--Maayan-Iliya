@@ -1,23 +1,26 @@
 #include "PurchaseHistory.h"
-#include "Product.h"
 
-PurchaseHistory::PurchaseHistory() {
+PurchaseHistory::PurchaseHistory() 
+{
 	pHistorySize = 0;
 	prodArr = nullptr;
 	myFeedbacks = nullptr;
 };
 
-PurchaseHistory::~PurchaseHistory() {
+PurchaseHistory::~PurchaseHistory() 
+{
 
 	delete[] prodArr;
 	delete[] myFeedbacks;
 };
-void PurchaseHistory::setHistorySize(int size) {
+void PurchaseHistory::setHistorySize(int size) 
+{
 	pHistorySize = size;
 
 };
 
-void PurchaseHistory::add(Product** products, int numOfProducts) {
+void PurchaseHistory::add(Product** products, int numOfProducts) 
+{
 	int newSize = numOfProducts + pHistorySize;
 	Product** newArr = new Product*[newSize];
 	Feedback** newFeedbacks = new Feedback*[newSize];

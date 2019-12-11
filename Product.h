@@ -1,12 +1,11 @@
 //#ifndef __PRODUCT_H
 //#define __PRODUCT_H
 #pragma once
-#include <string.h>
+#pragma warning (disable:4996)
 #include <iostream>
-
+#include <string.h>
 using namespace std;
-#pragma warning(disable: 4996)
-
+// try 
 class Seller; 
 class Feedback;
 

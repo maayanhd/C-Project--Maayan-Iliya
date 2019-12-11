@@ -1,6 +1,4 @@
 #include "Seller.h"
-#include "Product.h"
-#include "feedback.h"
 
 Seller::Seller(const char* userName, const char* password, const char* countryName, const char* cityName, const char* streetName,
 	int* house): address(countryName, cityName, streetName, house), availableProducts(NULL) // Using init line for initializing the address- 
