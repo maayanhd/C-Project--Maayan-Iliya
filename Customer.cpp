@@ -13,25 +13,61 @@ Customer::~Customer() {
 	sCart.~ShoppingCart(); 
 }  
 
-void Customer::watchPurchaseHistory() {
-	int size = history.getHistorySize();
+void Customer::addFeedback() {
+	int option, size = history.getHistorySize();
 	char ch;
+	bool isValid = false;
+	int maxSize = 150 , char* feedback;
 	Product** pHistory = history.getPurchaseHistory();
 	Feedback** feedbacks = history.getFeedbacks();
-	for (int i = 0; i < size; i++) {
+	
+	cout << "Choose a product to leave a feedback:\n;";
+	for (int i = 0; i < size; ++i) {
 		cout << i + 1 << ". ";
 		pHistory[i]->print();
-		if (feedbacks[i] == nullptr)
+		cin >> option;
+		if (optionIsValid(option))
 		{
-			cout << "You haven't left any feedback for this product, do you want do to this now: y/n?" << endl;
+			if (feedbacks[option - 1] == nullptr)
+			{
+				cout << "You haven't left any feedback for this product, do you want do to this now: y/n?" << endl;
+				cin >> ch;
+				if (ch == 'y') 
+				{
+					//char * str=  pHistory[option-1]->getSeller.//
+					//leaveFeedback(maxSize, str);
+				}
+			}
+		}
+		else // There's already a feedback 
+		{
+			cout << "You already have left a feedback for this product, do you want to change your recent feedback?: y/n?" << endl;
 			cin >> ch;
-			if (ch == 'y') {
-				//feedbacks[i] = pHistory[i].addFeedback(); // Need to realize this method when Maayan will make the feedback class
+			if (ch == 'y')
+			{
+				//leaveFeedback(maxSize, str);
 			}
 		}
 	}
-
 }
+
+bool Customer:: optionIsValid(int option)
+{
+	return (option >= 1 && option <= history.getHistorySize(); );
+}
+
+void  Customer::leaveFeedback(int maxSize, char * feedback)
+{
+	bool isValid = true;
+
+	do
+	{
+		cout << "Please enter your Feedback:\n";
+		isValid = getString(maxSize, feedback); // Ask for input
+	} while (!isValid) // As long as the input isn't valid
+	
+}
+
 void Customer:: order() {
 	int totalPrice = 0;
 	char ch;
@@ -84,3 +120,30 @@ void Customer:: print() {
 	cout << "Password: " << password << endl;
 	this->address.print();
 }
+
+bool Customer::getString(char* str, int maxSize) {
+
+	char* res = new char[maxSize];
+	cin.getline(res, maxSize);
+	if (cin.fail())
+	{
+		cin.clear();
+		cleanBuffer();
+		delete[] res;
+		return false;
+	}
+	else {
+		str = res;
+		return true;
+	}
+}
+
+void Customer::cleanBuffer()
+{
+	int c;
+	do
+	{
+		c = getchar();
+	} while (c != EOF && c != '\n');
+}
+

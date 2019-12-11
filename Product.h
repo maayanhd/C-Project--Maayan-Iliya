@@ -1,6 +1,6 @@
-#ifndef __PRODUCT_H
-#define __PRODUCT_H
-
+//#ifndef __PRODUCT_H
+//#define __PRODUCT_H
+#pragma once
 #include <string.h>
 #include <iostream>
 
@@ -26,7 +26,7 @@ public:
 	inline char* getName() const { return name; };
 	//inline const char* getSerialNumber() const { return serial_number; };
 	inline int getSerialNumber() const { return serial_number; };
-
+	inline Seller * getSeller() { return this->pSeller; };
 	inline Category getCategory() const { return ctg; };
 	inline float getPrice() const { return price; };
 	bool setPrice(float price);
@@ -44,8 +44,8 @@ private:
 	unsigned int serial_number; // Only using a common counter to produce the serial numbers 
 	Category ctg;
 
-	Seller * prodSeller; // Pointer to the seller of this product //
+	Seller * pSeller; // Pointer to the seller of this product //
 	Feedback** feedbacks;// Array of pointers to feedbacks of this product//
 };
-
-#endif
+//
+//#endif

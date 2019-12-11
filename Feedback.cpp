@@ -1,6 +1,5 @@
-//#include "Seller.h"
-//#include "Customer.h"
-#include "eCommerce.h"
+#include "Seller.h"
+#include "Customer.h"
 #include "Product.h"
 #include "feedback.h"
 
@@ -10,15 +9,14 @@ Feedback::Feedback(Customer* pCustomer, Seller * pSeller, char * feedback, Produ
 	setCustomer(pCustomer);
 	setSeller(pSeller);
 	setProduct(pProduct);
-	setFeedback(MIXED, feedback);
-	
+	setFeedback(feedback);
 }
 Feedback::Feedback(const Feedback & other):dateWritten(other.getDate)
 {
 	this->pCustomer = other.pCustomer;
 	this->pSeller = other.pSeller;
 	this->pProduct	= other.pProduct;
-	setFeedback(MIXED, other.feedback); // Allocating and copying the string 
+	setFeedback(other.feedback); // Allocating and copying the string 
 }
 Feedback::Feedback(Feedback && other):dateWritten(other.getDate)
 {
@@ -33,16 +31,45 @@ Feedback::~Feedback()
 	delete[] feedback; // Releasing the string represents a feedback 
 }
 
-bool Feedback:: setFeedback(strtype type, char* feedback) // Type is allocated in eCommerce
+bool Feedback:: setFeedback(char* feedback) // Type is allocated in eCommerce
 {
-	bool isValid = false;
+	int length = strlen(feedback) + 1;
+	this->feedback= new char[length]; // Allocating the feedback field 
+	memcpy(this->feedback, feedback, length); // Copying the string
+}
+
+bool Feedback:: getString(char* str, int maxSize) 
+{
+	char* res = new char[maxSize];
+	cin.getline(res, maxSize);
+	if (cin.fail())
+	{
+		cin.clear();
+		cleanBuffer();
+		delete[] res;
+		return false;
+	}
+	else 
+	{
+		str = res;
+		return true;
+	}
+}
+void Feedback::cleanBuffer()
+{
+	int c;
 	do
 	{
-		isValid = input(type, feedback); // Ask for input
-	}
-	while(!isValid) // As long as the input isn't valid
-
+		c = getchar();
+	} while (c != EOF && c != '\n');
 }
+
+
+
+
+
+
+
 
 
 

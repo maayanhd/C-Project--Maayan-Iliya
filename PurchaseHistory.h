@@ -1,9 +1,10 @@
-#ifndef _PURCHASE_HISTORY_H
-#define _PURCHASE_HISTORY_H
-
-#include "Product.h"
+//#ifndef _PURCHASE_HISTORY_H
+//#define _PURCHASE_HISTORY_H
+#pragma once
 #include "feedback.h"
+
 #include <iostream>
+
 using namespace std;
 
 class PurchaseHistory {
@@ -22,4 +23,4 @@ private:
 	Product** prodArr;// Products purchased by the customer //
 	Feedback** myFeedbacks; // Pointers to feedbacks of purchased products, myFeedbacks[i] related to prodArr[i]//
 };
-#endif
+//#endif

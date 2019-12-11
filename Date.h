@@ -1,5 +1,6 @@
-#ifndef __DATE_H
-#define __DATE_H
+//#ifndef __DATE_H
+//#define __DATE_H
+#pragma once 
 
 #include <iostream>
 using namespace std;
@@ -38,4 +39,4 @@ class Date
 		unsigned int * year; // preparation 4-digit number
 };
 
-#endif 
+//#endif 

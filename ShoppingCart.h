@@ -1,5 +1,6 @@
-#ifndef __SHOPPINGCART_H
-#define __SHOPPINGCART_H
+//#ifndef __SHOPPINGCART_H
+//#define __SHOPPINGCART_H
+#pragma once
 #include "Product.h"
 #include "PurchaseHistory.h"
 
@@ -28,4 +29,4 @@ private:
 };
 
 
-#endif
+//#endif

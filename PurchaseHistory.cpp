@@ -1,8 +1,9 @@
 #include "PurchaseHistory.h"
+#include "Product.h"
 
 PurchaseHistory::PurchaseHistory() {
 	pHistorySize = 0;
-	purchaseHistory = nullptr;
+	prodArr = nullptr;
 	myFeedbacks = nullptr;
 };
 
@@ -17,7 +18,7 @@ void PurchaseHistory::setHistorySize(int size) {
 };
 
 void PurchaseHistory::add(Product** products, int numOfProducts) {
-	int newSize = numOfproducts + pHistorySize;
+	int newSize = numOfProducts + pHistorySize;
 	Product** newArr = new Product*[newSize];
 	Feedback** newFeedbacks = new Feedback*[newSize];
 	for (int i = 0; i < pHistorySize; i++) // Copying old products 
