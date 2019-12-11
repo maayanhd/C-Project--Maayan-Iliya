@@ -3,7 +3,7 @@
 #include "Product.h"
 #include "PurchaseHistory.h"
 
-class Customer{};
+class Customer;
 
 class ShoppingCart {
 

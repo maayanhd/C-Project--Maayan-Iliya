@@ -1,4 +1,5 @@
 #include "Customer.h"
+#include "ShoppingCart.h"
 
 Customer::Customer(const char* username, const char* password,const char* countryName, const char* cityName, const char* streetName, const int* house)
 	:address(countryName,cityName,streetName,house), sCart(this){

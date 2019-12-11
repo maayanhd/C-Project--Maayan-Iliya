@@ -1,7 +1,8 @@
 #pragma once
 #include "Address.h"
-#include "ShoppingCart.h"
+#include "PurchaseHistory.h"
 
+class ShoppingCart;
 class Customer {
 
 public:

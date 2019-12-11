@@ -15,8 +15,9 @@ class E_Commerce
 		E_Commerce(const E_Commerce&) = delete; // No logic reason for copying the fields of the eCommerce 
 		// Logically the e-commerce system does not suppose to 'distract it self' - but we must deallocate the memory allocated during the program 
 		~E_Commerce(); 
-
-private:
+		friend class Feedback; // not working 
+		                                                                         
+	private:
 		Customer** customers; // Array of Costumers objects 
 		unsigned int currentNumOfCustomers;
 		Seller** sellers; // Array of Costumers objects 	
@@ -40,7 +41,7 @@ private:
 		void removeSeller(const char* username);
 		void emptyCustomers();
 		void emptySellers();
-		bool input(strtype type,char* str);
+		friend bool input(strtype type,char* str); // a Global function for input check
 		char* getData(strtype type);
 	
 };

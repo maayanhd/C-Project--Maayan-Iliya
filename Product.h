@@ -3,8 +3,6 @@
 
 #include <string.h>
 #include <iostream>
-#include "AuxMethods.h"
-#include "feedback.h"
 
 using namespace std;
 #pragma warning(disable: 4996)

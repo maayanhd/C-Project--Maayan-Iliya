@@ -1,11 +1,10 @@
 #ifndef _PURCHASE_HISTORY_H
 #define _PURCHASE_HISTORY_H
 
+#include "Product.h"
+#include "feedback.h"
 #include <iostream>
 using namespace std;
-
-class Feedback() {};
-class Product() {};
 
 class PurchaseHistory {
 	
@@ -14,9 +13,9 @@ public:
 	~PurchaseHistory();
 	void add(Product** products, int numOfProducts);
 	void setHistorySize(int size);
-	inline int getHistorySize() const {	return pHistorySize;};
+	inline int getHistorySize() const	   { return pHistorySize; };
 	inline Product** getPurchaseHistory() const { return prodArr; };
-	inline Feedback** getFeedbacks() const { return myFeedbacks; };
+	inline Feedback** getFeedbacks() const  { return myFeedbacks; };
 	
 private:
 	int pHistorySize;

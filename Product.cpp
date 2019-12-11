@@ -1,5 +1,4 @@
 ﻿#include "Product.h"
-
 #include "Seller.h"
 #include "feedback.h"
 

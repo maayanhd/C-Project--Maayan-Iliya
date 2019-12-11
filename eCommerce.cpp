@@ -1,5 +1,8 @@
 #include "eCommerce.h"
 
+const enum E_Commerce:: strtype;
+constexpr int E_Commerce::MAX_LENGTH = 21;
+
 Customer** E_Commerce:: changeCustomersArrSize(unsigned int newSize)
 { // Sending the address of the array of pointers to class objects to release it after allocating the new array by the updated size
 	Customer** updatedCustomers= new Customer*[currentNumOfCustomers+newSize]; 
@@ -114,6 +117,57 @@ void E_Commerce::removeSeller(const char * username) {
 
 	if (!found)
 		cout << "This username was not found" << endl;
+}
+
+bool input(E_Commerce:: strtype type, char* feedback) // Will be inside eCommerce class 
+{
+	char ch;
+	int phySize = 5, logicSize = 0;
+	bool isValid = true; // Flag notices whether the input is valid or not 
+	bool isTemp = false; // A flag notices whether the current string is temp or feedback string
+	feedback = new char[phySize]; // Allocating with initial size 
+	char * tempStr;
+	
+	cleanBuffer(); // Need to be implemented
+
+	while ((ch = getchar()) != '\n' && isValid)
+	{
+		if (logicSize == phySize)
+		{
+			phySize *= 2;
+			;
+			for (int i = 0; i < logicSize; ++i)
+			{
+				if (isTemp) {
+					feedback= new char[phySize + 1];
+					feedback[i] = tempStr[i];
+					delete[] tempStr;
+				}
+				else {
+					tempStr= new char[phySize + 1];
+					tempStr[i] = feedback[i];
+					delete[] feedback;
+				}			
+		}
+		switch (type) {
+			case E_Commerce::LETTERS: // only letters
+				((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) ? isValid = true : isValid = false;
+				break;
+
+			case E_Commerce::MIXED: // no restrictions of input of characters 
+				break;
+		}
+		if (isValid) {
+			isTemp ? tempStr[logicSize++] = ch : feedback[logicSize++] = ch; // Inserting the character to the array of characters 
+		}
+		if (logicSize > E_Commerce::MAX_LENGTH){ // Checking length restriction
+			isValid = false;
+			isTemp ? delete[] tempStr : delete[] feedback;
+		}
+	}
+		if (isValid)
+			isTemp ? tempStr[logicSize] = '\0' : feedback[logicSize] = '\0';
+		return isValid;
 }
 void E_Commerce::emptyCustomers() {
 
