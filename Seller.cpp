@@ -39,3 +39,17 @@ void Seller:: print() const
 	cout << "Password: " << this->getPassword() << endl;
 	this->address.print();
 }
+
+int Seller:: getNextIndexToInsert()
+{
+	Feedback ** tempFeedbacks = new Feedback *[numOfFeedbacks + 1];
+
+	for (int i = 0; i < numOfFeedbacks; ++i)
+	{
+		tempFeedbacks[i] = feedbacks[i]; // Copying the remaining 
+	}
+	feedbacks = tempFeedbacks; 
+	++numOfFeedbacks;
+
+	return numOfFeedbacks - 1;
+}

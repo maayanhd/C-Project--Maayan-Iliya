@@ -22,7 +22,7 @@ void Customer::addFeedback()
 	int option, size = history.getHistorySize();
 	char ch;
 	bool isValid = false;
-	int maxSize = MAX_LENGTH_FEEDBACK;
+	int maxSize = MAX_LENGTH_FEEDBACK; // Maximal size of feedback
 	char* feedback= nullptr;
 	Product** pHistory = history.getPurchaseHistory();
 	Feedback** feedbacks = history.getFeedbacks();
@@ -36,26 +36,21 @@ void Customer::addFeedback()
 		{
 			if (feedbacks[option - 1] == nullptr)
 			{
-				cout << "You haven't left any feedback for this product, do you want do to this now: y/n?" << endl;
+				cout << "You haven't left any feedback for this product, would you like to do it now: y/n?" << endl;
 				cin >> ch;
-				if (ch == 'y') 
+				if (ch == 'y' || ch == 'Y') // In case capslock is on 
 				{
 					Seller * relevantSeller = pHistory[option - 1]->getSeller();
-					relevantSeller->getFeedbacks();
-					
-					//leaveFeedback(maxSize, str);
+					int indexToInsert = relevantSeller->getNextIndexToInsert;
+					feedback = relevantSeller->getFeedbacks()[indexToInsert]->getFeedback();					
+					leaveFeedback(maxSize, feedback);
 				}
 			}
 		}
 		else // There's already a feedback 
 		{
-			cout << "You already have left a feedback for this product, do you want to change your recent feedback?: y/n?" << endl;
-			cin >> ch;
-			if (ch == 'y')
-			{
-				//leaveFeedback(maxSize, str);
-			}
-		}
+			cout << "You already have left a feedback for this product!" << endl;
+		}		
 	}
 }
 

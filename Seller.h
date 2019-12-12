@@ -18,7 +18,7 @@ class Seller
 		void setPassword(const char* password);				
 		void print()										   const; 
 		inline Feedback ** getFeedbacks() { return this->feedbacks; };
-
+		int getNextIndexToInsert();
 	private: 
 		static constexpr int MAX_LENGTH = 21;
 		char * userName; // UserName of Seller 

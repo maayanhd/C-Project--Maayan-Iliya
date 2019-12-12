@@ -37,7 +37,6 @@ class Feedback
 		// Helpers for input 
 		bool getString(char* str, int maxSize);
 		void cleanBuffer();
-
 		~Feedback(); // d'tor
 };
 //#endif
