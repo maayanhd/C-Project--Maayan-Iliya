@@ -2,10 +2,6 @@
 //#define __SHOPPINGCART_H
 #pragma once
 
-//#include "Product.h"
-//#include "PurchaseHistory.h"
-//#include "Product.h"
-
 class Customer;
 class Product; // Avoiding including too many times headers
 
