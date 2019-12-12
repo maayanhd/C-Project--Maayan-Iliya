@@ -1,6 +1,8 @@
 #ifndef _MENU_H
 #define _MENU_H
 #include "eCommerce.h"
+
+enum userType { CUSTOMER = 0,SELLER };
 class Menu
 {
 
@@ -15,11 +17,9 @@ public:
 	void addToShopingCart();
 	void order();
 	void pay();
-	void clientInfo();
-	void sellerInfo();
+	void getUserInfo(userType type);
 	void findProduct();
-	void exit();
-	void show();
+	void show(bool& exit);
 private:
 	E_Commerce system;
 };

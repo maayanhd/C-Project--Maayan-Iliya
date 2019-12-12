@@ -90,26 +90,6 @@ Seller* E_Commerce::newSeller()
 	Seller* res = new Seller(username, password, country, city, street, house);
 	return res;
 }
-void E_Commerce::addCustomer()
-{
-	Customer** newCustomerArr;
-	Customer* res = newCustomer();
-	newCustomerArr = changeCustomersArrSize(++currentNumOfCustomers);
-	newCustomerArr[currentNumOfCustomers - 1] = res;
-	delete[] customers;
-	customers = newCustomerArr;
-} 
-
-void E_Commerce::addSeller() 
-{
-	Seller** newSellersArr;
-	Seller* res = newSeller();
-	newSellersArr = changeSellersArrSize(++currentNumOfSellers);
-	newSellersArr[currentNumOfSellers - 1] = res;
-	delete[] sellers;
-	sellers = newSellersArr;
-
-}
 
 Seller** E_Commerce::changeSellersArrSize(unsigned int newSize)
 { // Sending the address of the array of pointers to class objects to release it after allocating the new array by the updated size
