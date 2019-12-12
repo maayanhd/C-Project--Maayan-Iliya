@@ -18,8 +18,15 @@ Seller:: ~Seller()
 }
 bool Seller::setUserName(const char * userName)
 {
+	if (strlen(userName) > MAX_LENGTH)
+	{
+		cout << "Too many characters for username" << endl;
+		return false;
+	}
+
 	delete[] this->userName;
 	this->userName = strdup(userName);
+	return false;
 }
 void Seller:: setPassword(const char* password)
 {
@@ -28,7 +35,7 @@ void Seller:: setPassword(const char* password)
 }
 void Seller:: print() const
 {
-	cout << "UserName: " << this->getUserName << endl;
-	cout << "Password: " << this->getPassword << endl;
+	cout << "UserName: " << this->getUserName() << endl;
+	cout << "Password: " << this->getPassword() << endl;
 	this->address.print();
 }

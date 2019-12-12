@@ -7,7 +7,7 @@
 // Responsible to reallocate the arrays - will be used for adding/removing sellers/customers  - 
 // defined as arrays of pointers to class objects to avoid the need for default constructor- which will not 
 // be recommended logically
-
+enum strtype { LETTERS = 0, MIXED };
 
 class E_Commerce
 {
@@ -24,7 +24,6 @@ class E_Commerce
 		Seller** sellers; // Array of Costumers objects 	
 		unsigned int currentNumOfSellers;
 
-		static enum strtype { LETTERS = 0, MIXED };
 		static constexpr int MAX_LENGTH = 21;
 		static constexpr int NOT_FOUND = -1;
 

@@ -1,6 +1,4 @@
-﻿//#include "Seller.h"
-//#include "feedback.h"
-#include "Seller.h"
+﻿#include "Seller.h"
 
 
 int Product::counter = 0; // counter for the serial numbers of products 

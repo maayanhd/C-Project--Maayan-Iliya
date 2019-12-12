@@ -1,6 +1,3 @@
-//#include "ShoppingCart.h"
-//#include "Product.h"
-// try
 #include "Customer.h"
 
 ShoppingCart::ShoppingCart(Customer* customer) 
@@ -12,7 +9,7 @@ ShoppingCart::ShoppingCart(Customer* customer)
 
 ShoppingCart::~ShoppingCart() 
 {
-	delete[] products; // Removes only the array, we losing the pointer to the products, but they still exist on the seller side //
+  delete[] products; // Removes only the array, we losing the pointer to the products, but they still exist on the seller side //
 }
 
 bool ShoppingCart::setNumOfProducts(int updatedCountOfProducts) 
@@ -28,7 +25,7 @@ bool ShoppingCart::setNumOfProducts(int updatedCountOfProducts)
 
 void ShoppingCart:: add(Product* prod) 
 {
-	Product** newProdArr = changeArrSize(numOfProducts+1); // add one more slot for new product
+	Product** newProdArr = changeArrSize(getNumOfProducts()+1); // add one more slot for new product
 	newProdArr[numOfProducts] = prod; // add the new product 
 	delete[] products;
 	products = newProdArr;

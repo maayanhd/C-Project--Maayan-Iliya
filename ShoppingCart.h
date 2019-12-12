@@ -4,9 +4,11 @@
 
 //#include "Product.h"
 //#include "PurchaseHistory.h"
-//class Customer;
+//#include "Product.h"
 
-class product; // Avoiding including too many times headers
+class Customer;
+class Product; // Avoiding including too many times headers
+
 
 class ShoppingCart {
 
@@ -21,6 +23,7 @@ public:
 	bool remove(int indToRemove);// remove product from the shopping cart
 	void toEmpty(); // removes all the products from the shopping cart
 	inline Product** getProducts() const { return products; };
+	 
 	
 private:
 	Customer* customer;

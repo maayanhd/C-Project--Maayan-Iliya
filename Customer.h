@@ -4,9 +4,6 @@
 #include "ShoppingCart.h"
 #include "PurchaseHistory.h"
 
-// try 1
-class ShoppingCart;
-
 class Customer {
 
 public:

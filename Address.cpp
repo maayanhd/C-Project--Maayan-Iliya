@@ -1,4 +1,9 @@
+#pragma warning (disable:4996)
+#include <iostream>
+#include <string.h>
 #include "Address.h"
+using namespace std;
+
 
 Address::Address(const char* countryName, const char* cityName, const char* streetName,const int* house) {
 	setCountry(countryName);

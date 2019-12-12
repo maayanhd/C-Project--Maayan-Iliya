@@ -1,4 +1,4 @@
-//#include "Customer.h"
+
 // try 1 
 #include "Seller.h"
 
@@ -22,7 +22,8 @@ void Customer::addFeedback()
 	int option, size = history.getHistorySize();
 	char ch;
 	bool isValid = false;
-	int maxSize = MAX_LENGTH_FEEDBACK, char* feedback;
+	int maxSize = MAX_LENGTH_FEEDBACK;
+	char* feedback= nullptr;
 	Product** pHistory = history.getPurchaseHistory();
 	Feedback** feedbacks = history.getFeedbacks();
 	
@@ -40,7 +41,7 @@ void Customer::addFeedback()
 				if (ch == 'y') 
 				{
 					Seller * relevantSeller = pHistory[option - 1]->getSeller();
-					 relevantSeller->getFeedbacks()
+					relevantSeller->getFeedbacks();
 					
 					//leaveFeedback(maxSize, str);
 				}
@@ -60,7 +61,7 @@ void Customer::addFeedback()
 
 bool Customer:: optionIsValid(int option)
 {
-	return (option >= 1 && option <= history.getHistorySize(); );
+	return (option >= 1 && option <= history.getHistorySize() );
 }
 
 void  Customer::leaveFeedback(int maxSize, char * feedback)
@@ -70,21 +71,23 @@ void  Customer::leaveFeedback(int maxSize, char * feedback)
 	do
 	{
 		cout << "Please enter your Feedback:\n";
-		isValid = getString(maxSize, feedback); // Ask for input
-	} while (!isValid) // As long as the input isn't valid
+		isValid = getString(feedback, maxSize); // Ask for input
+	} while (!isValid); // As long as the input isn't valid
 	
 }
 
 void Customer:: order() 
 {
-	int totalPrice = 0;
+	float totalPrice = 0;
 	char ch;
 	Product** products = sCart.getProducts();
 	int numOfProducts = sCart.getNumOfProducts();
-	cout << "Customer details: " << this->print;
+	cout << "Customer details: " << endl;
+	this->print();
 	for (int i = 0; i < numOfProducts; i++) {
-		totalPrice += products[i]->getPrice;
-		cout << "Product details: " << products[i]->print;
+		totalPrice += products[i]->getPrice();
+		cout << "Product details: " << endl; 
+		products[i]->print();
 	}
 	cout << "Total price: " << totalPrice << endl;
 	cout << "Do you want to make a payment: y/n?" << endl;

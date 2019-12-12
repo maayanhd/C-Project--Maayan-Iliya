@@ -20,6 +20,7 @@ class Seller
 		inline Feedback ** getFeedbacks() { return this->feedbacks; };
 
 	private: 
+		static constexpr int MAX_LENGTH = 21;
 		char * userName; // UserName of Seller 
 		char* password; // Password of The seller for logging into the system
 		Address address; // The Address of the seller

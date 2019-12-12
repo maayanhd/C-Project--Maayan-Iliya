@@ -1,33 +1,21 @@
-//#include "Seller.h"
-//#include "Customer.h"
-//#include "Product.h"
-
-// try 1 
-// #include "feedback.h"
-
-// try 2 
 #include "Customer.h"
 
-//Feedback::Feedback(Customer* pCustomer, Seller * pSeller, char * feedback, Product * pProduct,
 Feedback::Feedback(Customer* pCustomer, char * feedback, Product * pProduct, 
 	unsigned int* day, unsigned int* month, unsigned int* year): dateWritten(day, month, year)
 {
 	setCustomer(pCustomer);
-	//setSeller(pSeller);
 	setProduct(pProduct);
 	setFeedback(feedback);
 }
-Feedback::Feedback(const Feedback & other):dateWritten(other.getDate)
+Feedback::Feedback(const Feedback & other):dateWritten(other.dateWritten)
 {
 	this->pCustomer = other.pCustomer;
-	//this->pSeller = other.pSeller;
 	this->pProduct	= other.pProduct;
 	setFeedback(other.feedback); // Allocating and copying the string 
 }
-Feedback::Feedback(Feedback && other):dateWritten(other.getDate)
+Feedback::Feedback(Feedback && other):dateWritten(other.dateWritten)
 {
 	this->pCustomer = other.pCustomer;
-	//this->pSeller = other.pSeller;
 	this->pProduct = other.pProduct;
 	this->feedback = other.feedback;
 	other.feedback = nullptr;
@@ -37,7 +25,7 @@ Feedback::~Feedback()
 	delete[] feedback; // Releasing the string represents a feedback 
 }
 
-bool Feedback:: setFeedback(char* feedback) // Type is allocated in eCommerce
+void Feedback:: setFeedback(char* feedback) // Type is allocated in eCommerce
 {
 	int length = strlen(feedback) + 1;
 	this->feedback= new char[length]; // Allocating the feedback field 
