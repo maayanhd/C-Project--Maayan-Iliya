@@ -20,7 +20,9 @@ public:
 	bool setPassword(const char* password);
 	inline const char* getUsername() const { return username; };
 	inline const char* getPassword() const { return password; };
+	inline int getShoppingCartTotalPrice() const { return sCart.totalPrice; };
 	void print();
+	void pay();
 	void order();
 	void addFeedback();
 	bool optionIsValid(int option);

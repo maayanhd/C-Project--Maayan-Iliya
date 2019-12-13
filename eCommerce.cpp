@@ -1,13 +1,14 @@
 #include "eCommerce.h"
 
 
-Customer** E_Commerce:: changeCustomersArrSize(unsigned int newSize)
+Customer** E_Commerce:: changeCustomersArrSize()
 { // Sending the address of the array of pointers to class objects to release it after allocating the new array by the updated size
-	Customer** updatedCustomers= new Customer*[currentNumOfCustomers+newSize]; 
+	Customer** updatedCustomers= new Customer*[currentNumOfCustomers+1]; 
 	for (unsigned int i=0; i<currentNumOfCustomers; i++)
 	{
 		updatedCustomers[i] =customers[i]; // Shallow copying of pointers 
 	}	
+	setNumOfCustomers(currentNumOfCustomers + 1);
 	return updatedCustomers;
 }
 
@@ -27,14 +28,11 @@ bool E_Commerce::onlyLetters(const char* str) const
 char* E_Commerce:: input(strtype type, int maxSize) 
 {
 	bool valid = false;
-	char* res = nullptr;
-	
+	char* res = new char[maxSize];
 	while (!valid) {
 		valid = getString(res, maxSize);
 		if (type == LETTERS) {
 			valid = onlyLetters(res);
-			if (!valid)
-				delete[] res;
 		}
 	}
 	
@@ -42,15 +40,23 @@ char* E_Commerce:: input(strtype type, int maxSize)
 }
 Customer* E_Commerce::newCustomer() 
 {
-	char* username, *password, *country, *city, *street;
+	char* username=nullptr, *password, *country, *city, *street;
 	int house[2];
-	
-	username = input(MIXED, MAX_LENGTH);
+	int i = 0, j = 0;
+	while (i != NOT_FOUND || j!=NOT_FOUND) { // Make sure that we don't have user with the same username
+		username = input(MIXED, MAX_LENGTH);
+		i = findCustomer(username);
+		j = findSeller(username);
+		if (i != NOT_FOUND || j!=NOT_FOUND)
+		{
+			cout << "The username:" << username << " already exists in the system, please try again" << endl;
+			delete[] username;
+		}
+		}
 	password = input(MIXED, MAX_LENGTH);
 	country = input(LETTERS, MAX_LENGTH);
 	city = input(LETTERS, MAX_LENGTH);
 	street = input(MIXED, MAX_LENGTH);
-	
 	cout << "Enter the house number" << endl;
 	cin >> house[0];
 	cout << "Enter the entrance number" << endl;
@@ -68,10 +74,19 @@ Customer* E_Commerce::newCustomer()
 Seller* E_Commerce::newSeller() 
 {
 
-	char* username, *password, *country, *city, *street;
+	char* username=nullptr, *password, *country, *city, *street;
 	int house[2];
-
-	username = input(MIXED, MAX_LENGTH);
+	int i = 0, j = 0;
+	while (i != NOT_FOUND || j != NOT_FOUND) { // Make sure that we don't have user with the same username
+		username = input(MIXED, MAX_LENGTH);
+		i = findCustomer(username);
+		j = findSeller(username);
+		if (i != NOT_FOUND || j != NOT_FOUND)
+		{
+			cout << "The username:" << username << " already exists in the system, please try again" << endl;
+			delete[] username;
+		}
+	}
 	password = input(MIXED, MAX_LENGTH);
 	country = input(LETTERS, MAX_LENGTH);
 	city = input(LETTERS, MAX_LENGTH);
@@ -91,11 +106,12 @@ Seller* E_Commerce::newSeller()
 	return res;
 }
 
-Seller** E_Commerce::changeSellersArrSize(unsigned int newSize)
+Seller** E_Commerce::changeSellersArrSize()
 { // Sending the address of the array of pointers to class objects to release it after allocating the new array by the updated size
-	Seller** updatedSellers = new Seller*[currentNumOfSellers + newSize];
+	Seller** updatedSellers = new Seller*[currentNumOfSellers+1];
 	for (unsigned int i = 0; i < currentNumOfCustomers; i++)
 		updatedSellers[i] = sellers[i]; // Shallow copying of pointers 
+	setNumOfSellers(currentNumOfSellers + 1);
 	return updatedSellers;
 }
 void E_Commerce :: setNumOfCustomers(int num) 
@@ -115,35 +131,21 @@ E_Commerce::E_Commerce()
 	customers = nullptr; sellers = nullptr;
 }
 
-void E_Commerce::removeCustomer(const char * username)
-{
-	Customer** newCustomersArr;
-	int i = findCustomer(username);
-	if (i != NOT_FOUND)
-	{
-		delete customers[i];
-		customers[i] = customers[currentNumOfCustomers - 1];
-		newCustomersArr = changeCustomersArrSize(--currentNumOfCustomers);
-		delete[] customers;
-		customers = newCustomersArr;
-	}
-
-}
 
 bool E_Commerce::getString(char* str, int maxSize) 
 {
 
-	char* res = new char[maxSize];
-	cin.getline(res, maxSize);
+	//char* res = new char[maxSize];
+	cin.getline(str, maxSize);
 	if (cin.fail())
 	{
 		cin.clear();
 		cleanBuffer();
-		delete[] res;
+		delete[] str;
 		return false;
 	}
 	else {
-		str = res;
+		//str = res;
 		return true;
 	}
 }
@@ -158,19 +160,7 @@ void E_Commerce::cleanBuffer()
 	} while (c != EOF && c != '\n');
 }
 
-void E_Commerce::removeSeller(const char * username) 
-{
-	Seller** newSellersArr;
-	int i = findSeller(username);
-	if (i != NOT_FOUND)
-	{
-		delete sellers[i];
-		sellers[i] = sellers[currentNumOfCustomers - 1];
-		newSellersArr = changeSellersArrSize(--currentNumOfSellers);
-		delete[] sellers;
-		sellers = newSellersArr;;
-	}
-}
+
 
 void E_Commerce::emptyCustomers()
 {
@@ -187,7 +177,6 @@ int E_Commerce::findCustomer(const char* username) const
 		if ( !strcmp(username, customers[i]->getUsername() ))
 			return i;
 	}
-	cout << "This username wasn't found" << endl;
 	return NOT_FOUND;
 }
 
@@ -198,7 +187,6 @@ int E_Commerce::findSeller(const char* username) const
 		if (!strcmp(username, sellers[i]->getUserName()))
 			return i;
 	}
-	cout << "This username wasn't found" << endl;
 	return NOT_FOUND;
 }
 void E_Commerce::emptySellers() 

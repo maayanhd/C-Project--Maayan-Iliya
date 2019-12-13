@@ -4,6 +4,7 @@ ShoppingCart::ShoppingCart(Customer* customer)
 { // We want an empty cart
 	products = nullptr; // empty shopping cart
 	setNumOfProducts(0);
+	totalPrice = 0;
 	this->customer = customer;
 }
 
@@ -27,6 +28,7 @@ void ShoppingCart:: add(Product* prod)
 {
 	Product** newProdArr = changeArrSize(getNumOfProducts()+1); // add one more slot for new product
 	newProdArr[numOfProducts] = prod; // add the new product 
+	totalPrice += prod->getPrice();
 	delete[] products;
 	products = newProdArr;
 }
@@ -43,6 +45,7 @@ void ShoppingCart :: toEmpty()
 	delete[] products;
 	products = nullptr;
 	setNumOfProducts(0);
+	totalPrice = 0;
 };
 
 bool ShoppingCart::remove(int indToRemove) 
@@ -52,7 +55,10 @@ bool ShoppingCart::remove(int indToRemove)
 		cout << "The product you specified is not in your shopping cart" << endl;
 		return false;
 	}
+	totalPrice -= products[indToRemove]->getPrice();
 		products[indToRemove] = products[numOfProducts]; // Taking the last product in the array to replace the deleted product//
+		
 		changeArrSize(numOfProducts - 1);
+		
 		return true;
 }

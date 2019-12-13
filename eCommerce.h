@@ -29,14 +29,12 @@ class E_Commerce
 		static constexpr int NOT_FOUND = -1;
 
 public:
-		Customer** changeCustomersArrSize(unsigned int newSize);
-		Seller** changeSellersArrSize(unsigned int newSize);
+		Customer** changeCustomersArrSize();
+		Seller** changeSellersArrSize();
 		unsigned int getNumOfCustomers() const { return this->currentNumOfCustomers; };
 		unsigned int getNumOfSellers() const { return this->currentNumOfSellers; };
 		void setNumOfCustomers(int num);
 		void setNumOfSellers(int num);
-		void removeCustomer(const char* username);
-		void removeSeller(const char* username);
 		void emptyCustomers();
 		void emptySellers();
 		int findCustomer(const char* username) const;

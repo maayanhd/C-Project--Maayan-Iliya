@@ -41,7 +41,7 @@ void Customer::addFeedback()
 				if (ch == 'y' || ch == 'Y') // In case capslock is on 
 				{
 					Seller * relevantSeller = pHistory[option - 1]->getSeller();
-					int indexToInsert = relevantSeller->getNextIndexToInsert;
+					int indexToInsert = relevantSeller->getNextIndexToInsert();
 					feedback = relevantSeller->getFeedbacks()[indexToInsert]->getFeedback();					
 					leaveFeedback(maxSize, feedback);
 				}
@@ -73,31 +73,20 @@ void  Customer::leaveFeedback(int maxSize, char * feedback)
 
 void Customer:: order() 
 {
-	float totalPrice = 0;
 	char ch;
 	Product** products = sCart.getProducts();
 	int numOfProducts = sCart.getNumOfProducts();
 	cout << "Customer details: " << endl;
 	this->print();
 	for (int i = 0; i < numOfProducts; i++) {
-		totalPrice += products[i]->getPrice();
 		cout << "Product details: " << endl; 
 		products[i]->print();
 	}
-	cout << "Total price: " << totalPrice << endl;
-	cout << "Do you want to make a payment: y/n?" << endl;
-	cin >> ch;
-	if (ch == 'y') {
-		history.add(products, numOfProducts);
-		sCart.toEmpty();
-	}
-	else
-	{
-		cout << "Do you want to empty the shopping cart: y/n?" << endl;
-		cin >> ch;
-		if (ch == 'y')
-			sCart.toEmpty();
-	}
+	cout << "Total price: " << sCart.totalPrice << endl;
+}
+
+void Customer::pay() {
+	sCart.toEmpty();
 }
 bool Customer::setUsername(const char* username)
 {

@@ -9,6 +9,7 @@ class Product; // Avoiding including too many times headers
 class ShoppingCart {
 
 public:
+	friend class Customer;
 	ShoppingCart(Customer* customer); // makes empty shopping cart
 	~ShoppingCart();
 
@@ -26,6 +27,7 @@ private:
 	Product** changeArrSize(int newSize); // creates the copy of the ptr to products array but with the new size 
 	Product** products; //Cannot change the products, but can change the pointer //
 	int numOfProducts;
+	float totalPrice;
 	
 };
 

@@ -14,6 +14,8 @@ class Seller
 	public: 
 		inline const char * getUserName() const { return userName; };
 		inline const char * getPassword() const { return password; };
+		inline int getNumOfProducts() const { return numOfProducts; };
+		inline const Product** getProducts() const { return availableProducts; };
 		bool setUserName(const char * userName);
 		void setPassword(const char* password);				
 		void print()										   const; 
