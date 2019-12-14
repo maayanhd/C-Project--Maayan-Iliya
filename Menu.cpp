@@ -68,7 +68,7 @@ void Menu::show(bool& exit) {
 	cout << endl;
 	int input;
 	printHeadLine();
-	cout << "Welcome to the E_Commerce, choose one of the below options: " << endl;
+	cout << "Welcome to the E_Commerce system, choose one of the below options: " << endl;
 	cout << "1.New customer account" << endl;
 	cout << "2.New seller account" << endl;
 	cout << "3.Add new product" << endl;

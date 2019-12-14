@@ -31,8 +31,11 @@ char* E_Commerce:: input(strtype type, int maxSize)
 	char* res = new char[maxSize];
 	int iterationsCounter = 1;
 	do {
-		if(iterationsCounter > 1)
+		if (iterationsCounter > 1)
+		{
 			cout << "Invalid input, please try again\n";
+			res= new char[maxSize];
+		}
 		valid = getString(res, maxSize);
 		if (type == LETTERS) {
 			valid = onlyLetters(res);
