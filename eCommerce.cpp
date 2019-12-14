@@ -17,7 +17,7 @@ bool E_Commerce::onlyLetters(const char* str) const
 
 	int len = strlen(str);
 	for (int i = 0; i < len; i++) {
-		if (!((str[i] <= 'z' && str[i] >= 'a') || (str[i] <= 'Z' && str[i] >= 'A'))) {
+		if (!((str[i] <= 'z' && str[i] >= 'a') || (str[i] <= 'Z' && str[i] >= 'A')) && str[i] != ' ') {
 			return false;
 		}
 	}
@@ -29,12 +29,16 @@ char* E_Commerce:: input(strtype type, int maxSize)
 {
 	bool valid = false;
 	char* res = new char[maxSize];
-	while (!valid) {
+	int iterationsCounter = 1;
+	do {
+		if(iterationsCounter > 1)
+			cout << "Invalid input, please try again\n";
 		valid = getString(res, maxSize);
 		if (type == LETTERS) {
 			valid = onlyLetters(res);
 		}
-	}
+		++iterationsCounter;
+	} while (!valid);
 	
 	return res;
 }
@@ -43,7 +47,9 @@ Customer* E_Commerce::newCustomer()
 	char* username=nullptr, *password, *country, *city, *street;
 	int house[2];
 	int i = 0, j = 0;
-	while (i != NOT_FOUND || j!=NOT_FOUND) { // Make sure that we don't have user with the same username
+	while (i != NOT_FOUND || j!=NOT_FOUND)  // Make sure that we don't have user with the same username
+	{
+		cout << "Please enter userName:\n";
 		username = input(MIXED, MAX_LENGTH);
 		i = findCustomer(username);
 		j = findSeller(username);
@@ -52,11 +58,15 @@ Customer* E_Commerce::newCustomer()
 			cout << "The username:" << username << " already exists in the system, please try again" << endl;
 			delete[] username;
 		}
-		}
+	}
+	cout << "Please Enter A Password\n";
 	password = input(MIXED, MAX_LENGTH);
+	cout << "Please Enter A Country\n";
 	country = input(LETTERS, MAX_LENGTH);
+	cout << "Please Enter A City\n";
 	city = input(LETTERS, MAX_LENGTH);
-	street = input(MIXED, MAX_LENGTH);
+	cout << "Please Enter A Street\n";
+		street = input(MIXED, MAX_LENGTH);
 	cout << "Enter the house number" << endl;
 	cin >> house[0];
 	cout << "Enter the entrance number" << endl;
@@ -64,8 +74,8 @@ Customer* E_Commerce::newCustomer()
 	while (house[0] <= 0 || house[1] <= 0) {
 		cout << "House and entrance numbers should be a positive numbers " << endl;
 		cout << "Please try again" << endl;
-		cin >> house[0];
-		cin >> house[1];
+		cout<< "House number:\n";    cin >> house[0];
+		cout << "Entrance number:\n"; cin >> house[1];
 	}
 	Customer* res = new Customer(username, password, country, city, street, house);
 	return res;
@@ -78,6 +88,7 @@ Seller* E_Commerce::newSeller()
 	int house[2];
 	int i = 0, j = 0;
 	while (i != NOT_FOUND || j != NOT_FOUND) { // Make sure that we don't have user with the same username
+		cout << "Please enter a username:\n";
 		username = input(MIXED, MAX_LENGTH);
 		i = findCustomer(username);
 		j = findSeller(username);
@@ -87,9 +98,13 @@ Seller* E_Commerce::newSeller()
 			delete[] username;
 		}
 	}
+	cout << "Please enter a Password:\n";
 	password = input(MIXED, MAX_LENGTH);
+	cout << "Please enter a Country:\n";
 	country = input(LETTERS, MAX_LENGTH);
+	cout << "Please enter a City:\n";
 	city = input(LETTERS, MAX_LENGTH);
+	cout << "Please enter a Street:\n";
 	street = input(MIXED, MAX_LENGTH);
 
 	cout << "Enter the house number" << endl;
@@ -109,7 +124,7 @@ Seller* E_Commerce::newSeller()
 Seller** E_Commerce::changeSellersArrSize()
 { // Sending the address of the array of pointers to class objects to release it after allocating the new array by the updated size
 	Seller** updatedSellers = new Seller*[currentNumOfSellers+1];
-	for (unsigned int i = 0; i < currentNumOfCustomers; i++)
+	for (unsigned int i = 0; i < currentNumOfSellers; i++)
 		updatedSellers[i] = sellers[i]; // Shallow copying of pointers 
 	setNumOfSellers(currentNumOfSellers + 1);
 	return updatedSellers;

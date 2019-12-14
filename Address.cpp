@@ -43,7 +43,7 @@ bool Address::IsValid(const char* str) {
 		return false;
 	}
 	for (int i = 0; i < len; ++i) {
-		if (!((str[i] <= 'z' && str[i] >= 'a') || (str[i] <= 'Z' && str[i] >= 'A'))) {
+		if (!((str[i] <= 'z' && str[i] >= 'a') || (str[i] <= 'Z' && str[i] >= 'A')) && str[i] != ' ') {
 			cout << "Your input contains illegal characters" << endl;
 			return false;
 		}

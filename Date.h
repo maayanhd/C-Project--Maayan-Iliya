@@ -6,6 +6,7 @@ class Date
 {
 	public:
 		friend class Feedback; // Allowing Feedback class access to private attributes
+		friend class Customer;
 		Date(unsigned int* day , unsigned int* month , unsigned int *year );
 		~Date();
 		
@@ -17,7 +18,7 @@ class Date
 		inline unsigned int * getMonth() { return this->month; };
 		inline unsigned int * getYear()  { return this->year; };
 
-		void show(unsigned int day[], unsigned int month[], unsigned int year[]) const;
+		void show(unsigned int* day, unsigned int* month, unsigned int* year) const;
 		// Validation functions
 		bool yearIsValid(unsigned int * year);
 		bool monthIsValid(unsigned int* month);

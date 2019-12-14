@@ -49,11 +49,11 @@ bool Date::setYear(unsigned int * year)
 	
 	return true;
 }
-void Date::show(unsigned int day[], unsigned int month[], unsigned int year[]) const
+void Date::show(unsigned int* day, unsigned int* month, unsigned int* year) const
 {
 	unsigned int lengthOfDate = MAX_LENGTH_DAY + MAX_LENGTH_MONTH + MAX_LENGTH_YEAR;
 	cout << " Date: ";
-	for (int i = 0; i < lengthOfDate - 1; ++i)
+	for (unsigned int i = 0; i < lengthOfDate - 1; ++i)
 	{
 		if (i < 2)
 			cout << day[i];

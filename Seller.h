@@ -15,12 +15,18 @@ class Seller
 		inline const char * getUserName() const { return userName; };
 		inline const char * getPassword() const { return password; };
 		inline int getNumOfProducts() const { return numOfProducts; };
-		inline const Product** getProducts() const { return availableProducts; };
+		inline Product** getProducts() const { return availableProducts; };
 		bool setUserName(const char * userName);
 		void setPassword(const char* password);				
 		void print()										   const; 
 		inline Feedback ** getFeedbacks() { return this->feedbacks; };
-		int getNextIndexToInsert();
+		int getNextIndexToInsert(); // next Index to insert a feedback
+		int getNextIndexToInsertProduct(); // finding the next place for inserting a product
+		bool ProductExists(char * nameOfProduct) const;
+		void addProduct(char* prodName, float price, Category ctg);
+		bool optionIsValid (int option) const;
+		bool priceIsValid(float price) const;
+
 	private: 
 		static constexpr int MAX_LENGTH = 21;
 		char * userName; // UserName of Seller 
