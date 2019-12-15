@@ -32,24 +32,19 @@ void Menu::addSeller() {
 }
 
 void Menu::getUserInfo(userType type) {
-	char* input = new char[system.MAX_LENGTH];
-	int i;
-	cout << "Please enter your username" << endl;
-	system.getString(input, system.MAX_LENGTH);
-	switch (type) {
-
+	Customer* customer;
+	Seller* seller;
+	switch (type) 
+	{
 	case CUSTOMER:
-		i = system.findCustomer(input);
-		if (i != system.NOT_FOUND)
-			system.customers[i]->print();
+		Customer* customer = customerIdent();
+		customer->print();
 		break;
 	case SELLER:
-		i = system.findSeller(input);
-		if (i != system.NOT_FOUND)
-			system.sellers[i]->print();
+		Seller* seller = sellerIdent();
+		seller->print();
 		break;
 	}
-	delete[] input;
 }
 void Menu::printHeadLine()
 {
@@ -63,6 +58,41 @@ void Menu::printHeadLine()
 	cout << r3 << endl;
 	cout << r4 << endl;
 	cout << r5 << endl;
+}
+
+Customer* Menu::customerIdent() {
+
+	char* username = new char[system.MAX_LENGTH];
+	Customer* customer = nullptr;
+	int i;
+	system.getString(username, system.MAX_LENGTH);
+	i = system.findCustomer(username);
+	while (i == system.NOT_FOUND)
+	{
+		cout << "Customer with username you entered wasn't found, please try again" << endl;
+		system.getString(username, system.MAX_LENGTH);
+		i = system.findCustomer(username);
+	}
+	delete[] username;
+	return system.customers[i];
+}
+
+Seller* Menu::sellerIdent() {
+	// Asking for a user name
+	int i;
+	char* username = new char[system.MAX_LENGTH];
+	cout << " Please enter a Username:\n";
+	system.getString(username, system.MAX_LENGTH);
+	i = system.findSeller(username);
+	while (i == system.NOT_FOUND) // validation of username
+	{
+		cout << "No seller matching the username you have just entered in the system, please try again.\n" << endl;
+		system.getString(username, system.MAX_LENGTH);
+		i = system.findSeller(username);
+	}
+	delete[] username;
+	return system.sellers[i];
+
 }
 void Menu::show(bool& exit) {
 	cout << endl;
@@ -122,26 +152,11 @@ void Menu::show(bool& exit) {
 
 void Menu::addProduct() {
 
-	Seller* seller = nullptr;
-	int i;
+	Seller* seller = sellerIdent();
 	Category ctg;
 	int option;
 	float price;
 
-	// Asking for a user name 
-	char* username = new char[system.MAX_LENGTH];
-	cout << " Please enter a Username:\n";
-	system.getString(username, system.MAX_LENGTH);
-	i = system.findSeller(username);
-	while (i == system.NOT_FOUND) // validation of username
-	{
-		cout << "No seller matching the username you have just entered in the system, please try again.\n" << endl;
-		system.getString(username, system.MAX_LENGTH);
-		i = system.findSeller(username);
-	}
-	delete[] username;
-	seller = system.sellers[i];
-	// Asking for a product name
 	char* nameOfProduct = new char[system.MAX_LENGTH];
 	cout << " Please enter the name of the product you'd like to add:\n";
 	system.getString(nameOfProduct, system.MAX_LENGTH);
@@ -173,67 +188,57 @@ void Menu::addProduct() {
 
 void Menu::pay() {
 
-	char* username = new char[system.MAX_LENGTH];
-	Customer* customer = nullptr;
-	int i;
-	system.getString(username, system.MAX_LENGTH);
-	i = system.findCustomer(username);
-	while (i == system.NOT_FOUND)
-	{
-		cout << "Customer with username you entered wasn't found, please try again" << endl;
-		system.getString(username, system.MAX_LENGTH);
-		i = system.findCustomer(username);
-	}
-	delete[] username;
-	customer = system.customers[i];
+	Customer* customer = customerIdent();
 	cout << "The payment process succeeded." << endl;
 	cout << "Total price of the shopping cart: " << customer->getShoppingCartTotalPrice() << endl;;
 	customer->pay();
 }
 
 void Menu::addFeedback() {
-	char* username = new char[system.MAX_LENGTH];
-	Customer* customer = nullptr;
-	int i;
-	cout << "Please enter username:\n";
-	system.getString(username, system.MAX_LENGTH);
-	i = system.findCustomer(username);
-	while (i == system.NOT_FOUND) // Username validation
-	{
-		cout << "No customer matching the username you have just entered in the system, please try again" << endl;
-		system.getString(username, system.MAX_LENGTH);
-		i = system.findCustomer(username);
-	}
-	delete[] username;
-	customer = system.customers[i];
+	Customer* customer = customerIdent();
 	customer->addFeedback();
-
 }
 
 void Menu::addToShopingCart() {
-	Seller* currSeller;
-	int i = 0;
-	currSeller = system.sellers[i];
-	
+	/*Seller* currSeller;
+	Customer* customer = customerIdent();
+	Product** prodArr;
+	Product* prodToAdd;
+	int i = 0, j = 0, option = 1, count = 0, temp = 0;
+	int numOfProducts;
+	if (system.currentNumOfSellers > 0)
+		cout << "Choose one of the products listed below" << endl;
+		for (i = 0; i < system.currentNumOfSellers; ++i) {
+			currSeller = system.sellers[i];
+			prodArr = currSeller->getProducts();
+			numOfProducts = currSeller->getNumOfProducts();
+			for (j = 0; j < numOfProducts; ++j) {
+				cout << option << ". ";
+				prodArr[i]->print();
+				option++;
+			}
+		}
+		if (option == 1) 
+			cout << "There is no products at this moment" << endl;
+		else
+		{
+			i = 0;
+			temp = option;
+			while (count < option) {
+				currSeller = system.sellers[i];
+				count += currSeller->getNumOfProducts();
+				temp -= currSeller->getNumOfProducts();
+				i++;
+			}
+			prodArr = system.sellers[i - 1]->getProducts();
+			prodToAdd = prodArr[temp - 1];
+
+		}*/
 }
 
 void Menu::order() {
-
-	char* username = new char[system.MAX_LENGTH];
-	Customer* customer = nullptr;
-	int i;
-	system.getString(username, system.MAX_LENGTH);
-	i = system.findCustomer(username);
-	while (i == system.NOT_FOUND)
-	{
-		cout << "Customer with username you entered wasn't found, please try again" << endl;
-		system.getString(username, system.MAX_LENGTH);
-		i = system.findCustomer(username);
-	}
-	delete[] username;
-	customer = system.customers[i];
+	Customer* customer = customerIdent();
 	customer->order();
-
 }
 
 void Menu::findProduct() {

@@ -24,6 +24,8 @@ public:
 	void findProduct(); 
 	void show(bool& exit);// works
 	void printHeadLine();
+	Customer* customerIdent();
+	Seller* sellerIdent();
 
 private:
 	E_Commerce system;
