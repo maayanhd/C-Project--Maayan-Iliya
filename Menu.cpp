@@ -211,19 +211,34 @@ void Menu::addFeedback() {
 }
 
 void Menu::addToShopingCart() {
-
-
-
+	Seller* currSeller;
+	int i = 0;
+	currSeller = system.sellers[i];
+	
 }
 
 void Menu::order() {
 
-
+	char* username = new char[system.MAX_LENGTH];
+	Customer* customer = nullptr;
+	int i;
+	system.getString(username, system.MAX_LENGTH);
+	i = system.findCustomer(username);
+	while (i == system.NOT_FOUND)
+	{
+		cout << "Customer with username you entered wasn't found, please try again" << endl;
+		system.getString(username, system.MAX_LENGTH);
+		i = system.findCustomer(username);
+	}
+	delete[] username;
+	customer = system.customers[i];
+	customer->order();
 
 }
 
 void Menu::findProduct() {
 	char* prodName = new char[system.MAX_LENGTH];
+	int count = 0;
 	system.getString(prodName, system.MAX_LENGTH);
 	Product** prodArr;
 	Seller* currSeller;
@@ -234,10 +249,14 @@ void Menu::findProduct() {
 		prodArr = currSeller->getProducts();
 		for (int j = 0; j < numOfProducts; ++j)
 		{
-			if (strcmp(prodArr[j]->getName(), prodName) == 0)
+			if (strcmp(prodArr[j]->getName(), prodName) == 0) {
 				prodArr[j]->print();
+				count++;
+			}
 		}
 	}
+	if (count == 0)
+		cout << "This product wasn't found" << endl;
 	delete[] prodName;
 
 }
