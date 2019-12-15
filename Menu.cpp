@@ -32,12 +32,13 @@ void Menu::addSeller() {
 }
 
 void Menu::getUserInfo(userType type) {
-	Customer* customer;
-	Seller* seller;
+	Customer* customer= nullptr;
+	Seller* seller = nullptr;
+	
 	switch (type) 
 	{
 	case CUSTOMER:
-		Customer* customer = customerIdent();
+		customer = customerIdent();
 		customer->print();
 		break;
 	case SELLER:
