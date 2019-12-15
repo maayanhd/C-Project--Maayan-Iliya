@@ -20,6 +20,7 @@ public:
 	bool remove(int indToRemove);// remove product from the shopping cart
 	void toEmpty(); // removes all the products from the shopping cart
 	inline Product** getProducts() const { return products; };
+	inline float getTotalPrice() const { return totalPrice; };
 	 
 	
 private:

@@ -32,21 +32,21 @@ void Menu::addSeller() {
 }
 
 void Menu::getUserInfo(userType type) {
-	Customer* customer;
-	Seller* seller;
+	Customer* customer = nullptr;
+	Seller* seller = nullptr;
 	switch (type) 
 	{
 	case CUSTOMER:
-		Customer* customer = customerIdent();
+		customer = customerIdent();
 		customer->print();
 		break;
 	case SELLER:
-		Seller* seller = sellerIdent();
+		seller = sellerIdent();
 		seller->print();
 		break;
 	}
 }
-void Menu::printHeadLine()
+void Menu::printHeadLine() const
 {
 	auto r1 = R"( __  __                  )";
 	auto r2 = R"(|  \/  | ___ _ __  _   _ )";
@@ -65,6 +65,7 @@ Customer* Menu::customerIdent() {
 	char* username = new char[system.MAX_LENGTH];
 	Customer* customer = nullptr;
 	int i;
+	cout << "Please enter a Username: " << endl;
 	system.getString(username, system.MAX_LENGTH);
 	i = system.findCustomer(username);
 	while (i == system.NOT_FOUND)
@@ -81,7 +82,7 @@ Seller* Menu::sellerIdent() {
 	// Asking for a user name
 	int i;
 	char* username = new char[system.MAX_LENGTH];
-	cout << " Please enter a Username:\n";
+	cout << "Please enter a Username: " << endl;
 	system.getString(username, system.MAX_LENGTH);
 	i = system.findSeller(username);
 	while (i == system.NOT_FOUND) // validation of username
@@ -94,7 +95,7 @@ Seller* Menu::sellerIdent() {
 	return system.sellers[i];
 
 }
-void Menu::show(bool& exit) {
+void Menu::show(bool& exit){
 	cout << endl;
 	int input;
 	printHeadLine();
@@ -126,7 +127,7 @@ void Menu::show(bool& exit) {
 		addFeedback();
 		break;
 	case 5:
-		addToShopingCart();
+		addToShoppingCart();
 		break;
 	case 6:
 		order();
@@ -189,9 +190,14 @@ void Menu::addProduct() {
 void Menu::pay() {
 
 	Customer* customer = customerIdent();
-	cout << "The payment process succeeded." << endl;
-	cout << "Total price of the shopping cart: " << customer->getShoppingCartTotalPrice() << endl;;
-	customer->pay();
+	float totalPrice = customer->getCart().getTotalPrice();
+	if (totalPrice == 0)
+		cout << " The shopping cart is empty" << endl;
+	else {
+		cout << "The payment process succeeded." << endl;
+		cout << "Total price of the shopping cart: " << totalPrice << endl;;
+		customer->getCart().toEmpty();
+	}
 }
 
 void Menu::addFeedback() {
@@ -199,43 +205,43 @@ void Menu::addFeedback() {
 	customer->addFeedback();
 }
 
-void Menu::addToShopingCart() {
-	/*Seller* currSeller;
+void Menu::addToShoppingCart() {
+	Seller* currSeller = nullptr;
 	Customer* customer = customerIdent();
-	Product** prodArr;
-	Product* prodToAdd;
-	int i = 0, j = 0, option = 1, count = 0, temp = 0;
+	Product** prodArr = nullptr;
+	int option = 1, choice;
 	int numOfProducts;
+
 	if (system.currentNumOfSellers > 0)
 		cout << "Choose one of the products listed below" << endl;
-		for (i = 0; i < system.currentNumOfSellers; ++i) {
-			currSeller = system.sellers[i];
-			prodArr = currSeller->getProducts();
-			numOfProducts = currSeller->getNumOfProducts();
-			for (j = 0; j < numOfProducts; ++j) {
-				cout << option << ". ";
-				prodArr[i]->print();
-				option++;
-			}
+	for (unsigned int i = 0; i <system.currentNumOfSellers; ++i) {
+		currSeller = system.sellers[i];
+		prodArr = currSeller->getProducts();
+		numOfProducts = currSeller->getNumOfProducts();
+		for (int j = 0; j <numOfProducts; ++j) {
+			cout << option << ". ";
+			prodArr[i]->print();
+			option++;
 		}
-		if (option == 1) 
-			cout << "There is no products at this moment" << endl;
-		else
-		{
-			i = 0;
-			temp = option;
-			while (count < option) {
+	}
+	if (option == 1)
+		cout << "There is no products at this moment" << endl;
+	else
+	{
+		cin >> choice;
+		system.cleanBuffer();
+		if (choice > option)
+			cout << "The option you specified doesn't exist" << endl;
+		else {
+			for (unsigned int i = 0; i < system.currentNumOfSellers && choice - numOfProducts>0; ++i) {
 				currSeller = system.sellers[i];
-				count += currSeller->getNumOfProducts();
-				temp -= currSeller->getNumOfProducts();
-				i++;
+				numOfProducts = currSeller->getNumOfProducts();
+				choice -= numOfProducts;
 			}
-			prodArr = system.sellers[i - 1]->getProducts();
-			prodToAdd = prodArr[temp - 1];
-
-		}*/
+			customer->getCart().add(currSeller->getProducts()[choice - 1]);
+		}
+	}
 }
-
 void Menu::order() {
 	Customer* customer = customerIdent();
 	customer->order();

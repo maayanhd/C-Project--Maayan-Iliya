@@ -155,19 +155,15 @@ void  Customer::leaveFeedback(int maxSize, char * feedback)
 }
 void Customer::order()
 {
-	char ch;
 	Product** products = sCart.getProducts();
 	int numOfProducts = sCart.getNumOfProducts();
 	cout << "Customer details: " << endl;
 	this->print();
-	for (int i = 0; i < numOfProducts; i++) {
+	for (int i = 0; i < numOfProducts; ++i) {
 		cout << "Product details: " << endl;
 		products[i]->print();
 	}
 	cout << "Total price: " << sCart.totalPrice << endl;
-}
-void Customer::pay() {
-	sCart.toEmpty();
 }
 bool Customer::setUsername(const char* username)
 {

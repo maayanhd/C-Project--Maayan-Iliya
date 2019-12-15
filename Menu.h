@@ -17,15 +17,15 @@ public:
 	void addSeller(); // works
 	void addProduct(); 
 	void addFeedback();
-	void addToShopingCart();
+	void addToShoppingCart();
 	void order();
 	void pay();
 	void getUserInfo(userType type);// works
 	void findProduct(); 
 	void show(bool& exit);// works
-	void printHeadLine();
+	void printHeadLine() const ;
 	Customer* customerIdent();
-	Seller* sellerIdent();
+	Seller* sellerIdent() ;
 
 private:
 	E_Commerce system;

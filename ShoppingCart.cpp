@@ -31,6 +31,7 @@ void ShoppingCart:: add(Product* prod)
 	totalPrice += prod->getPrice();
 	delete[] products;
 	products = newProdArr;
+	numOfProducts++;
 }
 
 Product** ShoppingCart ::changeArrSize(int newSize) 

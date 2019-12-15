@@ -43,7 +43,7 @@ public:
 		Seller* newSeller();
 		
 public:
-	bool getString(char* str, int maxSize);
+	bool getString(char* str, int maxSize) ;
 	bool onlyLetters(const char* str) const;
 	void cleanBuffer();
 	char* input(strtype type, int maxSize);

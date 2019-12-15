@@ -20,17 +20,15 @@ public:
 	bool setPassword(const char* password);
 	inline const char* getUsername() const { return username; };
 	inline const char* getPassword() const { return password; };
-	inline float getShoppingCartTotalPrice() const { return sCart.totalPrice; };
 	void print();
-	void pay();
 	void order();
 	void addFeedback();
 	bool optionIsValid(int option);
-	void  leaveFeedback(int maxSize, char * feedback);
+	void leaveFeedback(int maxSize, char * feedback);
 	void printPurchasedProducts(Product** purchasedProducts) const;
 	void getValidDate(unsigned int *day, unsigned int * month, unsigned int * year);
 	bool dateIsValid(unsigned int *day, unsigned int * month, unsigned int * year, Date* dateAccess);
-
+	inline ShoppingCart& getCart() { return sCart; };
 
 	// Helpers for input 
 	bool getString(char* str, int maxSize);
