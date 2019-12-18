@@ -38,10 +38,12 @@ void Menu::getUserInfo(userType type) {
 	{
 	case CUSTOMER:
 		customer = customerIdent();
+		if(customer!=nullptr)
 		customer->print();
 		break;
 	case SELLER:
 		seller = sellerIdent();
+		if(seller!=nullptr)
 		seller->print();
 		break;
 	}
@@ -58,8 +60,8 @@ void Menu::printHeadLine() const
 	cout << r3 << endl;
 	cout << r4 << endl;
 	cout << r5 << endl;
+	
 }
-
 Customer* Menu::customerIdent() {
 
 	char* username = new char[system.MAX_LENGTH];
@@ -70,16 +72,21 @@ Customer* Menu::customerIdent() {
 	i = system.findCustomer(username);
 	while (i == system.NOT_FOUND)
 	{
-		cout << "Customer with username you entered wasn't found, please try again" << endl;
+		cout << "Customer with username you entered wasn't found, please try again or press 0 to return to the menu" << endl;
 		system.getString(username, system.MAX_LENGTH);
+		if (username[0] == '0') {
+			delete[] username;
+			return nullptr;
+		}
 		i = system.findCustomer(username);
+		
 	}
 	delete[] username;
 	return system.customers[i];
 }
 
 Seller* Menu::sellerIdent() {
-	// Asking for a user name
+	// Asking for a user nam
 	int i;
 	char* username = new char[system.MAX_LENGTH];
 	cout << "Please enter a Username: " << endl;
@@ -87,8 +94,12 @@ Seller* Menu::sellerIdent() {
 	i = system.findSeller(username);
 	while (i == system.NOT_FOUND) // validation of username
 	{
-		cout << "No seller matching the username you have just entered in the system, please try again.\n" << endl;
+		cout << "No seller matching the username you have just entered in the system, please try again or press 0 to return to the menu.\n" << endl;
 		system.getString(username, system.MAX_LENGTH);
+		if (username[0] == '0') {
+			delete[] username;
+			return nullptr;
+		}
 		i = system.findSeller(username);
 	}
 	delete[] username;
@@ -96,6 +107,8 @@ Seller* Menu::sellerIdent() {
 
 }
 void Menu::show(bool& exit){
+
+	std::system("CLS");
 	cout << endl;
 	int input;
 	printHeadLine();
@@ -113,6 +126,7 @@ void Menu::show(bool& exit){
 	cout << "11.Exit" << endl << endl;
 	cin >> input;
 	system.cleanBuffer();
+	std::system("CLS");
 	switch (input) {
 	case 1:
 		addCustomer();
@@ -148,7 +162,6 @@ void Menu::show(bool& exit){
 		exit = true;
 		break;
 	}
-
 }
 
 void Menu::addProduct() {
@@ -157,51 +170,55 @@ void Menu::addProduct() {
 	Category ctg;
 	int option;
 	float price;
-
-	char* nameOfProduct = new char[system.MAX_LENGTH];
-	cout << " Please enter the name of the product you'd like to add:\n";
-	system.getString(nameOfProduct, system.MAX_LENGTH);
-	while (seller->ProductExists(nameOfProduct)) // Validation of product name
-	{
-		cout << "a Product with an identical name has already been added to the seller, please try again.\n";
+	if (seller != nullptr) {
+		char* nameOfProduct = new char[system.MAX_LENGTH];
+		cout << " Please enter the name of the product you'd like to add:\n";
 		system.getString(nameOfProduct, system.MAX_LENGTH);
-	}
-	// Asking for a category
-	cout << " Please choose a category for the product:\n" << "choose an option by pressing the relevant number:\n";
-	cout << " 1 - Children\n 2 - Electricity\n 3 - Clothing\n 4 - Office Supply\n" << endl;
-	cin >> option;
-	while (!seller->optionIsValid(option)) // Category validation
-	{
-		cout << "Invalid option, choose again:\n" << " 1 - Children\n 2 - Electricity\n 3 - Clothing\n 4 - Office Supply\n";
+		while (seller->ProductExists(nameOfProduct)) // Validation of product name
+		{
+			cout << "a Product with an identical name has already been added to the seller, please try again.\n";
+			system.getString(nameOfProduct, system.MAX_LENGTH);
+		}
+		// Asking for a category
+		cout << " Please choose a category for the product:\n" << "choose an option by pressing the relevant number:\n";
+		cout << " 1 - Children\n 2 - Electricity\n 3 - Clothing\n 4 - Office Supply\n" << endl;
 		cin >> option;
-	}
-	ctg = (Category)(option - 1);
-	// Asking for a price
-	cout << "Please enter a price for the product:\n";
-	cin >> price;
-	while (!seller->priceIsValid(price))
-	{
-		cout << "Invalid price, please try again\n";
+		while (!seller->optionIsValid(option)) // Category validation
+		{
+			cout << "Invalid option, choose again:\n" << " 1 - Children\n 2 - Electricity\n 3 - Clothing\n 4 - Office Supply\n";
+			cin >> option;
+		}
+		ctg = (Category)(option - 1);
+		// Asking for a price
+		cout << "Please enter a price for the product:\n";
 		cin >> price;
+		while (!seller->priceIsValid(price))
+		{
+			cout << "Invalid price, please try again\n";
+			cin >> price;
+		}
+		seller->addProduct(nameOfProduct, price, ctg); // Adding the product to into the "list" of available products of the seller 
 	}
-	seller->addProduct(nameOfProduct, price, ctg); // Adding the product to into the "list" of available products of the seller 
-}
+	}
 
 void Menu::pay() {
 
 	Customer* customer = customerIdent();
-	float totalPrice = customer->getCart().getTotalPrice();
-	if (totalPrice == 0)
-		cout << " The shopping cart is empty" << endl;
-	else {
-		cout << "The payment process succeeded." << endl;
-		cout << "Total price of the shopping cart: " << totalPrice << endl;;
-		customer->getCart().toEmpty();
+	if (customer != nullptr) {
+		float totalPrice = customer->getCart().getTotalPrice();
+		if (totalPrice == 0)
+			cout << " The shopping cart is empty" << endl;
+		else {
+			cout << "The payment process succeeded." << endl;
+			cout << "Total price of the shopping cart: " << totalPrice << endl;;
+			customer->getCart().toEmpty();
+		}
 	}
 }
 
 void Menu::addFeedback() {
 	Customer* customer = customerIdent();
+	if(customer!=nullptr)
 	customer->addFeedback();
 }
 
@@ -211,7 +228,8 @@ void Menu::addToShoppingCart() {
 	Product** prodArr = nullptr;
 	int option = 1, choice;
 	int numOfProducts;
-
+	if (customer != nullptr)
+	{
 	if (system.currentNumOfSellers > 0)
 		cout << "Choose one of the products listed below" << endl;
 	for (unsigned int i = 0; i <system.currentNumOfSellers; ++i) {
@@ -241,9 +259,11 @@ void Menu::addToShoppingCart() {
 			customer->getCart().add(currSeller->getProducts()[choice - 1]);
 		}
 	}
+	}
 }
 void Menu::order() {
 	Customer* customer = customerIdent();
+	if(customer!=nullptr)
 	customer->order();
 }
 

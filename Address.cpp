@@ -71,7 +71,7 @@ bool Address:: setCity(const char*cityName)
 
 bool Address :: setStreet(const char* streetName) {
 
-	if (strlen(streetName) > 20)
+	if (strlen(streetName) > MAX_LENGTH)
 	{
 		cout << "This field cannot contain more than 20 characters" << endl;
 		return false;
