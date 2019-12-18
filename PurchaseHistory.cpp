@@ -25,19 +25,19 @@ void PurchaseHistory::add(Product** products, int numOfProducts)
 	int write = 0, read = 0;
 	Product** newArr = new Product*[newSize];
 	Feedback** newFeedbacks = new Feedback*[newSize];
-	while (write < pHistorySize) { // Copying old products 
+	while (write < pHistorySize) { // Copying old products and the feedbacks
 		newArr[write] = prodArr[read];
+		newFeedbacks[write] = myFeedbacks[write];
 		write++;
 		read++;
 	}
 	read = 0;
-	while (write < newSize) { // Copying new products
+	while (write < newSize) { // Copying new products, and making "blank" feedbacks as nullptr
 		newArr[write] = products[read];
+		newFeedbacks[write] = nullptr;
 		write++;
 		read++;
 	}
-	for (int i = 0; i < pHistorySize; i++) // Copying feedbacks, new feedbacks will be nullptr till the customer will leave one//
-		newFeedbacks[i] = myFeedbacks[i];
 	delete[] prodArr;
 	delete[] myFeedbacks;
 	setHistorySize(newSize);
