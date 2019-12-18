@@ -106,12 +106,14 @@ Seller* Menu::sellerIdent() {
 	return system.sellers[i];
 
 }
-void Menu::show(bool& exit){
+void Menu::show(bool& exit) {
 
 	std::system("CLS");
 	cout << endl;
 	int input;
 	printHeadLine();
+	do{
+		cin.clear();
 	cout << "Welcome to the E_Commerce system, choose one of the below options: " << endl;
 	cout << "1.New customer account" << endl;
 	cout << "2.New seller account" << endl;
@@ -126,7 +128,9 @@ void Menu::show(bool& exit){
 	cout << "11.Exit" << endl << endl;
 	cin >> input;
 	system.cleanBuffer();
+	} while (cin.fail());
 	std::system("CLS");
+
 	switch (input) {
 	case 1:
 		addCustomer();
