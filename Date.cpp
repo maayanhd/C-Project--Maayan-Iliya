@@ -163,7 +163,7 @@ bool Date::monthIsValid(unsigned int* month)
 				if (month[i - 1] == 0)
 					(month[i] >= 1 || month[i] <= 9) ? isValid = true : isValid = false;
 				else if (month[i - 1] == 1)
-					(month[i] >= 0 && month[i] <= 9) ? isValid = true : isValid = false;
+					(month[i] >= 0 || month[i] <= 9) ? isValid = true : isValid = false;
 				else // In any other case
 					isValid = false;
 				break;
@@ -175,7 +175,7 @@ bool Date::yearIsValid(unsigned int* year)
 {
 	placeCounter = 1;
 	bool isValid = true;
-	for (int i = 0; i < MAX_LENGTH_YEAR && isValid; ++i, ++placeCounter) // we can change to format of 2019 - 2999 
+	for (int i = 0; i < MAX_LENGTH_YEAR; ++i, ++placeCounter) // we can change to format of 2019 - 2999 
 	{
 		switch (placeCounter)
 		{

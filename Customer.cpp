@@ -23,14 +23,11 @@ Customer::~Customer() {
 void Customer::addFeedback()
 {
 	int option, maxSize = MAX_LENGTH_FEEDBACK; // Maximal size of feedback
-	char ch , *feedback = new char [MAX_LENGTH_FEEDBACK + 1];
+	char ch , *feedback = nullptr;;
 	bool answerIsValid = false;
 	Product** pHistory = history.getPurchaseHistory();
 	Feedback** feedbacks = history.getFeedbacks();
-	unsigned int * day = new unsigned int[DAY_LENGTH];
-	unsigned int * month = new unsigned int[MONTH_LENGTH];
-	unsigned int * year = new unsigned int[YEAR_LENGTH];
-	
+	unsigned int * day = nullptr, *month = nullptr, *year = nullptr;
 	if (pHistory != NULL) // The customer has already bought products
 	{
 		cout << "Choose a product to leave a feedback:\n";
@@ -39,7 +36,7 @@ void Customer::addFeedback()
 		cin >> option;
 		while (!optionIsValid(option)) // Option validation
 		{
-			cout << "no such of option exists, please try again\n";
+			cout << "no such of option exists, please try agian\n";
 			printPurchasedProducts(pHistory);
 			cin >> option;
 		}
@@ -60,12 +57,6 @@ void Customer::addFeedback()
 
 					// Adding the feedback in the next free place in the feedbacks array of the seller
 					relevantSeller->getFeedbacks()[indexToInsert] = new Feedback(this, feedback, pHistory[option - 1], day, month, year);
-					// Updating the feedbacks array of the relevant product
-					int indexToInsertInProduct = pHistory[option - 1]->getNextPlaceToInsertFeedback();
-					(pHistory[option - 1]->getFeedbacks())[indexToInsertInProduct] = relevantSeller->getFeedbacks()[indexToInsert];
-					delete[] day;
-					delete[] month;
-					delete[] year;
 				}
 				else if (ch == 'n' || ch == 'N') // Invalid input check
 					cout << "no feedback has been added\n";
@@ -93,6 +84,9 @@ void Customer:: getValidDate(unsigned int *day, unsigned int * month, unsigned i
 	unsigned int defaultYear[YEAR_LENGTH] = { 2, 0, 0, 0 };
 	int dayNum, monthNum, yearNum, iterationsCounter = 1;
 	
+	day = new unsigned int[DAY_LENGTH];
+	month = new unsigned int[MONTH_LENGTH];
+	year = new unsigned int[YEAR_LENGTH];
 	Date * date = new Date(defaultDay, defaultMonth, defaultYear);
 	do
 	{	// Notices whether the input is valid or not
@@ -126,7 +120,7 @@ bool Customer::dateIsValid(unsigned int *day, unsigned int * month, unsigned int
 {
 	bool dayIsValid = dateAccess->dayIsValid(day, month, year);
 	bool monthIsValid = dateAccess->monthIsValid(month);
-	bool yearIsValid = dateAccess->yearIsValid(year);
+	bool yearIsValid = dateAccess->yearIsValid(month);
 
 	return (dayIsValid && monthIsValid && yearIsValid);
 }
@@ -147,7 +141,7 @@ bool Customer::optionIsValid(int option)
 void  Customer::leaveFeedback(int maxSize, char * feedback)
 {
 	bool isValid = true;
-	
+	feedback = new char[maxSize]; // Allocating the feedback string to maximal size
 	do
 	{
 		cleanBuffer();
@@ -204,6 +198,7 @@ void Customer::print()
 bool Customer::getString(char* str, int maxSize)
 {
 
+	//char* res = new char[maxSize];
 	cin.getline(str, maxSize);
 	if (cin.fail())
 	{
@@ -213,6 +208,7 @@ bool Customer::getString(char* str, int maxSize)
 		return false;
 	}
 	else {
+		//str = res;
 		return true;
 	}
 }

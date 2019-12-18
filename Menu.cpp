@@ -256,7 +256,7 @@ void Menu::addToShoppingCart() {
 		if (choice > option)
 			cout << "The option you specified doesn't exist" << endl;
 		else {
-			unsigned int i;
+			int i;
 			for (i = 0; i < system.currentNumOfSellers && choice >0; ++i) {
 				currSeller = system.sellers[i];
 				numOfProducts = currSeller->getNumOfProducts();
