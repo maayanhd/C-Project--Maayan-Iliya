@@ -29,6 +29,7 @@ public:
 	void getValidDate(unsigned int *day, unsigned int * month, unsigned int * year);
 	bool dateIsValid(unsigned int *day, unsigned int * month, unsigned int * year, Date* dateAccess);
 	inline ShoppingCart& getCart() { return sCart; };
+	inline PurchaseHistory& getpHistory() { return history; };
 
 	// Helpers for input 
 	bool getString(char* str, int maxSize);

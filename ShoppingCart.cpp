@@ -43,6 +43,7 @@ Product** ShoppingCart ::changeArrSize(int newSize)
 }
 void ShoppingCart :: toEmpty() 
 {
+	customer->getpHistory().add(products, numOfProducts);
 	delete[] products;
 	products = nullptr;
 	setNumOfProducts(0);
