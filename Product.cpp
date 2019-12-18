@@ -2,7 +2,7 @@
 
 
 int Product::counter = 0; // counter for the serial numbers of products 
-Product::Product(const char* prodName, float price, Category ctg):feedbacks(NULL) 
+Product::Product(const char* prodName, float price, Category ctg):feedbacks(NULL) , serial_number(++counter)
 {
 	this->name = NULL; 
 	setName(prodName);

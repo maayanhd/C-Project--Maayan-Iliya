@@ -107,8 +107,7 @@ Seller* Menu::sellerIdent() {
 
 }
 void Menu::show(bool& exit) {
-
-	std::system("CLS");
+	//std::system("CLS");
 	cout << endl;
 	int input;
 	printHeadLine();
@@ -129,7 +128,9 @@ void Menu::show(bool& exit) {
 	cin >> input;
 	system.cleanBuffer();
 	} while (cin.fail());
-	std::system("CLS");
+
+
+	cin.clear();
 
 	switch (input) {
 	case 1:
@@ -242,24 +243,27 @@ void Menu::addToShoppingCart() {
 		numOfProducts = currSeller->getNumOfProducts();
 		for (int j = 0; j <numOfProducts; ++j) {
 			cout << option << ". ";
-			prodArr[i]->print();
+			prodArr[j]->print();
 			option++;
 		}
 	}
 	if (option == 1)
 		cout << "There is no products at this moment" << endl;
-	else
+
 	{
 		cin >> choice;
 		system.cleanBuffer();
 		if (choice > option)
 			cout << "The option you specified doesn't exist" << endl;
 		else {
-			for (unsigned int i = 0; i < system.currentNumOfSellers && choice - numOfProducts>0; ++i) {
+			int i;
+			for (i = 0; i < system.currentNumOfSellers && choice >0; ++i) {
 				currSeller = system.sellers[i];
 				numOfProducts = currSeller->getNumOfProducts();
 				choice -= numOfProducts;
 			}
+			choice += numOfProducts;
+			//currSeller = system.sellers[i];
 			customer->getCart().add(currSeller->getProducts()[choice - 1]);
 		}
 	}

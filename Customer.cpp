@@ -17,7 +17,7 @@ Customer::Customer(const char* username, const char* password, const char* count
 Customer::~Customer() {
 	delete[] this->username;
 	delete[] this->password;
-	sCart.~ShoppingCart();
+
 }
 
 void Customer::addFeedback()
