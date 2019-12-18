@@ -9,9 +9,9 @@ unsigned int Date::placeCounter = 1; // Initializing first the static (shared) v
 Date:: Date(unsigned int* day, unsigned int* month, unsigned int* year)
 {
 	// Allocating the arrays represents the fields of date as needed 
-	day = new unsigned int[MAX_LENGTH_DAY];
-	month = new unsigned int[MAX_LENGTH_DAY];
-	year = new unsigned int[MAX_LENGTH_DAY];
+	this->day = new unsigned int[MAX_LENGTH_DAY];
+	this->month = new unsigned int[MAX_LENGTH_DAY];
+	this->year = new unsigned int[MAX_LENGTH_DAY];
 	setYear(year);
 	setMonth(month);
 	setDay(day, month, year);

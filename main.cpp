@@ -7,10 +7,10 @@
 using namespace std;
 
 int main()
-{
+	{
 	Menu menu;
 	bool exit = false;
-	while (!exit) {
+		while (!exit) {
 		menu.show(exit);
 	}
 	//system("pause");

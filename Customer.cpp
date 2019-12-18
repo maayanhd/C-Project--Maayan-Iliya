@@ -28,7 +28,6 @@ void Customer::addFeedback()
 	Product** pHistory = history.getPurchaseHistory();
 	Feedback** feedbacks = history.getFeedbacks();
 	unsigned int * day = nullptr, *month = nullptr, *year = nullptr;
-
 	if (pHistory != NULL) // The customer has already bought products
 	{
 		cout << "Choose a product to leave a feedback:\n";
@@ -63,8 +62,9 @@ void Customer::addFeedback()
 					cout << "no feedback has been added\n";
 				else // invalid input
 				{
-					cout << "Invalid input, please enter your answer again.\n" << "You haven't left any feedback for this product, would you like to do it now: y/n?";
+					cout << "Invalid input, please enter your answer again.\n" << "You haven't left any feedback for this product, would you like to do it now: y/n?" << endl;
 					answerIsValid = false;
+					cin >> ch;
 				}
 			}
 		}
@@ -98,17 +98,17 @@ void Customer:: getValidDate(unsigned int *day, unsigned int * month, unsigned i
 		cin >> monthNum;
 		cout << " Please enter the year:\n";
 		cin >> yearNum;
-		for (int i = DAY_LENGTH - 1; i >= 0 ; ++i)
+		for (int i = DAY_LENGTH - 1; i >= 0 ; --i)
 		{
 			day[i] = (unsigned int)dayNum % 10; 
 			dayNum /= 10;
 		}
-		for (int i = MONTH_LENGTH - 1; i >= 0; ++i)
+		for (int i = MONTH_LENGTH - 1; i >= 0; --i)
 		{
 			month[i] = (unsigned int) monthNum % 10;
 			monthNum /= 10;
 		}
-		for (int i = YEAR_LENGTH - 1; i >= 0; ++i)
+		for (int i = YEAR_LENGTH - 1; i >= 0; --i)
 		{
 			year[i] = (unsigned int) yearNum % 10;
 			yearNum /= 10;
@@ -144,6 +144,7 @@ void  Customer::leaveFeedback(int maxSize, char * feedback)
 	feedback = new char[maxSize]; // Allocating the feedback string to maximal size
 	do
 	{
+		cleanBuffer();
 		cout << "Please enter your Feedback:\n";
 		isValid = getString(feedback, maxSize); // Ask for input
 		if (!isValid)
@@ -154,7 +155,7 @@ void  Customer::leaveFeedback(int maxSize, char * feedback)
 
 }
 void Customer::order()
-{
+	{
 	Product** products = sCart.getProducts();
 	int numOfProducts = sCart.getNumOfProducts();
 	cout << "Customer details: " << endl;

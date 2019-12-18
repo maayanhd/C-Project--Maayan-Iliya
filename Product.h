@@ -16,7 +16,7 @@ class Product
 {
 public:
 
-	Product(const char* prodName, float price, Category ctg); // c'tor
+	Product(const char* prodName, float price, Category ctg,Seller* seller); // c'tor
 	Product(const Product&); // copy c'tor
 	Product(Product&&); // move c'tor
 	~Product();

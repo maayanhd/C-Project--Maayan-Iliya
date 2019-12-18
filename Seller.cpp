@@ -89,7 +89,7 @@ void Seller::addProduct(char* prodName, float price, Category ctg)
 {
 	Product * newProduct = nullptr;
 	const char * finalName = prodName;
-	newProduct = new Product(finalName, price, ctg);
+	newProduct = new Product(finalName, price, ctg,this);
 	int nextIndexToInsert = getNextIndexToInsertProduct();
 	availableProducts[nextIndexToInsert] = newProduct; // Inserting the product into the available products storage
 	cout << "Product Added successfully to the seller:\n";
