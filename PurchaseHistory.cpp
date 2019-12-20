@@ -9,16 +9,22 @@ PurchaseHistory::PurchaseHistory()
 
 PurchaseHistory::~PurchaseHistory() 
 {
-
 	delete[] prodArr;
 	delete[] myFeedbacks;
-};
+}
 void PurchaseHistory::setHistorySize(int size) 
 {
 	pHistorySize = size;
+}
 
-};
-
+void PurchaseHistory:: print() const {
+	for (int i = 0; i < pHistorySize; ++i)
+	{
+		cout << i + 1 << ".";
+		prodArr[i]->print();
+		cout << endl;
+	}
+}
 void PurchaseHistory::add(Product** products, int numOfProducts) 
 {
 	int newSize = numOfProducts + pHistorySize;

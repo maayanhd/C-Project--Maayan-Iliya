@@ -28,22 +28,20 @@ void Customer::addFeedback()
 
 	bool answerIsValid = false;
 	Feedback *newFeedback;
-	Product** pHistory = history.getPurchaseHistory();
-	Feedback** feedbacks = history.getFeedbacks();
-	if (pHistory != NULL) // The customer has already bought products
+	if (history.pHistorySize!=0) // The customer has already bought products
 	{
 		cout << "Choose a product to leave a feedback:\n";
 		// Printing the products that has been purchased by the customer
-		printPurchasedProducts(pHistory);
+		history.print();
 		cin >> option;
 		while (!optionIsValid(option)) // Option validation
 		{
 			cout << "no such of option exists, please try again\n";
-			printPurchasedProducts(pHistory);
+			history.print();
 			cin >> option;
 		}
 
-		if (feedbacks[option - 1] == nullptr) // Checking if there's already a feedback on the product
+		if (history.myFeedbacks[option - 1] == nullptr) // Checking if there's already a feedback on the product
 		{
 			cout << "You haven't left any feedback for this product, would you like to do it now: y/n?" << endl;
 			cin >> ch;
@@ -52,18 +50,16 @@ void Customer::addFeedback()
 				answerIsValid = true; // assuming answer is valid- 
 				if (ch == 'y' || ch == 'Y')
 				{
-					Seller * relevantSeller = pHistory[option - 1]->getSeller(); // Getting the relevant seller 
+					Seller * relevantSeller = history.prodArr[option - 1]->getSeller(); // Getting the relevant seller 
 					int indexToInsert = relevantSeller->getNextIndexToInsert(); // Finding the matching index to insert the feedback
 					leaveFeedback(MAX_LENGTH_FEEDBACK, feedback); // The process of leaving the feedback string 						
 					getValidDate(day, month, year); // asking for the date
 
-													  // asking for the date
-
 					// Adding the feedback in the next free place in the feedbacks array of the seller
-					newFeedback = new Feedback(this, feedback, pHistory[option - 1], day, month, year);
+					newFeedback = new Feedback(this, feedback, history.prodArr[option - 1], day, month, year);
 					relevantSeller->getFeedbacks()[indexToInsert] = newFeedback;
-					pHistory[option - 1]->addFeedback(newFeedback);
-					feedbacks[option - 1] = newFeedback;
+					history.prodArr[option - 1]->addFeedback(newFeedback);
+					history.myFeedbacks[option - 1] = newFeedback;
 					
 				}
 				else if (ch == 'n' || ch == 'N') // Invalid input check
@@ -134,17 +130,8 @@ bool Customer::dateIsValid(unsigned int *day, unsigned int * month, unsigned int
 
 	return (dayIsValid && monthIsValid && yearIsValid);
 }
-void Customer::printPurchasedProducts(Product** purchasedProducts) const
-{	
-	int size = history.getHistorySize();
-	for (int i = 0; i < size; ++i)
-	{	// Printing the products that has been purchased by the customer
-		cout << i + 1 << ". ";
-		purchasedProducts[i]->print();
-		cout << endl;
-	}
-}
-bool Customer::optionIsValid(int option)
+
+bool Customer::optionIsValid(int option) const
 {
 	return (option >= 1 && option <= history.getHistorySize());
 }
@@ -163,7 +150,7 @@ void  Customer::leaveFeedback(int maxSize, char * feedback)
 	} while (!isValid); // As long as the input isn't valid
 
 }
-void Customer::order()
+void Customer::order() const
 	{
 	Product** products = sCart.getProducts();
 	int numOfProducts = sCart.getNumOfProducts();
@@ -175,30 +162,18 @@ void Customer::order()
 	}
 	cout << "Total price: " << sCart.totalPrice << endl;
 }
-bool Customer::setUsername(const char* username)
+void Customer::setUsername(const char* username)
 {
-	if (strlen(username) > MAX_LENGTH)
-	{
-		cout << "Too many characters for username" << endl;
-		return false;
-	}
 	delete[] this->username;
 	this->username = strdup(username);
-	return true;
 }
-bool Customer::setPassword(const char* password)
+void Customer::setPassword(const char* password)
 {
 
-	if (strlen(password) > MAX_LENGTH)
-	{
-		cout << "The password is too long" << endl;
-		return false;
-	}
 	delete[] this->password;
 	this->password = strdup(password);
-	return true;
 }
-void Customer::print()
+void Customer::print() const
 {
 	cout << "Name: " << username << endl;
 	cout << "Password: " << password << endl;
@@ -207,7 +182,6 @@ void Customer::print()
 bool Customer::getString(char* str, int maxSize)
 {
 
-	//char* res = new char[maxSize];
 	cin.getline(str, maxSize);
 	if (cin.fail())
 	{
@@ -215,10 +189,8 @@ bool Customer::getString(char* str, int maxSize)
 		cleanBuffer();
 		return false;
 	}
-	else {
-		//str = res;
+	else
 		return true;
-	}
 }
 void Customer::cleanBuffer()
 {

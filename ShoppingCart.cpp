@@ -41,6 +41,14 @@ Product** ShoppingCart ::changeArrSize(int newSize)
 		newProdArr[i] = products[i];
 	return newProdArr;
 }
+bool ShoppingCart::existsIn(Product* prod)  const{
+
+	for (int i = 0; i < numOfProducts; ++i) {
+		if (prod->getSerialNumber() == products[i]->getSerialNumber())
+			return true;
+	}
+	return false;
+}
 void ShoppingCart :: toEmpty() 
 {
 	customer->getpHistory().add(products, numOfProducts);

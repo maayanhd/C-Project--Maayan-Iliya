@@ -14,18 +14,17 @@ public:
 	~Customer();
 
 public:
-	bool setUsername(const char* username);
-	bool setPassword(const char* password);
+	void setUsername(const char* username);
+	void setPassword(const char* password);
 	inline const char* getUsername() const { return username; };
 	inline const char* getPassword() const { return password; };
-	void print();
-	void order();
+	void print() const;
+	void order() const;
 	void addFeedback();
-	bool optionIsValid(int option);
+	bool optionIsValid(int option) const ;
 	void leaveFeedback(int maxSize, char * feedback);
-	void printPurchasedProducts(Product** purchasedProducts) const;
 	inline ShoppingCart& getCart() { return sCart; };
-	inline PurchaseHistory& getpHistory() { return history; };
+	inline PurchaseHistory& getpHistory(){ return history; } ;
 
 	// Helpers for input 
 public:

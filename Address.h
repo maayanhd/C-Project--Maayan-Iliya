@@ -16,16 +16,15 @@ public:
 
 
 public: 
-	bool setCountry(const char* countryName);
-	bool setCity(const char* cityName);
-	bool setStreet(const char* streetName);
-	bool setHouseInfo(const int* house);
+	void setCountry(const char* countryName);
+	void setCity(const char* cityName);
+	void setStreet(const char* streetName);
+	void setHouseInfo(const int* house);
 	inline const char* getCountryName() const { return country; };
 	inline const char* getCityName() const { return city; };
 	inline const char* getStreetName() const { return street; };
 	inline const int* getHouseInfo() const { return house;};
 	void print()const;
-	bool IsValid(const char* str);
 
 private:
 	char* country; // country name

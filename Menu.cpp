@@ -2,17 +2,15 @@
 
 
 Menu::Menu() {
-	cout << " Menu -  c'tor"; // Debugging
 }
 
 Menu::~Menu() {
-	cout << " Menu -  d'tor"; // Debugging
 }
 
 void Menu::addCustomer() {
 
 	Customer** newCustomerArr = nullptr;
-	Customer* res = system.newCustomer();
+	Customer* res = system.newCustomer();  
 	newCustomerArr = system.changeCustomersArrSize();
 	newCustomerArr[system.currentNumOfCustomers - 1] = res;
 	delete[] system.customers;
@@ -232,6 +230,7 @@ void Menu::addToShoppingCart() {
 	Seller* currSeller = nullptr;
 	Customer* customer = customerIdent();
 	Product** prodArr = nullptr;
+	Product* prod = nullptr;
 	int option = 1, choice;
 	int numOfProducts;
 	if (customer != nullptr)
@@ -245,6 +244,7 @@ void Menu::addToShoppingCart() {
 		for (int j = 0; j <numOfProducts; ++j) {
 			cout << option << ". ";
 			prodArr[j]->print();
+			cout << endl;
 			option++;
 		}
 	}
@@ -264,8 +264,15 @@ void Menu::addToShoppingCart() {
 				choice -= numOfProducts;
 			}
 			choice += numOfProducts;
-			//currSeller = system.sellers[i];
-			customer->getCart().add(currSeller->getProducts()[choice - 1]);
+			prod = currSeller->getProducts()[choice - 1];
+			if (customer->getCart().existsIn(prod))
+				cout << "This product already in your shopping cart" << endl;
+			else
+			{
+				customer->getCart().add(prod);
+				cout << prod->getName() << " added to your shopping cart" << endl;
+			}
+
 		}
 	}
 	}

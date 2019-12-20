@@ -21,7 +21,7 @@ public:
 	void toEmpty(); // removes all the products from the shopping cart
 	inline Product** getProducts() const { return products; };
 	inline float getTotalPrice() const { return totalPrice; };
-	 
+	bool existsIn(Product* prod) const;
 	
 private:
 	Customer* customer;
