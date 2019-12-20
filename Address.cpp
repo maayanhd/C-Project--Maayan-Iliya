@@ -1,23 +1,25 @@
-
 #include "Address.h"
 using namespace std;
 
 
-Address::Address(const char* countryName, const char* cityName, const char* streetName,const int* house) {
+Address::Address(const char* countryName, const char* cityName, const char* streetName,const int* house) 
+{
 	setCountry(countryName);
 	setCity(cityName);
 	setStreet(streetName);
 	setHouseInfo(house);
 }
 
-Address::Address(const Address& other) {
+Address::Address(const Address& other)
+{
 	setCountry(other.country);
 	setCity(other.city);
 	setStreet(other.street);
 	setHouseInfo(house);
 }
 
-Address::Address(Address && other) {
+Address::Address(Address && other) 
+{
 	this->country = other.country;
 	this->city = other.city;
 	this->street = other.street;
@@ -27,13 +29,15 @@ Address::Address(Address && other) {
 	other.street = nullptr;
 }
 
-Address ::~Address() {
+Address ::~Address()
+{
 	delete[] country;
 	delete[] city;
 	delete[] street;
 }
 
-bool Address::IsValid(const char* str) {
+bool Address::IsValid(const char* str)
+{
 
 	int len = strlen(str);
 	if (len > MAX_LENGTH) {
@@ -78,7 +82,8 @@ bool Address :: setStreet(const char* streetName) {
 	street = _strdup(streetName);
 	return true;
 }
-bool Address::setHouseInfo(const int* house) {
+bool Address::setHouseInfo(const int* house) 
+{
 	if (house[houseNumInd] <= 0 || house[entranceInd] <= 0) {
 		cout << "Oops! It must be a positive value" << endl;
 		return false;
@@ -88,7 +93,8 @@ bool Address::setHouseInfo(const int* house) {
 	return true;
 }
 
-void Address :: print() const {
+void Address :: print() const 
+{
 	cout << "Address: " << street << " " << house[houseNumInd] << "/" << house[entranceInd];
 	cout <<", " << city << ", " << country << endl;
 	

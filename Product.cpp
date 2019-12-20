@@ -25,7 +25,8 @@ Product :: Product(Product&& other):serial_number(++counter)
 	setPrice(other.price);
 	other.name = nullptr;
 }
-Product::~Product() {
+Product::~Product() 
+{
 	delete[] this->name;
 	for (int i = 0; i < numOfFeedbacks; ++i)
 		delete  feedbacks[i];
@@ -62,19 +63,22 @@ void Product :: print() const
 
 }
 
-void Product::addFeedback(Feedback *feedback) {
+void Product::addFeedback(Feedback *feedback) 
+{
+	// Allocating a new feedbacks array to make room for the new feedback
 	Feedback** arr = new Feedback*[numOfFeedbacks + 1];
-	for (int i = 0; i < numOfFeedbacks; ++i)
+	for (int i = 0; i < numOfFeedbacks; ++i) // Copying addresses to existing feedbacks
 		arr[i] = feedbacks[i];
 	arr[numOfFeedbacks] = feedback;
-	delete[] feedbacks;
+	delete[] feedbacks;						// Deleting the old array of feedbacks
 	feedbacks = arr;
-	numOfFeedbacks++;
+	numOfFeedbacks++;					    // Updating number of feedbacks (including the new feedback that is about to be added)
 }
 
-void Product::printFeedbacks() const{
-	for (int i = 0; i < numOfFeedbacks; ++i) {
+void Product::printFeedbacks() const
+{
+	for (int i = 0; i < numOfFeedbacks; ++i) 
+	{
 		feedbacks[i]->print();
-}
-
+	}
 }

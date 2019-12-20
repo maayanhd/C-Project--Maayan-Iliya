@@ -1,8 +1,7 @@
-#pragma warning (disable:4996)
-#include "Menu.h"
 #define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
 #include <crtdbg.h>
+#include "Menu.h"
+#include <stdlib.h>
 
 int main(){
 	{
@@ -12,8 +11,7 @@ int main(){
 			menu.show(exit);
 		}
 	}
-	//system("pause");
-
+	// need to be deleted
 	if (_CrtDumpMemoryLeaks())
 		cout << "memory leak" << endl;
 	else
