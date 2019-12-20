@@ -1,10 +1,7 @@
-#pragma warning (disable:4996)
-#include <iostream>
-#include <string.h>
-using namespace std;
+
 #include "Date.h"
 
-unsigned int Date::placeCounter = 1; // Initializing first the static (shared) variable outside the class 
+unsigned int Date::placeCounter = 1; // Initializing first the static (shared) variable 
 
 Date:: Date(unsigned int* day, unsigned int* month, unsigned int* year)
 {
@@ -58,6 +55,7 @@ bool Date::dayIsValid(unsigned int* day, unsigned int* month, unsigned int* year
 {	
 	placeCounter = 1;
 	bool isValid = true; 
+	
 	// months with 31 days - 1, 3, 5, 7, 8 , 10, 12
 	unsigned int numericMonth = month[0] * 10 + month[1];
 	for (int i = 0; i < MAX_LENGTH_DAY && isValid; ++i, ++placeCounter)
@@ -168,12 +166,12 @@ bool Date::yearIsValid(unsigned int* year)
 		case 1: //First digit - assuming this system won't survive 1000 years
 			if (year[i] != 2)
 				isValid = false;
-			//(year[i] >= 0 && year[i] <= 9) ? isValid = true : isValid = false;
+			(year[i] >= 0 && year[i] <= 9) ? isValid = true : isValid = false;
 			break;
 		case 2: // Second digit - assuming this system won't survive 100 years
 			if (year[i] != 0)
 				isValid = false;
-			// (year[i] >= 0 && year[i] <= 9) ? isValid = true : isValid = false;
+			 (year[i] >= 0 && year[i] <= 9) ? isValid = true : isValid = false;
 			break;
 		case 3: // Third digit
 			(year[i] >= 0 && year[i] <= 9) ? isValid = true : isValid = false;

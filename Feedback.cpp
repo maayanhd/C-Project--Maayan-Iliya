@@ -11,7 +11,8 @@ Feedback::Feedback(const Feedback & other):dateWritten(other.dateWritten)
 {
 	this->pCustomer = other.pCustomer;
 	this->pProduct	= other.pProduct;
-	setFeedback(other.feedback); // Allocating and copying the string 
+	// Allocating and copying the string 
+	setFeedback(other.feedback);	  
 }
 Feedback::Feedback(Feedback && other):dateWritten(other.dateWritten)
 {
@@ -22,13 +23,14 @@ Feedback::Feedback(Feedback && other):dateWritten(other.dateWritten)
 }
 Feedback::~Feedback()
 {
-	delete[] feedback; // Releasing the string represents a feedback 
+	 // Releasing the string represents a feedback 
+	delete[] feedback;
 }
 
-void Feedback:: setFeedback(char* feedback) // Type is allocated in eCommerce
+void Feedback:: setFeedback(char* feedback)   // Type is allocated in eCommerce
 {
 	int length = strlen(feedback) + 1;
-	this->feedback= new char[length]; // Allocating the feedback field 
+	this->feedback= new char[length];		  // Allocating the feedback field 
 	memcpy(this->feedback, feedback, length); // Copying the string
 }
 
@@ -40,7 +42,6 @@ bool Feedback:: getString(char* str, int maxSize)
 	{
 		cin.clear();
 		cleanBuffer();
-		delete[] res;
 		return false;
 	}
 	else 
@@ -50,7 +51,8 @@ bool Feedback:: getString(char* str, int maxSize)
 	}
 }
 
-void Feedback:: print() const {
+void Feedback:: print() const 
+{
 	cout << pCustomer->getUsername() << ": " << feedback << endl;
 	dateWritten.print();
 	
