@@ -1,6 +1,4 @@
-#pragma warning (disable:4996)
-#include <iostream>
-#include <string.h>
+
 #include "Address.h"
 using namespace std;
 
@@ -56,7 +54,7 @@ bool Address::setCountry(const char*countryName)
 	if (!IsValid(countryName))
 		return false;
 	delete[] country;
-	country = strdup(countryName);
+	country = _strdup(countryName);
 	return true;
 }
 bool Address:: setCity(const char*cityName)
@@ -65,7 +63,7 @@ bool Address:: setCity(const char*cityName)
 	if (!IsValid(cityName))
 		return false;
 	delete[] this->city;
-	this->city = strdup(cityName);
+	this->city = _strdup(cityName);
 	return true;
 }
 
@@ -77,7 +75,7 @@ bool Address :: setStreet(const char* streetName) {
 		return false;
 	}
 	delete[] street;
-	street = strdup(streetName);
+	street = _strdup(streetName);
 	return true;
 }
 bool Address::setHouseInfo(const int* house) {

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _CUSTOMER_H
+#define _CUSTOMER_H
 
 #include "Address.h"
 #include "ShoppingCart.h"
@@ -7,12 +8,9 @@
 class Customer {
 
 public:
-	/* The idea of receiving the cityName etc and not the address object is to avoid unenecessary calls of copy constructor,
-	and overall it seems to me more logical */
-	/*The constructor */
+
 	Customer(const char* username, const char* password,const char* countryName, const char* cityName, const char* streetName, const int* house);
 	Customer(const Customer&) = delete; // copy c'tor 
-
 	~Customer();
 
 public:
@@ -26,12 +24,13 @@ public:
 	bool optionIsValid(int option);
 	void leaveFeedback(int maxSize, char * feedback);
 	void printPurchasedProducts(Product** purchasedProducts) const;
-	void getValidDate(unsigned int *day, unsigned int * month, unsigned int * year);
-	bool dateIsValid(unsigned int *day, unsigned int * month, unsigned int * year, Date* dateAccess);
 	inline ShoppingCart& getCart() { return sCart; };
 	inline PurchaseHistory& getpHistory() { return history; };
 
 	// Helpers for input 
+public:
+	void getValidDate(unsigned int *day, unsigned int * month, unsigned int * year);
+	bool dateIsValid(unsigned int *day, unsigned int * month, unsigned int * year, Date* dateAccess);
 	bool getString(char* str, int maxSize);
 	void cleanBuffer();
 
@@ -45,3 +44,4 @@ public:
 		PurchaseHistory history;
 };
 
+#endif

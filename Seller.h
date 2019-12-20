@@ -1,6 +1,6 @@
-//#ifndef __SELLER_H
-//#define __SELLER_H
-#pragma once 
+#ifndef __SELLER_H
+#define __SELLER_H
+ 
 #include "Customer.h"
 
 class Seller
@@ -39,4 +39,4 @@ class Seller
 		
 };
 //
-//#endif
+#endif

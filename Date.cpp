@@ -10,8 +10,8 @@ Date:: Date(unsigned int* day, unsigned int* month, unsigned int* year)
 {
 	// Allocating the arrays represents the fields of date as needed 
 	this->day = new unsigned int[MAX_LENGTH_DAY];
-	this->month = new unsigned int[MAX_LENGTH_DAY];
-	this->year = new unsigned int[MAX_LENGTH_DAY];
+	this->month = new unsigned int[MAX_LENGTH_MONTH];
+	this->year = new unsigned int[MAX_LENGTH_YEAR];
 	setYear(year);
 	setMonth(month);
 	setDay(day, month, year);
@@ -26,16 +26,16 @@ bool Date::setDay(unsigned int * day, unsigned int * month, unsigned int * year)
 {
 	if (!dayIsValid(day, month, year))
 		return false;
-	for (int i = 0; i < MAX_LENGTH_DAY - 1; ++i)
+	for (int i = 0; i < MAX_LENGTH_DAY; ++i)
 		this->day[i] = day[i];
 		
 	return true;
 }
 bool Date::setMonth(unsigned int * month)
 {
-	if (!monthIsValid(day))
+	if (!monthIsValid(month))
 		return false;
-	for (int i = 0; i < MAX_LENGTH_MONTH - 1; ++i)
+	for (int i = 0; i < MAX_LENGTH_MONTH; ++i)
 		this->month[i] = month[i];
 	
 	return true;
@@ -44,29 +44,15 @@ bool Date::setYear(unsigned int * year)
 {
 	if (!yearIsValid(year))
 		return false;
-	for (int i = 0; i < MAX_LENGTH_YEAR - 1; ++i)
+	for (int i = 0; i < MAX_LENGTH_YEAR; ++i)
 		this->year[i] = year[i];
 	
 	return true;
 }
-void Date::show(unsigned int* day, unsigned int* month, unsigned int* year) const
+void Date::print() const
 {
-	unsigned int lengthOfDate = MAX_LENGTH_DAY + MAX_LENGTH_MONTH + MAX_LENGTH_YEAR;
-	cout << " Date: ";
-	for (unsigned int i = 0; i < lengthOfDate - 1; ++i)
-	{
-		if (i < 2)
-			cout << day[i];
-		else if (i == 2)
-			cout << ".";
-		else if (i < 4)
-			cout << month[i];
-		else if (i == 4)
-			cout << ".";
-		else // i < 8
-			cout << year[i];
-	}
-	cout << endl;
+	cout << day[0] << day[1] << "/" << month[0] << month[1] << "/";
+	cout << year[0] << year[1] << year[2] << year[3];
 }
 bool Date::dayIsValid(unsigned int* day, unsigned int* month, unsigned int* year)
 {	
@@ -163,7 +149,7 @@ bool Date::monthIsValid(unsigned int* month)
 				if (month[i - 1] == 0)
 					(month[i] >= 1 || month[i] <= 9) ? isValid = true : isValid = false;
 				else if (month[i - 1] == 1)
-					(month[i] >= 0 || month[i] <= 9) ? isValid = true : isValid = false;
+					(month[i] >= 0 && month[i] <= 9) ? isValid = true : isValid = false;
 				else // In any other case
 					isValid = false;
 				break;
@@ -175,7 +161,7 @@ bool Date::yearIsValid(unsigned int* year)
 {
 	placeCounter = 1;
 	bool isValid = true;
-	for (int i = 0; i < MAX_LENGTH_YEAR; ++i, ++placeCounter) // we can change to format of 2019 - 2999 
+	for (int i = 0; i < MAX_LENGTH_YEAR && isValid; ++i, ++placeCounter) // we can change to format of 2019 - 2999 
 	{
 		switch (placeCounter)
 		{

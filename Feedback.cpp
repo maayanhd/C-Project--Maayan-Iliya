@@ -49,6 +49,13 @@ bool Feedback:: getString(char* str, int maxSize)
 		return true;
 	}
 }
+
+void Feedback:: print() const {
+	cout << pCustomer->getUsername() << ": " << feedback << endl;
+	dateWritten.print();
+	
+
+}
 void Feedback::cleanBuffer()
 {
 	int c;

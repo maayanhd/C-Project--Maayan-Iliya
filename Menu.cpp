@@ -203,6 +203,7 @@ void Menu::addProduct() {
 			cin >> price;
 		}
 		seller->addProduct(nameOfProduct, price, ctg); // Adding the product to into the "list" of available products of the seller 
+		delete[] nameOfProduct;
 	}
 	}
 
@@ -256,7 +257,7 @@ void Menu::addToShoppingCart() {
 		if (choice > option)
 			cout << "The option you specified doesn't exist" << endl;
 		else {
-			int i;
+			unsigned int i;
 			for (i = 0; i < system.currentNumOfSellers && choice >0; ++i) {
 				currSeller = system.sellers[i];
 				numOfProducts = currSeller->getNumOfProducts();
@@ -278,6 +279,7 @@ void Menu::order() {
 void Menu::findProduct() {
 	char* prodName = new char[system.MAX_LENGTH];
 	int count = 0;
+	cout << "Enter a product name to find" << endl;
 	system.getString(prodName, system.MAX_LENGTH);
 	Product** prodArr;
 	Seller* currSeller;

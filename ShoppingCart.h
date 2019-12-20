@@ -1,6 +1,6 @@
-//#ifndef __SHOPPINGCART_H
-//#define __SHOPPINGCART_H
-#pragma once
+#ifndef __SHOPPINGCART_H
+#define __SHOPPINGCART_H
+
 
 class Customer;
 class Product; // Avoiding including too many times headers
@@ -33,4 +33,4 @@ private:
 };
 
 
-//#endif
+#endif
