@@ -1,21 +1,24 @@
 #include "Address.h"
 
 
-Address::Address(const char* countryName, const char* cityName, const char* streetName,const int* house) {
+Address::Address(const char* countryName, const char* cityName, const char* streetName,const int* house)
+{
 	setCountry(countryName);
 	setCity(cityName);
 	setStreet(streetName);
 	setHouseInfo(house);
 }
 
-Address::Address(const Address& other) {
+Address::Address(const Address& other) 
+{
 	setCountry(other.country);
 	setCity(other.city);
 	setStreet(other.street);
 	setHouseInfo(house);
 }
 
-Address::Address(Address && other) {
+Address::Address(Address && other) 
+{
 	this->country = other.country;
 	this->city = other.city;
 	this->street = other.street;
@@ -25,7 +28,8 @@ Address::Address(Address && other) {
 	other.street = nullptr;
 }
 
-Address ::~Address() {
+Address ::~Address() 
+{
 	delete[] country;
 	delete[] city;
 	delete[] street;
