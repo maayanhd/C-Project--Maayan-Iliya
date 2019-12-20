@@ -1,8 +1,7 @@
-//#ifndef __E_COMMERCE_H
-//#define __E_COMMERCE_H
+#ifndef __E_COMMERCE_H
+#define __E_COMMERCE_H
 
-#include "Seller.h"
-#pragma once 
+#include "Seller.h" 
 
 // Responsible to reallocate the arrays - will be used for adding/removing sellers/customers  - 
 // defined as arrays of pointers to class objects to avoid the need for default constructor- which will not 
@@ -49,6 +48,6 @@ public:
 	char* input(strtype type, int maxSize);
 };
 
-//
-//#endif
+
+#endif
 

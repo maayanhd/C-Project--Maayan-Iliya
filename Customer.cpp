@@ -1,5 +1,3 @@
-
-// try 1 
 #include "Seller.h"
 
 // constant variable for the maximal length of the feedback string
@@ -22,12 +20,16 @@ Customer::~Customer() {
 
 void Customer::addFeedback()
 {
-	int option, maxSize = MAX_LENGTH_FEEDBACK; // Maximal size of feedback
-	char ch , *feedback = nullptr;;
+	int option; // Maximal size of feedback
+	char ch, *feedback = new char[MAX_LENGTH_FEEDBACK+1];
+	unsigned int* day = new unsigned int[DAY_LENGTH];
+	unsigned int* month = new unsigned int[MONTH_LENGTH];
+	unsigned int* year = new unsigned int[YEAR_LENGTH];
+
 	bool answerIsValid = false;
+	Feedback *newFeedback;
 	Product** pHistory = history.getPurchaseHistory();
 	Feedback** feedbacks = history.getFeedbacks();
-	unsigned int * day = nullptr, *month = nullptr, *year = nullptr;
 	if (pHistory != NULL) // The customer has already bought products
 	{
 		cout << "Choose a product to leave a feedback:\n";
@@ -36,7 +38,7 @@ void Customer::addFeedback()
 		cin >> option;
 		while (!optionIsValid(option)) // Option validation
 		{
-			cout << "no such of option exists, please try agian\n";
+			cout << "no such of option exists, please try again\n";
 			printPurchasedProducts(pHistory);
 			cin >> option;
 		}
@@ -52,11 +54,17 @@ void Customer::addFeedback()
 				{
 					Seller * relevantSeller = pHistory[option - 1]->getSeller(); // Getting the relevant seller 
 					int indexToInsert = relevantSeller->getNextIndexToInsert(); // Finding the matching index to insert the feedback
-					leaveFeedback(maxSize, feedback); // The process of leaving the feedback string 						
+					leaveFeedback(MAX_LENGTH_FEEDBACK, feedback); // The process of leaving the feedback string 						
 					getValidDate(day, month, year); // asking for the date
 
+													  // asking for the date
+
 					// Adding the feedback in the next free place in the feedbacks array of the seller
-					relevantSeller->getFeedbacks()[indexToInsert] = new Feedback(this, feedback, pHistory[option - 1], day, month, year);
+					newFeedback = new Feedback(this, feedback, pHistory[option - 1], day, month, year);
+					relevantSeller->getFeedbacks()[indexToInsert] = newFeedback;
+					pHistory[option - 1]->addFeedback(newFeedback);
+					feedbacks[option - 1] = newFeedback;
+					
 				}
 				else if (ch == 'n' || ch == 'N') // Invalid input check
 					cout << "no feedback has been added\n";
@@ -75,6 +83,10 @@ void Customer::addFeedback()
 	}
 	else
 		cout << "No products has been purchased yet\n";
+	delete[] day;
+	delete[] month;
+	delete[] year;
+	delete[] feedback;
 }
 void Customer:: getValidDate(unsigned int *day, unsigned int * month, unsigned int * year)
 {
@@ -83,11 +95,8 @@ void Customer:: getValidDate(unsigned int *day, unsigned int * month, unsigned i
 	unsigned int defaultMonth[MONTH_LENGTH] = { 0, 0 };
 	unsigned int defaultYear[YEAR_LENGTH] = { 2, 0, 0, 0 };
 	int dayNum, monthNum, yearNum, iterationsCounter = 1;
-	
-	day = new unsigned int[DAY_LENGTH];
-	month = new unsigned int[MONTH_LENGTH];
-	year = new unsigned int[YEAR_LENGTH];
 	Date * date = new Date(defaultDay, defaultMonth, defaultYear);
+
 	do
 	{	// Notices whether the input is valid or not
 		iterationsCounter > 1 ? cout << "invalid date, please try again\n" : cout << "Date had been updated\n";
@@ -115,12 +124,13 @@ void Customer:: getValidDate(unsigned int *day, unsigned int * month, unsigned i
 		}
 		++iterationsCounter;
 	} while ( dayNum < 0 || monthNum < 0 || yearNum < 0 || !dateIsValid(day, month, year, date) ) ; // Date validation
+	delete date;
 }
 bool Customer::dateIsValid(unsigned int *day, unsigned int * month, unsigned int * year, Date* dateAccess)
 {
 	bool dayIsValid = dateAccess->dayIsValid(day, month, year);
 	bool monthIsValid = dateAccess->monthIsValid(month);
-	bool yearIsValid = dateAccess->yearIsValid(month);
+	bool yearIsValid = dateAccess->yearIsValid(year);
 
 	return (dayIsValid && monthIsValid && yearIsValid);
 }
@@ -140,8 +150,7 @@ bool Customer::optionIsValid(int option)
 }
 void  Customer::leaveFeedback(int maxSize, char * feedback)
 {
-	bool isValid = true;
-	feedback = new char[maxSize]; // Allocating the feedback string to maximal size
+	bool isValid = true; // Allocating the feedback string to maximal size
 	do
 	{
 		cleanBuffer();
@@ -204,7 +213,6 @@ bool Customer::getString(char* str, int maxSize)
 	{
 		cin.clear();
 		cleanBuffer();
-		delete[] str;
 		return false;
 	}
 	else {

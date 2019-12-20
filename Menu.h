@@ -3,7 +3,7 @@
 #include "eCommerce.h"
 
 enum userType { CUSTOMER = 0,SELLER };
-//const enum Category { CHILDREN = 0, ELECTRICITY, CLOTHING, OFFICESUPPLY };
+
 class product;
 
 class Menu

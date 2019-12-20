@@ -1,17 +1,11 @@
-//#ifndef __FEEDBACK_H
-//#define __FEEDBACK_H
+#ifndef __FEEDBACK_H
+#define __FEEDBACK_H
 
-#pragma once // ifndef isn't working well 
 #include "Date.h"
 #include "Product.h"
 
-//#include "Customer.h"
 
-//class Seller;
-//class Product;
-
-// try 
-class Customer; // Avoiding excessive includ actions
+class Customer;
 
 class Feedback 
 {
@@ -21,11 +15,15 @@ class Feedback
 		Product * pProduct; // A pointer to the relevant product
 		Date dateWritten;
 
-	public:
-		Feedback(Customer* pCustomer, char * feedback, Product * pProduct, 
-			unsigned int* day, unsigned int* month, unsigned int* year); // Default c'tor
+	 public:
+
+		 Feedback(Customer* pCustomer, char * feedback, Product * pProduct,
+			 unsigned int* day, unsigned int* month, unsigned int* year); // Default c'tor
 		Feedback(const Feedback & other); // copy c'tor
 		Feedback(Feedback && other); // move c'tor
+		~Feedback(); // d'tor
+    
+     public:
 
 		void setCustomer(Customer* pCustomer) { this->pCustomer = pCustomer; }; 
 		inline Customer* getPCustomer() { return this->pCustomer; };
@@ -34,9 +32,15 @@ class Feedback
 		void setProduct(Product* pProduct) { this->pProduct= pProduct; };
 		inline Product* getPProduct() { return this->pProduct; };
 		inline Date getDate() { return this->dateWritten; };
-		// Helpers for input 
+		void print() const;
+		
+	// Helpers for input 
+     public:
+
 		bool getString(char* str, int maxSize);
 		void cleanBuffer();
-		~Feedback(); // d'tor
+		
 };
-//#endif
+
+
+#endif

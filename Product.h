@@ -1,7 +1,7 @@
-//#ifndef __PRODUCT_H
-//#define __PRODUCT_H
-#pragma once
+#ifndef __PRODUCT_H
+#define __PRODUCT_H
 #pragma warning (disable:4996)
+
 #include <iostream>
 #include <string.h>
 using namespace std;
@@ -31,7 +31,9 @@ public:
 	void setCategory(Category ctg);
 	void setName(const char* name);
 	void print()	const;
-	
+	void printFeedbacks() const;
+	void addFeedback(Feedback* feedback);
+
 private:
 	static int counter; // Keeps counting added products (in the entire system)
 	char* name;
@@ -41,6 +43,7 @@ private:
 
 	Seller * pSeller; // Pointer to the seller of this product //
 	Feedback** feedbacks;// Array of pointers to feedbacks of this product//
+	int numOfFeedbacks;
 };
-//
-//#endif
+
+#endif

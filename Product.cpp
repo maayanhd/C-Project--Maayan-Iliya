@@ -9,6 +9,7 @@ Product::Product(const char* prodName, float price, Category ctg,Seller* seller)
 	setName(prodName);
 	setPrice(price);
 	setCategory(ctg);
+	numOfFeedbacks = 0;
 }
 Product::Product(const Product& other): serial_number(++counter) 
 {
@@ -26,6 +27,9 @@ Product :: Product(Product&& other):serial_number(++counter)
 }
 Product::~Product() {
 	delete[] this->name;
+	for (int i = 0; i < numOfFeedbacks; ++i)
+		delete  feedbacks[i];
+	delete[] feedbacks;
 }
 
 bool Product::setPrice(float price)
@@ -54,5 +58,23 @@ void Product :: print() const
 	cout << "Price: " << this->price << " NIS" << endl;
 	cout << "Serial number: " << this->serial_number << endl;
 	cout << "Category: " << categoryName[this->ctg] << endl;
+	printFeedbacks();
+
+}
+
+void Product::addFeedback(Feedback *feedback) {
+	Feedback** arr = new Feedback*[numOfFeedbacks + 1];
+	for (int i = 0; i < numOfFeedbacks; ++i)
+		arr[i] = feedbacks[i];
+	arr[numOfFeedbacks] = feedback;
+	delete[] feedbacks;
+	feedbacks = arr;
+	numOfFeedbacks++;
+}
+
+void Product::printFeedbacks() const{
+	for (int i = 0; i < numOfFeedbacks; ++i) {
+		feedbacks[i]->print();
+}
 
 }

@@ -18,7 +18,7 @@ class Date
 		inline unsigned int * getMonth() { return this->month; };
 		inline unsigned int * getYear()  { return this->year; };
 
-		void show(unsigned int* day, unsigned int* month, unsigned int* year) const;
+		void print() const;
 		// Validation functions
 		bool yearIsValid(unsigned int * year);
 		bool monthIsValid(unsigned int* month);

@@ -32,10 +32,7 @@ char* E_Commerce:: input(strtype type, int maxSize)
 	int iterationsCounter = 1;
 	do {
 		if (iterationsCounter > 1)
-		{
 			cout << "Invalid input, please try again\n";
-			res= new char[maxSize];
-		}
 		valid = getString(res, maxSize);
 		if (type == LETTERS) {
 			valid = onlyLetters(res);
@@ -81,6 +78,11 @@ Customer* E_Commerce::newCustomer()
 		cout << "Entrance number:\n"; cin >> house[1];
 	}
 	Customer* res = new Customer(username, password, country, city, street, house);
+	delete[] username;
+	delete[] password;
+	delete[] country;
+	delete[] city;
+	delete[] street;
 	return res;
 }
 
@@ -121,6 +123,11 @@ Seller* E_Commerce::newSeller()
 		cin >> house[1];
 	}
 	Seller* res = new Seller(username, password, country, city, street, house);
+	delete[] username;
+	delete[] password;
+	delete[] country;
+	delete[] city;
+	delete[] street;
 	return res;
 }
 
@@ -153,13 +160,11 @@ E_Commerce::E_Commerce()
 bool E_Commerce::getString(char* str, int maxSize) 
 {
 
-	//char* res = new char[maxSize];
 	cin.getline(str, maxSize);
 	if (cin.fail())
 	{
 		cin.clear();
 		cleanBuffer();
-		delete[] str;
 		return false;
 	}
 	else {

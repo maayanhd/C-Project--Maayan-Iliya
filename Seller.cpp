@@ -12,9 +12,12 @@ Seller:: ~Seller()
 {
 	delete[] this->userName;
 	delete[] this->password;
-
+	
 	for (int i = 0; i < numOfProducts; ++i)
 		delete this->availableProducts[i];
+	delete[] availableProducts;
+	
+	delete[] this->feedbacks;
 
 }
 bool Seller::setUserName(const char * userName)
@@ -49,6 +52,7 @@ int Seller::getNextIndexToInsert()
 	{
 		tempFeedbacks[i] = feedbacks[i]; // Copying the remaining 
 	}
+	delete[] feedbacks;
 	feedbacks = tempFeedbacks;
 	++numOfFeedbacks;
 
@@ -64,6 +68,7 @@ int Seller::getNextIndexToInsertProduct()
 	{
 		tempProducts[i] = availableProducts[i]; // Copying the remaining products
 	}
+	delete[] availableProducts;
 	availableProducts = tempProducts;
 	++numOfProducts; // updating the number of products 
 
