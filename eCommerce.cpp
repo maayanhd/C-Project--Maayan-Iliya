@@ -43,7 +43,8 @@ char* E_Commerce:: input(strtype type, int maxSize)
 		if (iterationsCounter > 1)
 			cout << "Invalid input, please try again\n";
 		valid = getString(res, maxSize);
-		valid = isValid(res, type);
+		if (valid)
+			valid = isValid(res, type);
 		++iterationsCounter;
 	} while (!valid);
 	
