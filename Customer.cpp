@@ -27,7 +27,7 @@ void Customer::addFeedback()
 	unsigned int* year = new unsigned int[YEAR_LENGTH];
 
 	bool answerIsValid = false;
-	Feedback *newFeedback;
+	Feedback *newFeedback = nullptr;
 	if (history.pHistorySize!=0) // The customer has already bought products
 	{
 		cout << "Choose a product to leave a feedback:\n";
@@ -87,7 +87,7 @@ void Customer::addFeedback()
 void Customer:: getValidDate(unsigned int *day, unsigned int * month, unsigned int * year)
 {
 	// Default date fields for access of validation functions 
-	unsigned int defaultDay[DAY_LENGTH] = { 0,  };
+	unsigned int defaultDay[DAY_LENGTH] = { 0, 0 };
 	unsigned int defaultMonth[MONTH_LENGTH] = { 0, 0 };
 	unsigned int defaultYear[YEAR_LENGTH] = { 2, 0, 0, 0 };
 	int dayNum, monthNum, yearNum, iterationsCounter = 1;
@@ -95,7 +95,8 @@ void Customer:: getValidDate(unsigned int *day, unsigned int * month, unsigned i
 
 	do
 	{	// Notices whether the input is valid or not
-		iterationsCounter > 1 ? cout << "invalid date, please try again\n" : cout << "Date had been updated\n";
+		if (iterationsCounter > 1)
+			cout << "invalid date, please try again\n";
 
 		cout << " Please enter the day:\n";
 		cin >> dayNum;

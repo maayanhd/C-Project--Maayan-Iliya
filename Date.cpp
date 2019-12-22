@@ -69,7 +69,7 @@ bool Date::dayIsValid(unsigned int* day, unsigned int* month, unsigned int* year
 				if (day[i - 1] == 3)
 				{
 					if (is31DaysMonth(numericMonth))
-						(day[i] != 0 && day[i] != 1) ? isValid = true : isValid = false;
+						(day[i] == 0 || day[i] == 1) ? isValid = true : isValid = false;
 					else if (numericMonth == 2) // February is less than 30 days month
 						return false;
 					else // Any other month
@@ -79,11 +79,13 @@ bool Date::dayIsValid(unsigned int* day, unsigned int* month, unsigned int* year
 				{
 					if (numericMonth == 2) // February
 					{
-						if ((getNumericYear(year) % 2016) % 4 == 0) // Every 4 years- February has 28 days 
+						if ((getNumericYear(year) % 2016) % 4 == 0) // Every 4 years- February has 29 days 
+							(day[i] >= 0 && day[i] <=9) ? isValid = true : isValid = false;
+						else // any other month - included years February has 28 days 
 							(day[i] >= 0 && day[i] <= 8) ? isValid = true : isValid = false;
 					}
-					else // any other month - included years February has 29 days 
-						(day[i] >= 0 && day[i] <= 9) ? isValid = true : isValid = false;
+					else
+						(day[i] >= 0 && day[i] <= 9) ? isValid = true : isValid = false;					
 				}
 				else if (day[i - 1] == 1 || day[i - 1] == 0)
 					(day[i] >= 0 && day[i] <= 9) ? isValid = true : isValid = false;
@@ -145,9 +147,9 @@ bool Date::monthIsValid(unsigned int* month)
 				break;
 			case 2: // Second digit 
 				if (month[i - 1] == 0)
-					(month[i] >= 1 || month[i] <= 9) ? isValid = true : isValid = false;
+					(month[i] >= 1 && month[i] <= 9) ? isValid = true : isValid = false;
 				else if (month[i - 1] == 1)
-					(month[i] >= 0 && month[i] <= 9) ? isValid = true : isValid = false;
+					(month[i] >= 0 && month[i] <= 2) ? isValid = true : isValid = false;
 				else // In any other case
 					isValid = false;
 				break;
@@ -164,14 +166,10 @@ bool Date::yearIsValid(unsigned int* year)
 		switch (placeCounter)
 		{
 		case 1: //First digit - assuming this system won't survive 1000 years
-			if (year[i] != 2)
-				isValid = false;
-			(year[i] >= 0 && year[i] <= 9) ? isValid = true : isValid = false;
+			(year[i] != 2) ? isValid = false : isValid = true;
 			break;
 		case 2: // Second digit - assuming this system won't survive 100 years
-			if (year[i] != 0)
-				isValid = false;
-			 (year[i] >= 0 && year[i] <= 9) ? isValid = true : isValid = false;
+			(year[i] != 0) ? isValid = false : isValid = true;
 			break;
 		case 3: // Third digit
 			(year[i] >= 0 && year[i] <= 9) ? isValid = true : isValid = false;
