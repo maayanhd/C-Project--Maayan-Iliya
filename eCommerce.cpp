@@ -12,19 +12,28 @@ Customer** E_Commerce:: changeCustomersArrSize()
 	return updatedCustomers;
 }
 
-bool E_Commerce::onlyLetters(const char* str) const
-{
+bool E_Commerce::isValid(const char* str,strtype type) const {
 
 	int len = strlen(str);
 	for (int i = 0; i < len; i++) {
-		if (!((str[i] <= 'z' && str[i] >= 'a') || (str[i] <= 'Z' && str[i] >= 'A')) && str[i] != ' ') {
-			return false;
+		switch (type)
+		{
+		case LETTERS:
+			if (!((str[i] <= 'z' && str[i] >= 'a') || (str[i] <= 'Z' && str[i] >= 'A')) && str[i] != ' ' && str[i] != '-')
+				return false;
+			break;
+		case MIXED:
+			if (!((str[i] <= 'z' && str[i] >= 'a') || (str[i] <= 'Z' && str[i] >= 'A')) && str[i] != ' ' && str[i] != '-' && !(str[i] <= '9' && str[i] >= '0'))
+				return false;
+			break;
+		case FREESTYLE:
+			return true;
+			break;
 		}
 	}
 	return true;
 
 }
-
 char* E_Commerce:: input(strtype type, int maxSize) 
 {
 	bool valid = false;
@@ -34,9 +43,7 @@ char* E_Commerce:: input(strtype type, int maxSize)
 		if (iterationsCounter > 1)
 			cout << "Invalid input, please try again\n";
 		valid = getString(res, maxSize);
-		if (type == LETTERS) {
-			valid = onlyLetters(res);
-		}
+		valid = isValid(res, type);
 		++iterationsCounter;
 	} while (!valid);
 	
@@ -60,7 +67,7 @@ Customer* E_Commerce::newCustomer()
 		}
 	}
 	cout << "Please Enter A Password\n";
-	password = input(MIXED, MAX_LENGTH);
+	password = input(FREESTYLE, MAX_LENGTH);
 	cout << "Please Enter A Country\n";
 	country = input(LETTERS, MAX_LENGTH);
 	cout << "Please Enter A City\n";
@@ -104,7 +111,7 @@ Seller* E_Commerce::newSeller()
 		}
 	}
 	cout << "Please enter a Password:\n";
-	password = input(MIXED, MAX_LENGTH);
+	password = input(FREESTYLE, MAX_LENGTH);
 	cout << "Please enter a Country:\n";
 	country = input(LETTERS, MAX_LENGTH);
 	cout << "Please enter a City:\n";

@@ -59,7 +59,9 @@ void Product :: print() const
 	cout << "Price: " << this->price << " NIS" << endl;
 	cout << "Serial number: " << this->serial_number << endl;
 	cout << "Category: " << categoryName[this->ctg] << endl;
+	cout << "Feedbacks: " << endl;
 	printFeedbacks();
+	cout << endl;
 
 }
 
