@@ -17,7 +17,7 @@ public:
 	
 private:
 	int pHistorySize;
-	Product** prodArr;// Products purchased by the customer //
-	Feedback** myFeedbacks; // Pointers to feedbacks of purchased products, myFeedbacks[i] related to prodArr[i]//
+	Product** prodArr;				// Products purchased by the customer 
+	Feedback** myFeedbacks;			// Pointers to feedbacks of purchased products, myFeedbacks[i] related to prodArr[i]
 };
 #endif

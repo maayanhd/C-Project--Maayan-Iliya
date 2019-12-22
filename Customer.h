@@ -9,9 +9,10 @@ class Customer {
 
 public:
 
-	Customer(const char* username, const char* password,const char* countryName, const char* cityName, const char* streetName, const int* house);
-	Customer(const Customer&) = delete; // copy c'tor 
-	~Customer();
+	Customer(const char* username, const char* password,const char* countryName, 
+		const char* cityName, const char* streetName, const int* house); // default c'tor
+	Customer(const Customer&) = delete;									 // copy c'tor 
+	~Customer();														 // d'tor
 
 public:
 	void setUsername(const char* username);

@@ -42,9 +42,9 @@ char* E_Commerce:: input(strtype type, int maxSize)
 	do {
 		if (iterationsCounter > 1)
 			cout << "Invalid input, please try again\n";
-		valid = getString(res, maxSize);
-		if (valid)
-			valid = isValid(res, type);
+		valid = getString(res, maxSize);  
+		if (valid)						 // in case the string is valid - in manners of length
+			valid = isValid(res, type);  // content of string validation
 		++iterationsCounter;
 	} while (!valid);
 	
@@ -168,19 +168,19 @@ E_Commerce::E_Commerce()
 bool E_Commerce::getString(char* str, int maxSize) 
 {
 
-	cin.getline(str, maxSize);
-	if (cin.fail())
+	cin.getline(str, maxSize); 
+	if (cin.fail())				// Checks whether the flag notices the cin function failed (due to too many characters input) is on 
 	{
-		cin.clear();
-		cleanBuffer();
-		return false;
+		cin.clear();			// Remove the flag we mentioned earlier
+		cleanBuffer();			
+		return false;			
 	}
 	else {
 		//str = res;
 		return true;
 	}
 }
-
+// Cleans the buffer - every character until reaches the '\n'
 void E_Commerce::cleanBuffer()
 {
 	
