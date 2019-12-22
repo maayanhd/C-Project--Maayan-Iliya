@@ -53,8 +53,9 @@ bool Feedback:: getString(char* str, int maxSize)
 
 void Feedback:: print() const 
 {
-	cout << pCustomer->getUsername() << ": " << feedback << endl;
+	cout << pCustomer->getUsername() << ": " << feedback << ", ";
 	dateWritten.print();
+	cout << endl;
 	
 
 }

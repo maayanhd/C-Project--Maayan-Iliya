@@ -173,14 +173,15 @@ void Menu::addProduct() {
 	Category ctg;
 	int option;
 	float price;
+	char* nameOfProduct;
 	if (seller != nullptr) {
-		char* nameOfProduct = new char[system.MAX_LENGTH];
 		cout << " Please enter the name of the product you'd like to add:\n";
-		system.getString(nameOfProduct, system.MAX_LENGTH);
-		while (seller->ProductExists(nameOfProduct)) // Validation of product name
+		nameOfProduct=system.input(FREESTYLE, system.MAX_LENGTH);
+			while (seller->ProductExists(nameOfProduct)) // Validation of product name
 		{
 			cout << "a Product with an identical name has already been added to the seller, please try again.\n";
-			system.getString(nameOfProduct, system.MAX_LENGTH);
+			delete[] nameOfProduct;
+			nameOfProduct = system.input(FREESTYLE, system.MAX_LENGTH);
 		}
 		// Asking for a category
 		cout << " Please choose a category for the product:\n" << "choose an option by pressing the relevant number:\n";

@@ -6,7 +6,7 @@
 // Responsible to reallocate the arrays - will be used for adding/removing sellers/customers  - 
 // defined as arrays of pointers to class objects to avoid the need for default constructor- which will not 
 // be recommended logically
-enum strtype { LETTERS = 0, MIXED };
+enum strtype { LETTERS = 0, MIXED,FREESTYLE };
 
 class E_Commerce
 {
@@ -43,7 +43,7 @@ public:
 		
 public:
 	bool getString(char* str, int maxSize) ;
-	bool onlyLetters(const char* str) const;
+	bool isValid(const char* str,strtype type) const;
 	void cleanBuffer();
 	char* input(strtype type, int maxSize);
 };
