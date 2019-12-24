@@ -1,24 +1,20 @@
 #ifndef _CUSTOMER_H
 #define _CUSTOMER_H
-
+#include "User.h"
 #include "Address.h"
 #include "ShoppingCart.h"
 #include "PurchaseHistory.h"
 
-class Customer {
-
-public:
+class Customer : virtual public User
+{
+public: 
 
 	Customer(const char* username, const char* password,const char* countryName, 
 		const char* cityName, const char* streetName, const int* house); // default c'tor
 	Customer(const Customer&) = delete;									 // copy c'tor 
-	~Customer();														 // d'tor
+	virtual ~Customer();														 // d'tor
 
 public:
-	void setUsername(const char* username);
-	void setPassword(const char* password);
-	inline const char* getUsername() const { return username; };
-	inline const char* getPassword() const { return password; };
 	void print() const;
 	void order() const;
 	void addFeedback();
@@ -28,18 +24,17 @@ public:
 	inline PurchaseHistory& getpHistory(){ return history; } ;
 
 	// Helpers for input 
-public:
-	void getValidDate(unsigned int *day, unsigned int * month, unsigned int * year);
-	bool dateIsValid(unsigned int *day, unsigned int * month, unsigned int * year, Date* dateAccess);
-	bool getString(char* str, int maxSize);
-	void cleanBuffer();
+	public:
+		void getValidDate(unsigned int *day, unsigned int * month, unsigned int * year);
+		bool dateIsValid(unsigned int *day, unsigned int * month, unsigned int * year, Date* dateAccess);
+		bool getString(char* str, int maxSize);
+		void cleanBuffer();
 
+	public:
+		virtual void toOs(ostream& os) const;
 
-	private:
+	protected:
 		static constexpr int MAX_LENGTH = 21;
-		char* username;
-		char* password;
-		Address address;
 		ShoppingCart sCart;
 		PurchaseHistory history;
 };

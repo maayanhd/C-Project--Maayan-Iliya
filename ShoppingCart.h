@@ -25,6 +25,9 @@ public:
 	inline float getTotalPrice()					const 
 		{ return totalPrice; };
 	bool existsIn(Product* prod)					const;
+
+public:
+	friend ostream& operator<<(ostream& os, const ShoppingCart& sCart);
 	
 private:
 	Customer* customer;

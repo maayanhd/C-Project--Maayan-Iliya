@@ -40,6 +40,9 @@ class Product
 		void printFeedbacks()											const;
 		void addFeedback(Feedback* feedback);
 
+	public:
+		friend ostream& operator<<(ostream& os, const Product& product);
+
 	private:
 		static int counter;			// Keeps counting added products (in the entire system)
 		char* name;

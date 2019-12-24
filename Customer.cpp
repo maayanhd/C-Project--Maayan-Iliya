@@ -6,16 +6,12 @@ constexpr int DAY_LENGTH = 2;
 constexpr int MONTH_LENGTH = 2;
 constexpr int YEAR_LENGTH = 4;
 
-Customer::Customer(const char* username, const char* password, const char* countryName, const char* cityName, const char* streetName, const int* house)
-	:address(countryName, cityName, streetName, house), sCart(this) {
-	setUsername(username);
-	setPassword(password);
+Customer::Customer(const char* username, const char* password, const char* countryName,
+	const char* cityName, const char* streetName, const int* house)
+	:User(username, password, countryName, cityName, streetName, house), sCart(this) {
 };
 
 Customer::~Customer() {
-	delete[] this->username;
-	delete[] this->password;
-
 }
 
 void Customer::addFeedback()
@@ -163,17 +159,6 @@ void Customer::order() const
 	}
 	cout << "Total price: " << sCart.totalPrice << endl;
 }
-void Customer::setUsername(const char* username)
-{
-	delete[] this->username;
-	this->username = strdup(username);
-}
-void Customer::setPassword(const char* password)
-{
-
-	delete[] this->password;
-	this->password = strdup(password);
-}
 void Customer::print() const
 {
 	cout << "Name: " << username << endl;
@@ -202,3 +187,7 @@ void Customer::cleanBuffer()
 	} while (c != EOF && c != '\n');
 }
 
+void Customer::toOs(ostream& os) const
+{
+	os << this->sCart;			 // Using operator << in Shopping cart class
+}

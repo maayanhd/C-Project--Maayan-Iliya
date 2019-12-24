@@ -1,19 +1,11 @@
 #include "Seller.h"
 
-Seller::Seller(const char* userName, const char* password, const char* countryName, const char* cityName, 
-	const char* streetName, int* house) : address(countryName, cityName, streetName, house), availableProducts(NULL) 
-{
-	this->userName = nullptr;																 
-	this->password = nullptr;
-	setUserName(userName);
-	setPassword(password);
+Seller::Seller(const char* userName, const char* password, const char* countryName, const char* cityName,
+	const char* streetName, int* house) : User(userName, password, countryName, cityName,
+		streetName, house), availableProducts(NULL) {
 }
 Seller:: ~Seller()
 {
-	// Releasing the strings of username and password 
-	delete[] this->userName;
-	delete[] this->password;
-	
 	// Releasing each and every pointer to product 
 	for (int i = 0; i < numOfProducts; ++i)
 		delete this->availableProducts[i];
@@ -22,23 +14,6 @@ Seller:: ~Seller()
 	// Releasing array of pointers to feedbacks - the feedbacks released at the Product d'tor
 	delete[] this->feedbacks;
 
-}
-bool Seller::setUserName(const char * userName)
-{
-	if (strlen(userName) > MAX_LENGTH)
-	{
-		cout << "Too many characters for username" << endl;
-		return false;
-	}
-
-	delete[] this->userName;
-	this->userName = strdup(userName);
-	return false;
-}
-void Seller::setPassword(const char* password)
-{
-	delete[] this->password;
-	this->password = strdup(password);
 }
 void Seller::print() const
 {
@@ -114,6 +89,16 @@ bool Seller::priceIsValid(float price) const
 {
 	return price > 0.0;										// a Price of a product must be positive number 
 }
+
+void Seller::toOs(ostream& os) const
+{
+	os << "Available Products\n";
+	for (int i = 0; i < this->numOfProducts; ++i)
+	{
+		os << i << ". " << *(availableProducts[i]) << endl; // Using operator << in product class
+	}
+}
+
 
 
 

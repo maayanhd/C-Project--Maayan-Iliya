@@ -72,3 +72,14 @@ bool ShoppingCart::remove(int indToRemove)
 		
 		return true;
 }
+
+ostream& operator<<(ostream& os, const ShoppingCart& sCart)
+{
+	os << "Shopping cart:\n";
+	for (int i = 0; i < sCart.numOfProducts; ++i)
+	{
+		os << i + 1 << ". " << *(sCart.products[i]) << endl; // Using operator << of Product class
+	}
+	os << "Total Price: " << sCart.getTotalPrice();
+}
+
