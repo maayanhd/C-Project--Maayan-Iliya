@@ -1,8 +1,6 @@
 #include "Seller.h"
 
-Seller::Seller(const char* userName, const char* password, const char* countryName, const char* cityName,
-	const char* streetName, int* house) : User(userName, password, countryName, cityName,
-		streetName, house), availableProducts(NULL) {
+Seller::Seller(const char* userName, const char* password, Address a) : User(userName, password, a), availableProducts(NULL) {
 }
 Seller:: ~Seller()
 {
@@ -14,6 +12,9 @@ Seller:: ~Seller()
 	// Releasing array of pointers to feedbacks - the feedbacks released at the Product d'tor
 	delete[] this->feedbacks;
 
+}
+
+Seller::Seller(const Seller& other):User(other) {
 }
 void Seller::print() const
 {
@@ -92,11 +93,13 @@ bool Seller::priceIsValid(float price) const
 
 void Seller::toOs(ostream& os) const
 {
-	os << "Available Products\n";
+	os << "My Available Products\n";
 	for (int i = 0; i < this->numOfProducts; ++i)
 	{
 		os << i << ". " << *(availableProducts[i]) << endl; // Using operator << in product class
 	}
+
+
 }
 
 

@@ -2,8 +2,6 @@
 #define _MENU_H
 #include "eCommerce.h"
 
-enum userType { CUSTOMER = 0, SELLER };
-
 class product;
 
 class Menu
@@ -14,19 +12,18 @@ public:
 	Menu();
 	~Menu();
 
-	void addCustomer(); 
-	void addSeller(); 
 	void addProduct(); 
+	void newUser(bool isCustomer,bool isSeller);
 	void addFeedback();
 	void addToShoppingCart();
 	void order();
 	void pay();
-	void getUserInfo(userType type);
+	void getUserInfo();
+	void showAllCustomersSellers() const;
 	void findProduct(); 
 	void show(bool& exit);
 	void printHeadLine()			const;
-	Customer* customerIdent();
-	Seller* sellerIdent() ;
+	User* userIdent();
 
 private:
 	E_Commerce system;

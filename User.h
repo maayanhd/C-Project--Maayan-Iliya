@@ -10,12 +10,14 @@ class User // Abstract class
 		Address address;				// The Address of the seller
 		
 	public:
-		User(const char* username, const char* password, const char* countryName,
-			const char* cityName, const char* streetName, const int* house);
-		User(const User &) = delete;							  // we do not use copy c'tor in the descendants	 
+		User(const char* username, const char* password, Address a);
+		User(const User &);	
+		User(User&&);
+		// we do not use copy c'tor in the descendants	 
 		virtual ~User();
 		
 	public: 
+		Address getAddress() const { return address; }
 		void setUserName(const char* username);
 		void setPassword(const char* password);
 		inline const char* getUserName() const 

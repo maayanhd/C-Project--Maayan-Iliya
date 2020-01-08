@@ -1,7 +1,7 @@
 #ifndef __E_COMMERCE_H
 #define __E_COMMERCE_H
 
-#include "Seller.h" 
+#include "Customer_Seller.h" 
 
 // Responsible to reallocate the arrays - will be used for adding/removing sellers/customers  - 
 // defined as arrays of pointers to class objects to avoid the need for default constructor- which will not 
@@ -22,29 +22,19 @@ class E_Commerce
 		friend class Menu;
 	// a Global function for input check                                                          
 	private:
-		Customer** customers;				// Array of Costumers objects 
-		unsigned int currentNumOfCustomers;
-		Seller** sellers;					// Array of Costumers objects 	
-		unsigned int currentNumOfSellers;
-
+		User** users;
+		unsigned int numOfUsers;
+		unsigned int maxSize;
 		static constexpr int MAX_LENGTH = 21;
 		static constexpr int NOT_FOUND = -1;
+    public:
+		void operator+=(User* newUser);
 
-public:
-		Customer** changeCustomersArrSize();
-		Seller** changeSellersArrSize();
-		unsigned int getNumOfCustomers()			const 
-			{ return this->currentNumOfCustomers; };
-		unsigned int getNumOfSellers()				const 
-			{ return this->currentNumOfSellers; };
-		void setNumOfCustomers(int num);
-		void setNumOfSellers(int num);
-		void emptyCustomers();
-		void emptySellers();
-		int findCustomer(const char* username)	    const;
-		int findSeller(const char* username)		const;
-		Customer* newCustomer();
-		Seller* newSeller();
+    public:
+	    void changeUsersArrSize();
+		unsigned int getNumOfUsers() const { return numOfUsers; }
+		void emptyUsers();
+		int findUser(const char* username);
 		
 public:
 	bool getString(char* str, int maxSize) ;

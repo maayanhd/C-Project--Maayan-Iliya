@@ -1,7 +1,6 @@
 #ifndef _CUSTOMER_H
 #define _CUSTOMER_H
 #include "User.h"
-#include "Address.h"
 #include "ShoppingCart.h"
 #include "PurchaseHistory.h"
 
@@ -9,11 +8,12 @@ class Customer : virtual public User
 {
 public: 
 
-	Customer(const char* username, const char* password,const char* countryName, 
-		const char* cityName, const char* streetName, const int* house); // default c'tor
-	Customer(const Customer&) = delete;									 // copy c'tor 
+	Customer(const char* username, const char* password,Address a); // default c'tor
+	Customer(const Customer&);								 // copy c'tor 
 	virtual ~Customer();														 // d'tor
 
+public:
+	bool operator>(const Customer& other) const ;
 public:
 	void print() const;
 	void order() const;

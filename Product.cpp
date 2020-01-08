@@ -89,7 +89,8 @@ ostream& operator<<(ostream& os, const Product& product)
 {
 	os << "Product name: " <<product.getName()<< endl;
 	os << "Price: " << product.getPrice()<< " NIS" << endl;
-	os << "Serial number: " << product.getSerialNumber<< endl;
+	os << "Serial number: " << product.getSerialNumber()<< endl;
 	os << "Category: " << categoryName[product.getCategory()] << endl;
 	os << "Feedbacks: " << endl;
+	return os;
 }

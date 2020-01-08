@@ -6,14 +6,14 @@ constexpr int DAY_LENGTH = 2;
 constexpr int MONTH_LENGTH = 2;
 constexpr int YEAR_LENGTH = 4;
 
-Customer::Customer(const char* username, const char* password, const char* countryName,
-	const char* cityName, const char* streetName, const int* house)
-	:User(username, password, countryName, cityName, streetName, house), sCart(this) {
-};
+Customer::Customer(const char* username, const char* password, Address a)
+	:User(username, password, a), sCart(this) { };
 
-Customer::~Customer() {
+Customer::~Customer() { }
+
+Customer::Customer(const Customer& other): User(other),sCart(other.sCart)
+{
 }
-
 void Customer::addFeedback()
 {
 	int option; // Maximal size of feedback
@@ -79,6 +79,10 @@ void Customer::addFeedback()
 	delete[] month;
 	delete[] year;
 	delete[] feedback;
+}
+
+bool Customer::operator>(const Customer& other) const {
+	return this->sCart.getTotalPrice() > other.sCart.getTotalPrice();
 }
 void Customer:: getValidDate(unsigned int *day, unsigned int * month, unsigned int * year)
 {

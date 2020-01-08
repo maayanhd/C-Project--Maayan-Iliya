@@ -1,14 +1,13 @@
 #ifndef __SELLER_H
 #define __SELLER_H
-#include "User.h"
+
 #include "Customer.h"
 
 class Seller : virtual public User
 {	
 	public: 
-		Seller(const char* userName, const char* password, const char* countryName,
-			const char* cityName, const char* streetName, int* houseNumber);
-		Seller(const Seller &) = delete;							  // copy c'tor 
+		Seller(const char* userName, const char* password, Address a);
+		Seller(const Seller &);							  // copy c'tor 
 		virtual ~Seller();													  // d'tor
 		
 	public: 

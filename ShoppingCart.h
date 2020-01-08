@@ -11,6 +11,9 @@ class ShoppingCart {
 public:
 	friend class Customer;
 	ShoppingCart(Customer* customer); // makes empty shopping cart
+	ShoppingCart(const ShoppingCart&);
+	ShoppingCart(ShoppingCart&&);
+		
 	~ShoppingCart();
 
 public:

@@ -14,15 +14,22 @@ ostream& operator<<(ostream& os, const User& user)
 	return os;
 }
 
-User::User(const char* username, const char* password, const char* countryName, const char* cityName, const char* streetName, const int* house)
-	:address(countryName, cityName, streetName, house) {
+User::User(const char* username, const char* password, Address a)
+	:address(a) {
 	setUserName(username);
 	setPassword(password);
 };
 
-User::~User() {
-	delete[] this->username;
-	delete[] this->password;
+User::User(const User& other): address(other.address) {
+	setUserName(other.username);
+	setPassword(other.password);
+
+}
+User::User(User&& other) : address(other.address) {
+	this->username = other.username;
+	this->password = other.password;
+	other.username = nullptr;
+	other.password = nullptr;
 
 }
 

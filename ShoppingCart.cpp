@@ -8,6 +8,24 @@ ShoppingCart::ShoppingCart(Customer* customer)
 	this->customer = customer;
 }
 
+ShoppingCart::ShoppingCart(const ShoppingCart& other) {
+	this->customer = other.customer;
+	this->numOfProducts = other.numOfProducts;
+	this->totalPrice = other.totalPrice;
+	this->products = new Product*[numOfProducts]; // allocating the array
+	for (int i = 0; i < numOfProducts; ++i) // coppying the products
+		this->products[i] = other.products[i];
+}
+
+ShoppingCart::ShoppingCart(ShoppingCart&& other) {
+	this->customer = other.customer;
+	this->numOfProducts = other.numOfProducts;
+	this->totalPrice = other.totalPrice;
+	this->products = other.products;
+	other.customer = nullptr;
+	other.products = nullptr;
+
+}
 ShoppingCart::~ShoppingCart() 
 {
   delete[] products; // Removes only the array, we losing the pointer to the products, but they still exist on the seller side //
@@ -81,5 +99,6 @@ ostream& operator<<(ostream& os, const ShoppingCart& sCart)
 		os << i + 1 << ". " << *(sCart.products[i]) << endl; // Using operator << of Product class
 	}
 	os << "Total Price: " << sCart.getTotalPrice();
+	return os;
 }
 
