@@ -52,7 +52,7 @@ void Customer::addFeedback()
 					getValidDate(day, month, year); // asking for the date
 
 					// Adding the feedback in the next free place in the feedbacks array of the seller
-					newFeedback = new Feedback(this, feedback, history.prodArr[option - 1], day, month, year);
+					newFeedback = new Feedback(*this, feedback, history.prodArr[option - 1], day, month, year);
 					relevantSeller->getFeedbacks()[indexToInsert] = newFeedback;
 					history.prodArr[option - 1]->addFeedback(newFeedback);
 					history.myFeedbacks[option - 1] = newFeedback;
