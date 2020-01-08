@@ -16,11 +16,13 @@ ostream& operator<<(ostream& os, const User& user)
 
 User::User(const char* username, const char* password, Address a)
 	:address(a) {
+	this->username = this->password = nullptr;
 	setUserName(username);
 	setPassword(password);
 };
 
 User::User(const User& other): address(other.address) {
+	username = password = nullptr;
 	setUserName(other.username);
 	setPassword(other.password);
 

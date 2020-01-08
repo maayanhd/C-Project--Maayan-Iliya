@@ -1,6 +1,6 @@
 #include "Seller.h"
 
-Seller::Seller(const char* userName, const char* password, Address a) : User(userName, password, a), availableProducts(NULL) {
+Seller::Seller(const char* userName, const char* password, Address a) : User(userName, password, a), availableProducts(NULL) ,feedbacks(NULL) {
 }
 Seller:: ~Seller()
 {

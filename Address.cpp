@@ -3,6 +3,8 @@
 
 Address::Address(const char* countryName, const char* cityName, const char* streetName,const int* house)
 {
+
+	city = street = country = nullptr;
 	setCountry(countryName);
 	setCity(cityName);
 	setStreet(streetName);
@@ -11,6 +13,7 @@ Address::Address(const char* countryName, const char* cityName, const char* stre
 
 Address::Address(const Address& other) 
 {
+	city = street = country = nullptr;
 	setCountry(other.country);
 	setCity(other.city);
 	setStreet(other.street);

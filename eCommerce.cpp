@@ -69,7 +69,7 @@ E_Commerce::E_Commerce()
 {
 	numOfUsers = 0;
 	maxSize = 1;
-	users = nullptr;
+	users = new User*[maxSize];
 }
 
 

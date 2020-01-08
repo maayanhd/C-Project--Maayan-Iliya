@@ -30,6 +30,7 @@ void Menu::printHeadLine() const
 void Menu::newUser(bool isSeller, bool isCustomer) {
 	User * res;
 	char* username = nullptr, *password = nullptr;
+	char* tempusername=nullptr, *temppassword=nullptr;
 	char *country = nullptr, *city = nullptr, *street = nullptr;
 	int house[2];
 	int i = 0;
@@ -64,8 +65,10 @@ void Menu::newUser(bool isSeller, bool isCustomer) {
 	}
 	if (isSeller && isCustomer) {
 		Address temp(country, city, street, house);
+		tempusername = strdup(username);
+		temppassword = strdup(password);
 	res = new Customer_Seller(Customer(username, password, temp)
-			, Seller(username, password, temp));
+			, Seller(tempusername, temppassword, temp));
 
 	}
 	else if (isCustomer) {
@@ -75,11 +78,8 @@ void Menu::newUser(bool isSeller, bool isCustomer) {
 	{
 		res = new Seller(username, password, Address(country, city, street, house));
 	}
-	delete[] username;
-	delete[] password;
-	delete[] country;
-	delete[] city;
-	delete[] street;
+	delete[] tempusername;
+	delete[] temppassword;
 	system += res;
 }
 
@@ -176,11 +176,11 @@ void Menu::show(bool& exit) {
 void Menu:: showAllCustomersSellers() const
 {
 	Customer_Seller* customerSeller = nullptr;
-	for (int i = 0; i < system.numOfUsers; ++i)
+	for (unsigned int i = 0; i < system.numOfUsers; ++i)
 	{
 		customerSeller = dynamic_cast<Customer_Seller*>(system.users[i]);
 		if (customerSeller)
-			cout << i+1<<". " << customerSeller << endl;
+			cout << i+1<<". " << *(customerSeller) << endl;
 	}
 }
 
@@ -264,7 +264,7 @@ void Menu::addToShoppingCart() {
 			cout << "Choose one of the products listed below" << endl;
 		for (unsigned int i = 0; i < system.numOfUsers; ++i) {
 			currSeller = dynamic_cast<Seller*>(system.users[i]);
-			if (currSeller)
+			if (currSeller && (User*)currSeller!=(User*)customer)
 			{
 				prodArr = currSeller->getProducts();
 				numOfProducts = currSeller->getNumOfProducts();
@@ -288,7 +288,7 @@ void Menu::addToShoppingCart() {
 				unsigned int i;
 				for (i = 0; i < system.numOfUsers && choice >0; ++i) {
 					currSeller = dynamic_cast<Seller*>(system.users[i]);
-					if (currSeller)
+					if (currSeller && (User*)currSeller!=(User*)customer)
 					{
 						numOfProducts = currSeller->getNumOfProducts();
 						choice -= numOfProducts;
