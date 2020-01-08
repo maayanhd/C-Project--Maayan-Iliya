@@ -1,22 +1,19 @@
 #include "Customer.h"
 
-Feedback::Feedback(Customer* pCustomer, char * feedback, Product * pProduct, 
-	unsigned int* day, unsigned int* month, unsigned int* year): dateWritten(day, month, year)
+Feedback::Feedback(const Customer& customer, char * feedback, Product * pProduct, 
+	unsigned int* day, unsigned int* month, unsigned int* year): dateWritten(day, month, year), refCustomer(customer)
 {
-	setCustomer(pCustomer);
 	setProduct(pProduct);
 	setFeedback(feedback);
 }
-Feedback::Feedback(const Feedback & other):dateWritten(other.dateWritten)
+Feedback::Feedback(const Feedback & other): refCustomer(other.getCustomer()),dateWritten(other.dateWritten)
 {
-	this->pCustomer = other.pCustomer;
 	this->pProduct	= other.pProduct;
 	// Allocating and copying the string 
 	setFeedback(other.feedback);	  
 }
-Feedback::Feedback(Feedback && other):dateWritten(other.dateWritten)
+Feedback::Feedback(Feedback && other):refCustomer(other.getCustomer()), dateWritten(other.dateWritten)
 {
-	this->pCustomer = other.pCustomer;
 	this->pProduct = other.pProduct;
 	this->feedback = other.feedback;
 	other.feedback = nullptr;
@@ -53,7 +50,7 @@ bool Feedback:: getString(char* str, int maxSize)
 
 void Feedback:: print() const 
 {
-	cout << pCustomer->getUserName() << ": " << feedback << ", ";
+	cout << refCustomer.getUserName() << ": " << feedback << ", ";
 	dateWritten.print();
 	cout << endl;
 	
