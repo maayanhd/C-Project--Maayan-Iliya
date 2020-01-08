@@ -22,7 +22,9 @@ public:
 	void showAllCustomersSellers() const;
 	void findProduct(); 
 	void show(bool& exit);
-	void printHeadLine()			const;
+	void printHeadLine()	const;
+	void operatorMenu();
+	void compareCustomers();
 	User* userIdent();
 
 private:

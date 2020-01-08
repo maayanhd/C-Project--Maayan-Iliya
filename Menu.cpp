@@ -11,7 +11,7 @@ void Menu::getUserInfo() {
 	
 	User* user = userIdent();
 
-	cout << user << endl;
+	cout << *user << endl;
 }
 void Menu::printHeadLine() const
 {
@@ -125,7 +125,8 @@ void Menu::show(bool& exit) {
 	cout << "9.View user info" << endl;
 	cout << "10. Show All Customers that are Sellers" << endl;
 	cout << "11.Find product by name" << endl;
-	cout << "12.Exit" << endl << endl;
+	cout << "12.Operator menu" << endl;
+	cout << "13.Exit" << endl << endl;
 	cin >> input;
 	system.cleanBuffer();
 	} while (cin.fail());
@@ -135,7 +136,7 @@ void Menu::show(bool& exit) {
 
 	switch (input) {
 	case 1:
-		newUser(true, false);
+		newUser(false, true);
 		break;
 	case 2:
 		newUser(true, false);
@@ -168,9 +169,77 @@ void Menu::show(bool& exit) {
 		findProduct();
 		break;
 	case 12:
+		operatorMenu();
+		break;
+	case 13:
 		exit = true;
 		break;
 	}
+}
+void Menu::operatorMenu() {
+
+
+	cout << endl;
+	int input;
+	int subInput;
+	printHeadLine();
+	do {
+		cin.clear();
+		cout << "Operator menu, choose one of the below options: " << endl;
+		cout << "1.+=" << endl;
+		cout << "2.>" << endl;
+		cout << "3.<<" << endl;
+		cin >> input;
+		system.cleanBuffer();
+	} while (cin.fail());
+	cin.clear();
+	switch (input){
+	case 1:
+		do {
+			cout << "Choose one of the below options: " << endl;
+			cout << "1.Add Customer" << endl;
+			cout << "2.Add Seller" << endl;
+			cout << "3.Add Customer-Seller" << endl;
+			cin >> subInput;
+			system.cleanBuffer();
+		} while (cin.fail());
+		cin.clear();
+		switch (subInput)
+		{
+		case 1:
+			newUser(false, true);
+			break;
+		case 2:
+			newUser(true, false);
+			break;
+		case 3:
+			newUser(true, true);
+			break;
+		}
+		break;
+	case 2:
+		compareCustomers();
+		break;
+	case 3:
+		getUserInfo();
+		break;
+	}
+}
+
+void Menu::compareCustomers() {
+	Customer* c1 = dynamic_cast<Customer*>(userIdent());
+	Customer* c2 = dynamic_cast<Customer*>(userIdent());
+	if (c1 && c2) {
+		if (*c1 > *c2)
+			cout << c1->getUserName() << "'s shopping cart total price is bigger." << endl;
+		else if (*c2 > *c1)
+			cout << c2->getUserName() << "'s shopping cart total price is bigger." << endl;
+		else cout << "Both customers have the same total price in their shopping carts." << endl;
+	}
+	else
+		cout << "No matching customers to the usernames you entered" << endl;
+
+
 }
 
 void Menu:: showAllCustomersSellers() const
@@ -253,7 +322,8 @@ void Menu::addFeedback() {
 
 void Menu::addToShoppingCart() {
 	Seller* currSeller = nullptr;
-	Customer* customer = dynamic_cast<Customer*> (userIdent());
+	User* user = userIdent();
+	Customer* customer = dynamic_cast<Customer*>(user);
 	Product** prodArr = nullptr;
 	Product* prod = nullptr;
 	int option = 1, choice;
@@ -278,7 +348,7 @@ void Menu::addToShoppingCart() {
 		}
 		if (option == 1)
 			cout << "There is no products at this moment" << endl;
-
+		else
 		{
 			cin >> choice;
 			system.cleanBuffer();

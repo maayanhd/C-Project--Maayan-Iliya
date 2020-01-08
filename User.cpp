@@ -3,13 +3,13 @@
 
 ostream& operator<<(ostream& os, const User& user)
 {
+	
 	os << "UserName: " << user.getUserName() << endl;
 	os << "Password: " << user.getPassword() << endl;
 	os << "Address: " << user.address.getStreetName();
 	os << " " << (user.address.getHouseInfo())[0] << "/";
 	os << (user.address.getHouseInfo())[1] << ", ";
 	os << user.address.getCityName() << ", " << user.address.getCountryName() << endl;
-	// we need to check this
 	user.toOs(os);
 	return os;
 }
