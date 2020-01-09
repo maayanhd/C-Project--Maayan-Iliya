@@ -10,6 +10,7 @@ public:
 
 	PurchaseHistory();
 	~PurchaseHistory();
+
 	void add(Product** products, int numOfProducts);
 	void setHistorySize(int size);
 	inline int getHistorySize() const	   { return pHistorySize; }

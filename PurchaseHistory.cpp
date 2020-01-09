@@ -7,6 +7,7 @@ PurchaseHistory::PurchaseHistory()
 	myFeedbacks = nullptr;
 };
 
+
 PurchaseHistory::~PurchaseHistory() 
 {
 	delete[] prodArr;
@@ -21,7 +22,7 @@ void PurchaseHistory:: print() const {
 	for (int i = 0; i < pHistorySize; ++i)
 	{
 		cout << i + 1 << ".";
-		prodArr[i]->print();
+		cout<<*(prodArr[i]);
 		cout << endl;
 	}
 }

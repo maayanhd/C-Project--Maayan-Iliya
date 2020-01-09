@@ -48,14 +48,14 @@ bool Feedback:: getString(char* str, int maxSize)
 	}
 }
 
-void Feedback:: print() const 
+ostream& operator<<(ostream& os, const Feedback& feedback)
 {
-	cout << refCustomer.getUserName() << ": " << feedback << ", ";
-	dateWritten.print();
-	cout << endl;
-	
-
+	 os << feedback.getCustomer().getUserName() << ": " << feedback.getFeedback()<< ", ";
+	 os << feedback.getDate()<< endl;
+	 return os;
 }
+
+
 void Feedback::cleanBuffer()
 {
 	int c;

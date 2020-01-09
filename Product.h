@@ -17,7 +17,7 @@ class Product
 	public:
 
 		Product(const char* prodName, float price, 
-			Category ctg ,Seller* seller);		// c'tor
+			Category ctg ,Seller& mySeller);		// c'tor
 		Product(const Product&);				// copy c'tor
 		Product(Product&&);						// move c'tor
 		~Product();								// d'tor
@@ -27,8 +27,8 @@ class Product
 			{ return name; };
 		inline unsigned int getSerialNumber()							const 
 			{ return serial_number; };
-		inline Seller * getSeller() 
-			{ return this->pSeller; };
+		inline Seller & getSeller() 
+			{ return seller; };
 		inline Category getCategory()									const		
 			{ return ctg; };											
 		inline float getPrice()											const 
@@ -36,8 +36,6 @@ class Product
 		bool setPrice(float price);										
 		void setCategory(Category ctg);									
 		void setName(const char* name);									
-		void print()													const;
-		void printFeedbacks()											const;
 		void addFeedback(Feedback* feedback);
 
 	public:
@@ -50,7 +48,7 @@ class Product
 		unsigned int serial_number; // Only using a common counter to produce the serial numbers 
 		Category ctg;
 
-		Seller * pSeller;			// Pointer to the seller of this product 
+		Seller & seller;			// ref to the seller of this product 
 		Feedback** feedbacks;		// Array of pointers to feedbacks of this product
 		int numOfFeedbacks;
 	};

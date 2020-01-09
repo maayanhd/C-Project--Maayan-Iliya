@@ -7,7 +7,7 @@ class User // Abstract class
 	protected: 
 		char* username;					// UserName of Seller 
 		char* password;					// Password of The seller for logging into the system
-		Address address;				// The Address of the seller
+		const  Address& address;				// The Address of the seller
 		
 	public:
 		User(const char* username, const char* password, Address a);

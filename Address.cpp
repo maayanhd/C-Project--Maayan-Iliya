@@ -20,7 +20,7 @@ Address::Address(const Address& other)
 	setHouseInfo(house);
 }
 
-Address::Address(Address && other) 
+Address::Address(Address && other)
 {
 	this->country = other.country;
 	this->city = other.city;
@@ -29,6 +29,7 @@ Address::Address(Address && other)
 	other.country = nullptr;
 	other.city = nullptr;
 	other.street = nullptr;
+	
 }
 
 Address ::~Address() 

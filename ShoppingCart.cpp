@@ -1,31 +1,12 @@
 #include "Customer.h"
 
-ShoppingCart::ShoppingCart(Customer* customer) 
+ShoppingCart::ShoppingCart(Customer& myCustomer): customer(myCustomer)
 { // We want an empty cart
 	products = nullptr; // empty shopping cart
 	setNumOfProducts(0);
 	totalPrice = 0;
-	this->customer = customer;
 }
 
-ShoppingCart::ShoppingCart(const ShoppingCart& other) {
-	this->customer = other.customer;
-	this->numOfProducts = other.numOfProducts;
-	this->totalPrice = other.totalPrice;
-	this->products = new Product*[numOfProducts]; // allocating the array
-	for (int i = 0; i < numOfProducts; ++i) // coppying the products
-		this->products[i] = other.products[i];
-}
-
-ShoppingCart::ShoppingCart(ShoppingCart&& other) {
-	this->customer = other.customer;
-	this->numOfProducts = other.numOfProducts;
-	this->totalPrice = other.totalPrice;
-	this->products = other.products;
-	other.customer = nullptr;
-	other.products = nullptr;
-
-}
 ShoppingCart::~ShoppingCart() 
 {
   delete[] products; // Removes only the array, we losing the pointer to the products, but they still exist on the seller side //
@@ -69,7 +50,8 @@ bool ShoppingCart::existsIn(Product* prod)  const{
 }
 void ShoppingCart :: toEmpty() 
 {
-	customer->getpHistory().add(products, numOfProducts);
+	PurchaseHistory& tempHistory = customer.getpHistory();
+	tempHistory.add(products, numOfProducts);
 	delete[] products;
 	products = nullptr;
 	setNumOfProducts(0);

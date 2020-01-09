@@ -8,14 +8,14 @@ class Customer : virtual public User
 {
 public: 
 
-	Customer(const char* username, const char* password,Address a); // default c'tor
-	Customer(const Customer&);								 // copy c'tor 
-	virtual ~Customer();														 // d'tor
+	Customer(const char* username, const char* password, Address address); // default c'tor
+	Customer(const Customer& other);									   // copy c'tor 
+	Customer(Customer&& other);											   // move c'tor
+	virtual ~Customer();											       // virtual d'tor
 
 public:
 	bool operator>(const Customer& other) const ;
 public:
-	void print() const;
 	void order() const;
 	void addFeedback();
 	bool optionIsValid(int option) const ;

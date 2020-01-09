@@ -7,13 +7,15 @@ constexpr int MONTH_LENGTH = 2;
 constexpr int YEAR_LENGTH = 4;
 
 Customer::Customer(const char* username, const char* password, Address a)
-	:User(username, password, a), sCart(this) { };
+:User(username, password, a), sCart(*this){ };
 
 Customer::~Customer() { }
 
-Customer::Customer(const Customer& other): User(other),sCart(other.sCart)
-{
-}
+Customer::Customer(const Customer& other): User(other),sCart(*this)
+{}
+Customer::Customer(Customer&& other) : User(move(other)), sCart(*this)
+{}
+
 void Customer::addFeedback()
 {
 	int option; // Maximal size of feedback
@@ -46,14 +48,14 @@ void Customer::addFeedback()
 				answerIsValid = true; // assuming answer is valid- 
 				if (ch == 'y' || ch == 'Y')
 				{
-					Seller * relevantSeller = history.prodArr[option - 1]->getSeller(); // Getting the relevant seller 
-					int indexToInsert = relevantSeller->getNextIndexToInsert(); // Finding the matching index to insert the feedback
+				    Seller & relevantSeller = history.prodArr[option - 1]->getSeller(); // Getting the relevant seller 
+					int indexToInsert = relevantSeller.getNextIndexToInsert(); // Finding the matching index to insert the feedback
 					leaveFeedback(MAX_LENGTH_FEEDBACK, feedback); // The process of leaving the feedback string 						
 					getValidDate(day, month, year); // asking for the date
 
 					// Adding the feedback in the next free place in the feedbacks array of the seller
 					newFeedback = new Feedback(*this, feedback, history.prodArr[option - 1], day, month, year);
-					relevantSeller->getFeedbacks()[indexToInsert] = newFeedback;
+					relevantSeller.getFeedbacks()[indexToInsert] = newFeedback;
 					history.prodArr[option - 1]->addFeedback(newFeedback);
 					history.myFeedbacks[option - 1] = newFeedback;
 					
@@ -156,18 +158,12 @@ void Customer::order() const
 	Product** products = sCart.getProducts();
 	int numOfProducts = sCart.getNumOfProducts();
 	cout << "Customer details: " << endl;
-	this->print();
+	cout<<*this;
 	for (int i = 0; i < numOfProducts; ++i) {
 		cout << "Product details: " << endl;
-		products[i]->print();
+		cout<<(products[i]);
 	}
 	cout << "Total price: " << sCart.totalPrice << endl;
-}
-void Customer::print() const
-{
-	cout << "Name: " << username << endl;
-	cout << "Password: " << password << endl;
-	this->address.print();
 }
 bool Customer::getString(char* str, int maxSize)
 {

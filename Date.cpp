@@ -46,11 +46,6 @@ bool Date::setYear(unsigned int * year)
 	
 	return true;
 }
-void Date::print() const
-{
-	cout << day[0] << day[1] << "/" << month[0] << month[1] << "/";
-	cout << year[0] << year[1] << year[2] << year[3];
-}
 bool Date::dayIsValid(unsigned int* day, unsigned int* month, unsigned int* year)
 {	
 	placeCounter = 1;
@@ -110,30 +105,35 @@ bool Date:: is31DaysMonth(unsigned int month) // should we have connections of s
 {
 	switch (month)
 	{
-		case 1: 
-			return true;
+		case (1||3||5||7||8||10||12): 
 			break;
-		case 3:
-			return true;
-			break;
-		case 5:
-			return true;
-			break;
-		case 7:
-			return true;
-			break;
-		case 8:
-			return true;
-			break;
-		case 10:
-			return true;
-			break;
-		case 12:
-			return true;
-			break;
+		//case 3:
+		//	break;
+		//case 5:
+		//	break;
+		//case 7:
+		//	break;
+		//case 8:
+		//	break;
+		//case 10:
+		//	break;
+		//case 12:
+		//	break;
 	}
-	return false; // it is not a 31 days month
+	return false;
 }
+ostream& operator<<(ostream& os, const Date& date)
+{
+	unsigned int* day = date.getDay();
+	unsigned int* month = date.getMonth();
+	unsigned int* year = date.getYear();
+
+	os << day[0] << day[1] << "/" << month[0] << month[1] << "/";
+	os << year[0] << year[1] << year[2] << year[3] << endl;
+
+	return os;
+}
+
 bool Date::monthIsValid(unsigned int* month)
 {
 	placeCounter = 1;

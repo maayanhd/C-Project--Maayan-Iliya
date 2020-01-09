@@ -1,6 +1,6 @@
 #include "Seller.h"
 
-Seller::Seller(const char* userName, const char* password, Address a) : User(userName, password, a), availableProducts(NULL) ,feedbacks(NULL) {
+Seller::Seller(const char* userName, const char* password,Address a) : User(userName, password, a), availableProducts(NULL) ,feedbacks(NULL) {
 }
 Seller:: ~Seller()
 {
@@ -14,14 +14,25 @@ Seller:: ~Seller()
 
 }
 
-Seller::Seller(const Seller& other):User(other) {
-}
-void Seller::print() const
+Seller::Seller(const Seller& other) :User(other)
 {
-	cout << "UserName: " << this->getUserName() << endl;
-	cout << "Password: " << this->getPassword() << endl;
-	this->address.print();
+	if (!other.availableProducts)	// In case the array isn't null
+		memcpy(this->availableProducts, other.availableProducts, other.numOfProducts);
+	else
+		this->availableProducts = nullptr;
+	if(!other.feedbacks)			// In case the array isn't null
+		memcpy(this->availableProducts, other.availableProducts, other.numOfFeedbacks);
+	else
+		this->feedbacks = nullptr;
 }
+Seller::Seller(Seller&& other) : User( move(other) )
+{
+	this->availableProducts = other.availableProducts;
+	other.availableProducts = nullptr;
+	this->feedbacks = other.feedbacks;
+	other.feedbacks = nullptr;
+}
+
 
 int Seller::getNextIndexToInsert()
 {
@@ -56,7 +67,7 @@ int Seller::getNextIndexToInsertProduct()
 	return numOfProducts - 1;					// Returning the index of the next free place in the array
 }
 
-bool Seller::ProductExists(char * nameOfProduct) const
+bool Seller::ProductExists(const char * nameOfProduct) const
 {
 	bool exists = false;
 
@@ -75,11 +86,11 @@ void Seller::addProduct(char* prodName, float price, Category ctg)
 {
 	Product * newProduct = nullptr;
 	const char * finalName = prodName;
-	newProduct = new Product(finalName, price, ctg,this);
+	newProduct = new Product(finalName, price, ctg,*this);
 	int nextIndexToInsert = getNextIndexToInsertProduct();
 	availableProducts[nextIndexToInsert] = newProduct;		// Inserting the product into the available products storage
 	cout << "Product Added successfully to the seller:\n";
-	this->print();										    // Printing the seller's details
+	cout << *this;										    // Printing the seller's details
 }
 
 bool Seller::optionIsValid(int option) const

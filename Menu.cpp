@@ -63,23 +63,24 @@ void Menu::newUser(bool isSeller, bool isCustomer) {
 		cout << "House number:\n";    cin >> house[0];
 		cout << "Entrance number:\n"; cin >> house[1];
 	}
+	Address* address = new Address(country, city, street, house);
 	if (isSeller && isCustomer) {
-		Address temp(country, city, street, house);
 		tempusername = strdup(username);
 		temppassword = strdup(password);
-	res = new Customer_Seller(Customer(username, password, temp)
-			, Seller(tempusername, temppassword, temp));
-
+		Customer* c = new Customer(username, password, *address); // PROBLEM
+		Seller* s = new Seller(tempusername, temppassword, *address);
+		res = new Customer_Seller(*c, *s);
+	delete address;
+	delete[] tempusername;
+	delete[] temppassword;
 	}
 	else if (isCustomer) {
-		res = new Customer(username, password, Address(country, city, street, house));
+		res = new Customer(username, password, *address);
 	}
 	else // if seller
 	{
-		res = new Seller(username, password, Address(country, city, street, house));
+		res = new Seller(username, password, *address);
 	}
-	delete[] tempusername;
-	delete[] temppassword;
 	system += res;
 }
 
@@ -297,7 +298,7 @@ void Menu::addProduct() {
 void Menu::pay() {
 	// already checked whether the returned is a customer
 	Customer* customer = dynamic_cast<Customer*>(userIdent());
-		
+	
 	if (customer != nullptr) {
 		float totalPrice = (customer)->getCart().getTotalPrice();
 		if (totalPrice == 0)
@@ -305,7 +306,8 @@ void Menu::pay() {
 		else {
 			cout << "The payment process succeeded." << endl;
 			cout << "Total price of the shopping cart: " << totalPrice << endl;;
-			customer->getCart().toEmpty();
+			ShoppingCart& cart = customer->getCart();
+			cart.toEmpty();
 		}
 	}
 	else
@@ -340,7 +342,7 @@ void Menu::addToShoppingCart() {
 				numOfProducts = currSeller->getNumOfProducts();
 				for (int j = 0; j < numOfProducts; ++j) {
 					cout << option << ". ";
-					prodArr[j]->print();
+					cout<<*(prodArr[j]);
 					cout << endl;
 					option++;
 				}
@@ -403,7 +405,7 @@ void Menu::findProduct() {
 		for (int j = 0; j < numOfProducts; ++j)
 		{
 			if (strcmp(prodArr[j]->getName(), prodName) == 0) {
-				prodArr[j]->print();
+				cout<<*(prodArr[j]);
 				count++;
 			}
 		}

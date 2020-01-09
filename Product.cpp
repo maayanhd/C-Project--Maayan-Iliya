@@ -2,23 +2,22 @@
 
 
 int Product::counter = 0; // counter for the serial numbers of products 
-Product::Product(const char* prodName, float price, Category ctg,Seller* seller):feedbacks(NULL) , serial_number(++counter)
+Product::Product(const char* prodName, float price, Category ctg,Seller& mySeller) : seller(mySeller),feedbacks(NULL) ,serial_number(++counter)
 {
 	this->name = NULL; 
-	this->pSeller = seller;
 	setName(prodName);
 	setPrice(price);
 	setCategory(ctg);
 	numOfFeedbacks = 0;
 }
-Product::Product(const Product& other): serial_number(++counter) 
+Product::Product(const Product& other): seller(other.seller) , serial_number(++counter) 
 {
 	
 	setName(other.name);
 	setPrice(other.price);
 	setCategory(other.ctg);
 }
-Product :: Product(Product&& other):serial_number(++counter) 
+Product :: Product(Product&& other):seller(other.seller),serial_number(++counter) 
 {
 	this->name = other.name;
 	setCategory(other.ctg);
@@ -53,17 +52,7 @@ void Product:: setName(const char* name)
 	delete[] this->name;
 	this->name = strdup(name);
 }
-void Product :: print() const 
-{
-	cout << "Product name: " << this->name << endl;
-	cout << "Price: " << this->price << " NIS" << endl;
-	cout << "Serial number: " << this->serial_number << endl;
-	cout << "Category: " << categoryName[this->ctg] << endl;
-	cout << "Feedbacks: " << endl;
-	printFeedbacks();
-	cout << endl;
 
-}
 
 void Product::addFeedback(Feedback *feedback) 
 {
@@ -77,20 +66,17 @@ void Product::addFeedback(Feedback *feedback)
 	numOfFeedbacks++;					    // Updating number of feedbacks (including the new feedback that is about to be added)
 }
 
-void Product::printFeedbacks() const
-{
-	for (int i = 0; i < numOfFeedbacks; ++i) 
-	{
-		feedbacks[i]->print();
-	}
-}
-
 ostream& operator<<(ostream& os, const Product& product)
 {
-	os << "Product name: " <<product.getName()<< endl;
-	os << "Price: " << product.getPrice()<< " NIS" << endl;
-	os << "Serial number: " << product.getSerialNumber()<< endl;
+	os << "Product name: " <<product.name<< endl;
+	os << "Price: " << product.price<< " NIS" << endl;
+	os << "Serial number: " << product.serial_number<< endl;
 	os << "Category: " << categoryName[product.getCategory()] << endl;
-	os << "Feedbacks: " << endl;
+	os << "Feedbacks: "<<endl;
+
+	for (int i = 0; i < product.numOfFeedbacks; ++i)
+	{
+		os << i + 1 << ". " << product.feedbacks[i] << endl;
+	}
 	return os;
 }

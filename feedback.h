@@ -26,16 +26,18 @@ class Feedback
      public:
 		 inline const Customer& getCustomer() const
 		 {	return this->refCustomer;};
-		inline char * getFeedback()           
+		inline char * getFeedback()           const
 			{ return this->feedback; };
 		void setProduct(Product* pProduct)    
 			{ this->pProduct= pProduct; };
-		inline Product* getPProduct() 
+		inline Product* getPProduct()		  const
 			{ return this->pProduct; };
-		inline Date getDate() 
+		inline Date getDate()				  const
 			{ return this->dateWritten; };
 		void setFeedback(char* feedback);
-		void print() const;
+	public:
+		friend ostream& operator<<(ostream& os, const Feedback& feedback);
+
 		
      public:
 

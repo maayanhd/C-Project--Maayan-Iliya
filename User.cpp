@@ -1,6 +1,5 @@
 #include "User.h"
 
-
 ostream& operator<<(ostream& os, const User& user)
 {
 	
@@ -14,7 +13,7 @@ ostream& operator<<(ostream& os, const User& user)
 	return os;
 }
 
-User::User(const char* username, const char* password, Address a)
+User::User(const char* username, const char* password,Address a)
 	:address(a) {
 	this->username = this->password = nullptr;
 	setUserName(username);

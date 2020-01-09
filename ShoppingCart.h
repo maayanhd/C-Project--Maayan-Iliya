@@ -10,10 +10,7 @@ class ShoppingCart {
 
 public:
 	friend class Customer;
-	ShoppingCart(Customer* customer); // makes empty shopping cart
-	ShoppingCart(const ShoppingCart&);
-	ShoppingCart(ShoppingCart&&);
-		
+	ShoppingCart(Customer& myCustomer); // makes empty shopping cart
 	~ShoppingCart();
 
 public:
@@ -33,7 +30,7 @@ public:
 	friend ostream& operator<<(ostream& os, const ShoppingCart& sCart);
 	
 private:
-	Customer* customer;
+	Customer& customer;
 	Product** changeArrSize(int newSize); // creates the copy of the ptr to products array but with the new size 
 	Product** products;					  //Cannot change the products, but can change the pointer 
 	int numOfProducts;

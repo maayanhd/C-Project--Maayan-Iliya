@@ -25,7 +25,6 @@ class Date
 		inline unsigned int * getYear()										  const 
 			{ return this->year; };
 
-		void print() const;
 		// Validation functions
 		bool yearIsValid(unsigned int * year);
 		bool monthIsValid(unsigned int* month);
@@ -33,7 +32,10 @@ class Date
 		bool dayIsValid(unsigned int *day, unsigned int * month, unsigned int * year); 
 		bool is31DaysMonth(unsigned int month);
 		inline unsigned int getNumericYear(unsigned int * year);
-			   		 			   	
+		
+	public:
+		friend ostream& operator<<(ostream& os, const Date& date);
+						   		 			   	
 	private:
 		static constexpr unsigned int	MAX_LENGTH_DAY = 2;
 		static constexpr unsigned int	MAX_LENGTH_MONTH = 2;
