@@ -76,7 +76,7 @@ ostream& operator<<(ostream& os, const Product& product)
 
 	for (int i = 0; i < product.numOfFeedbacks; ++i)
 	{
-		os << i + 1 << ". " << product.feedbacks[i] << endl;
+		os << i + 1 << ". " << *(product.feedbacks[i]) << endl;
 	}
 	return os;
 }

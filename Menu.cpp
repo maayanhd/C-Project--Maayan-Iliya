@@ -63,25 +63,26 @@ void Menu::newUser(bool isSeller, bool isCustomer) {
 		cout << "House number:\n";    cin >> house[0];
 		cout << "Entrance number:\n"; cin >> house[1];
 	}
-	Address* address = new Address(country, city, street, house);
+	Address address(country, city, street, house);
 	if (isSeller && isCustomer) {
-		tempusername = strdup(username);
-		temppassword = strdup(password);
-		Customer* c = new Customer(username, password, *address); // PROBLEM
-		Seller* s = new Seller(tempusername, temppassword, *address);
-		res = new Customer_Seller(*c, *s);
-	delete address;
-	delete[] tempusername;
-	delete[] temppassword;
+		Customer c(username, password, address); // PROBLEM
+		Seller s(username, password, address);
+		res = new Customer_Seller(c, s);
 	}
 	else if (isCustomer) {
-		res = new Customer(username, password, *address);
+		res = new Customer(username, password, address);
 	}
 	else // if seller
 	{
-		res = new Seller(username, password, *address);
+		res = new Seller(username, password, address);
 	}
 	system += res;
+	delete username;
+	delete password;
+	delete country;
+	delete city;
+	delete street;
+	
 }
 
 User* Menu::userIdent() {

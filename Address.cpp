@@ -17,7 +17,7 @@ Address::Address(const Address& other)
 	setCountry(other.country);
 	setCity(other.city);
 	setStreet(other.street);
-	setHouseInfo(house);
+	setHouseInfo(other.house);
 }
 
 Address::Address(Address && other)

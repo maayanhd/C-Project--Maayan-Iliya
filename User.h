@@ -7,7 +7,7 @@ class User // Abstract class
 	protected: 
 		char* username;					// UserName of Seller 
 		char* password;					// Password of The seller for logging into the system
-		const  Address& address;				// The Address of the seller
+		Address address;				// The Address of the seller
 		
 	public:
 		User(const char* username, const char* password, Address a);
@@ -17,7 +17,7 @@ class User // Abstract class
 		virtual ~User();
 		
 	public: 
-		Address getAddress() const { return address; }
+		const Address &getAddress() const { return address; }
 		void setUserName(const char* username);
 		void setPassword(const char* password);
 		inline const char* getUserName() const 

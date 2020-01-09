@@ -11,7 +11,7 @@ public:
 	Customer(const char* username, const char* password, Address address); // default c'tor
 	Customer(const Customer& other);									   // copy c'tor 
 	Customer(Customer&& other);											   // move c'tor
-	virtual ~Customer();											       // virtual d'tor
+	virtual ~Customer();											       // virtual d'	tor
 
 public:
 	bool operator>(const Customer& other) const ;
