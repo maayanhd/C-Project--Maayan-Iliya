@@ -11,6 +11,8 @@ class Date
 		friend class Feedback; 
 		friend class Customer;
 		Date(unsigned int* day , unsigned int* month , unsigned int *year );
+		Date(const Date&);
+		Date(Date&&);
 		~Date();
 
 		// Month and year passed for validation check

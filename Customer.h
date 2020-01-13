@@ -21,14 +21,12 @@ public:
 	bool optionIsValid(int option) const ;
 	void leaveFeedback(int maxSize, char * feedback);
 	inline ShoppingCart& getCart() { return sCart; };
-	inline PurchaseHistory& getpHistory(){ return history; } ;
+	inline PurchaseHistory& getpHistory(){ return history; };
 
 	// Helpers for input 
 	public:
 		void getValidDate(unsigned int *day, unsigned int * month, unsigned int * year);
 		bool dateIsValid(unsigned int *day, unsigned int * month, unsigned int * year, Date* dateAccess);
-		bool getString(char* str, int maxSize);
-		void cleanBuffer();
 
 	public:
 		virtual void toOs(ostream& os) const;

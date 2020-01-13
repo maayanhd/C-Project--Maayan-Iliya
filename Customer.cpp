@@ -134,6 +134,7 @@ bool Customer::dateIsValid(unsigned int *day, unsigned int * month, unsigned int
 	return (dayIsValid && monthIsValid && yearIsValid);
 }
 
+
 bool Customer::optionIsValid(int option) const
 {
 	return (option >= 1 && option <= history.getHistorySize());
@@ -159,34 +160,8 @@ void Customer::order() const
 	int numOfProducts = sCart.getNumOfProducts();
 	cout << "Customer details: " << endl;
 	cout<<*this;
-	for (int i = 0; i < numOfProducts; ++i) {
-		cout << "Product details: " << endl;
-		cout<<(products[i]);
-	}
-	cout << "Total price: " << sCart.totalPrice << endl;
-}
-bool Customer::getString(char* str, int maxSize)
-{
 
-	cin.getline(str, maxSize);
-	if (cin.fail())
-	{
-		cin.clear();
-		cleanBuffer();
-		return false;
-	}
-	else
-		return true;
 }
-void Customer::cleanBuffer()
-{
-	int c;
-	do
-	{
-		c = getchar();
-	} while (c != EOF && c != '\n');
-}
-
 void Customer::toOs(ostream& os) const
 {
 	os << this->sCart;			 // Using operator << in Shopping cart class

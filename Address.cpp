@@ -50,7 +50,6 @@ void Address:: setCity(const char*cityName)
 
 	delete[] this->city;
 	this->city = _strdup(cityName);
-
 }
 
 void Address :: setStreet(const char* streetName) 

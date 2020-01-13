@@ -91,12 +91,12 @@ User* Menu::userIdent() {
 	User* user = nullptr;
 	int i;
 	cout << "Please enter a Username: " << endl;
-	system.getString(username, system.MAX_LENGTH);
+	getString(username, system.MAX_LENGTH);
 	i = system.findUser(username);
 	while (i == system.NOT_FOUND)
 	{
 		cout << "The username you entered wasn't found, please try again or press 0 to return to the menu" << endl;
-		system.getString(username, system.MAX_LENGTH);
+		getString(username, system.MAX_LENGTH);
 		if (username[0] == '0') {
 			delete[] username;
 			return nullptr;
@@ -130,7 +130,7 @@ void Menu::show(bool& exit) {
 	cout << "12.Operator menu" << endl;
 	cout << "13.Exit" << endl << endl;
 	cin >> input;
-	system.cleanBuffer();
+	cleanBuffer();
 	} while (cin.fail());
 
 
@@ -192,7 +192,7 @@ void Menu::operatorMenu() {
 		cout << "2.>" << endl;
 		cout << "3.<<" << endl;
 		cin >> input;
-		system.cleanBuffer();
+		cleanBuffer();
 	} while (cin.fail());
 	cin.clear();
 	switch (input){
@@ -203,7 +203,7 @@ void Menu::operatorMenu() {
 			cout << "2.Add Seller" << endl;
 			cout << "3.Add Customer-Seller" << endl;
 			cin >> subInput;
-			system.cleanBuffer();
+			cleanBuffer();
 		} while (cin.fail());
 		cin.clear();
 		switch (subInput)
@@ -251,7 +251,7 @@ void Menu:: showAllCustomersSellers() const
 	{
 		customerSeller = dynamic_cast<Customer_Seller*>(system.users[i]);
 		if (customerSeller)
-			cout << i+1<<". " << *(customerSeller) << endl;
+			cout << *(customerSeller) << endl;
 	}
 }
 
@@ -354,7 +354,7 @@ void Menu::addToShoppingCart() {
 		else
 		{
 			cin >> choice;
-			system.cleanBuffer();
+			cleanBuffer();
 			if (choice > option)
 				cout << "The option you specified doesn't exist" << endl;
 			else {
@@ -395,19 +395,21 @@ void Menu::findProduct() {
 	char* prodName = new char[system.MAX_LENGTH];
 	int count = 0;
 	cout << "Enter a product name to find" << endl;
-	system.getString(prodName, system.MAX_LENGTH);
+	getString(prodName, system.MAX_LENGTH);
 	Product** prodArr;
 	Seller* currSeller;
 	int numOfProducts;
 	for (unsigned int i = 0; i < system.numOfUsers; ++i) {
 		currSeller = dynamic_cast<Seller*> (system.users[i]);
-		numOfProducts = currSeller->getNumOfProducts();
-		prodArr = currSeller->getProducts();
-		for (int j = 0; j < numOfProducts; ++j)
-		{
-			if (strcmp(prodArr[j]->getName(), prodName) == 0) {
-				cout<<*(prodArr[j]);
-				count++;
+		if (currSeller) {
+			numOfProducts = currSeller->getNumOfProducts();
+			prodArr = currSeller->getProducts();
+			for (int j = 0; j < numOfProducts; ++j)
+			{
+				if (strcmp(prodArr[j]->getName(), prodName) == 0) {
+					cout << *(prodArr[j]);
+					count++;
+				}
 			}
 		}
 	}

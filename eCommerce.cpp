@@ -72,33 +72,6 @@ E_Commerce::E_Commerce()
 	users = new User*[maxSize];
 }
 
-
-bool E_Commerce::getString(char* str, int maxSize) 
-{
-
-	cin.getline(str, maxSize); 
-	if (cin.fail())				// Checks whether the flag notices the cin function failed (due to too many characters input) is on 
-	{
-		cin.clear();			// Remove the flag we mentioned earlier
-		cleanBuffer();			
-		return false;			
-	}
-	else {
-		//str = res;
-		return true;
-	}
-}
-// Cleans the buffer - every character until reaches the '\n'
-void E_Commerce::cleanBuffer()
-{
-	
-	int c;
-	do
-	{
-		c = getchar();
-	} while (c != EOF && c != '\n');
-}
-
 void E_Commerce ::emptyUsers(){
 
 	for (unsigned int i = 0; i < numOfUsers; ++i) {

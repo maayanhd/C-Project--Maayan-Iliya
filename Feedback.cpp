@@ -30,44 +30,12 @@ void Feedback:: setFeedback(char* feedback)   // Type is allocated in eCommerce
 	this->feedback= new char[length];		  // Allocating the feedback field 
 	memcpy(this->feedback, feedback, length); // Copying the string
 }
-
-bool Feedback:: getString(char* str, int maxSize) 
-{
-	char* res = new char[maxSize];
-	cin.getline(res, maxSize);
-	if (cin.fail())
-	{
-		cin.clear();
-		cleanBuffer();
-		return false;
-	}
-	else 
-	{
-		str = res;
-		return true;
-	}
-}
-
 ostream& operator<<(ostream& os, const Feedback& feedback)
 {
 	 os << feedback.getCustomer().getUserName() << ": " << feedback.getFeedback()<< ", ";
-	 os << feedback.getDate()<< endl;
+	 os << feedback.getDate();
 	 return os;
 }
-
-
-void Feedback::cleanBuffer()
-{
-	int c;
-	do
-	{
-		c = getchar();
-	} while (c != EOF && c != '\n');
-}
-
-
-
-
 
 
 

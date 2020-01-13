@@ -32,18 +32,12 @@ class Feedback
 			{ this->pProduct= pProduct; };
 		inline Product* getPProduct()		  const
 			{ return this->pProduct; };
-		inline Date getDate()				  const
+		inline const Date& getDate()		  const
 			{ return this->dateWritten; };
 		void setFeedback(char* feedback);
 	public:
 		friend ostream& operator<<(ostream& os, const Feedback& feedback);
 
-		
-     public:
-
-		// Helpers for input 
-		bool getString(char* str, int maxSize);
-		void cleanBuffer();
 		
 };
 

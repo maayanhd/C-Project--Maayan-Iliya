@@ -103,23 +103,8 @@ unsigned int Date:: getNumericYear(unsigned int * year)
 }
 bool Date:: is31DaysMonth(unsigned int month) // should we have connections of small functions to a class?
 {
-	switch (month)
-	{
-		case (1||3||5||7||8||10||12): 
-			break;
-		//case 3:
-		//	break;
-		//case 5:
-		//	break;
-		//case 7:
-		//	break;
-		//case 8:
-		//	break;
-		//case 10:
-		//	break;
-		//case 12:
-		//	break;
-	}
+		if (month == 1 || month== 3 ||month== 5 || month==7 || month==8 || month==10 || month==12)
+			return true;
 	return false;
 }
 ostream& operator<<(ostream& os, const Date& date)
@@ -129,10 +114,33 @@ ostream& operator<<(ostream& os, const Date& date)
 	unsigned int* year = date.getYear();
 
 	os << day[0] << day[1] << "/" << month[0] << month[1] << "/";
-	os << year[0] << year[1] << year[2] << year[3] << endl;
+	os << year[0] << year[1] << year[2] << year[3];
 
 	return os;
 }
+
+Date::Date(const Date& other) {
+
+	this->day = new unsigned int[MAX_LENGTH_DAY];
+	this->month = new unsigned int[MAX_LENGTH_MONTH];
+	this->year = new unsigned int[MAX_LENGTH_YEAR];
+	setDay(other.day,other.month,other.year);
+	setMonth(other.month);
+	setYear(other.year);
+
+}
+
+Date::Date(Date&&other) {
+	
+	this->day = other.day;
+	this->month = other.month;
+	this->year = other.year;
+	other.day = nullptr;
+	other.month = nullptr;
+	other.year = nullptr;
+
+}
+
 
 bool Date::monthIsValid(unsigned int* month)
 {

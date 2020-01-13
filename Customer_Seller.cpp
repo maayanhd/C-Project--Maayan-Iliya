@@ -13,10 +13,10 @@ Customer_Seller:: ~Customer_Seller() {
 
 void Customer_Seller:: toOs(ostream& os) const 
 {
-	os << "My Available Products\n";
+	os << "My Available Products:\n";
 	for (int i = 0; i < this->numOfProducts; ++i)
 	{
-		os << i << ". " << *(availableProducts[i]) << endl; // Using operator << in product class
+		os << i+1 << ". " << *(availableProducts[i]) << endl; // Using operator << in product class
 	}
 
 	os << this->sCart;

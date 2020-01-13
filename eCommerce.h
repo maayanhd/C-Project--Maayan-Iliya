@@ -31,16 +31,16 @@ class E_Commerce
 		void operator+=(User* newUser);
 
     public:
+		char* input(strtype type, int maxSize);
 	    void changeUsersArrSize();
 		unsigned int getNumOfUsers() const { return numOfUsers; }
 		void emptyUsers();
 		int findUser(const char* username);
 		
 public:
-	bool getString(char* str, int maxSize) ;
+
 	bool isValid(const char* str,strtype type)		const;
-	void cleanBuffer();
-	char* input(strtype type, int maxSize);
+
 };
 
 
