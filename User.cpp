@@ -13,15 +13,14 @@ ostream& operator<<(ostream& os, const User& user)
 	return os;
 }
 
-User::User(const char* username, const char* password,Address a)
-	:address(a) {
-	this->username = this->password = nullptr;
+User::User(const string& username, const string& password,Address a)
+	:address(a) 
+{
 	setUserName(username);
 	setPassword(password);
 };
 
 User::User(const User& other): address(other.address) {
-	username = password = nullptr;
 	setUserName(other.username);
 	setPassword(other.password);
 
@@ -29,25 +28,19 @@ User::User(const User& other): address(other.address) {
 User::User(User&& other) : address(other.address) {
 	this->username = other.username;
 	this->password = other.password;
-	other.username = nullptr;
-	other.password = nullptr;
 
 }
 
-void User::setUserName(const char* username)
+void User::setUserName(const string& username)
 {
-	delete[] this->username;
-	this->username = strdup(username);
+	this->username = username;
 }
-void User::setPassword(const char* password)
+void User::setPassword(const string& password)
 {
-	delete[] this->password;
-	this->password = strdup(password);
+	this->password = password;
 }
 
 User:: ~User()
 {
-	// Releasing the strings of username and password 
-	delete[] this->username;
-	delete[] this->password;
+
 }

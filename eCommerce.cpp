@@ -1,20 +1,9 @@
 #include "eCommerce.h"
 
 
-void E_Commerce:: changeUsersArrSize()
-{
-	maxSize *= 2;
-	User** newArr = new User*[maxSize];
-	for (unsigned int i = 0; i < numOfUsers; ++i)
-		newArr[i] = users[i];
-	delete[] users;
-	this->users = newArr;
-    
-}
+bool E_Commerce::isValid(const string& str,strtype type) const {
 
-bool E_Commerce::isValid(const char* str,strtype type) const {
-
-	int len = strlen(str);
+	int len = str.length();
 	for (int i = 0; i < len; i++) {
 		switch (type)
 		{
@@ -34,32 +23,30 @@ bool E_Commerce::isValid(const char* str,strtype type) const {
 	return true;
 
 }
-char* E_Commerce:: input(strtype type, int maxSize) 
+string E_Commerce:: input(strtype type, int maxSize) 
 {
 	bool valid = false;
-	char* res = new char[maxSize];
+	string res;
 	int iterationsCounter = 1;
 	do {
 		if (iterationsCounter > 1)
 			cout << "Invalid input, please try again\n";
-		valid = getString(res, maxSize);  
-		if (valid)						 // in case the string is valid - in manners of length
-			valid = isValid(res, type);  // content of string validation
+		getline(std::cin, res);  
+	    valid = isValid(res, type);  // content of string validation
 		++iterationsCounter;
 	} while (!valid);
 	
 	return res;
 }
 void E_Commerce:: operator+=(User* newUser) {
-	if (numOfUsers == maxSize)
-		changeUsersArrSize();
-	users[numOfUsers++] = newUser;
+	
+	users.push_back(newUser);
 
 }
-int E_Commerce::findUser(const char* username) {
+int E_Commerce::findUser(const string& username) {
 
 	for (unsigned int i = 0; i < numOfUsers; ++i) {
-		if (strcmp(username, users[i]->getUserName()) == 0)
+		if ((username.compare(users[i]->getUserName())==0))
 			return i;
 	}
 	return NOT_FOUND;
@@ -67,19 +54,15 @@ int E_Commerce::findUser(const char* username) {
 
 E_Commerce::E_Commerce()
 {
-	numOfUsers = 0;
-	maxSize = 1;
-	users = new User*[maxSize];
+
 }
 
 void E_Commerce ::emptyUsers(){
+	vector<User*> ::iterator itr = users.begin();
+	vector<User*> ::iterator itrEnd = users.end();
+	for (; itr != itrEnd; ++itr)
+		users.erase(itr);
 
-	for (unsigned int i = 0; i < numOfUsers; ++i) {
-		delete users[i];
-	}
-	delete[] users;
-	numOfUsers = 0;
-	maxSize = 1;
 }
 
 E_Commerce::~E_Commerce()

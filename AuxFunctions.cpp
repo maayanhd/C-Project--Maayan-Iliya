@@ -1,5 +1,5 @@
 #include "AuxFunctions.h"
-
+#include <string>
 void cleanBuffer()
 {
 	int c;
@@ -10,10 +10,10 @@ void cleanBuffer()
 }
 
 
-bool getString(char* str, int maxSize)
+bool getString(string& str, int maxSize)
 {
 
-	cin.getline(str, maxSize);
+	getline(std::cin, str);
 	if (cin.fail())
 	{
 		cin.clear();

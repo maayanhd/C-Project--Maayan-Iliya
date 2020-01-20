@@ -8,7 +8,7 @@ class Customer : virtual public User
 {
 public: 
 
-	Customer(const char* username, const char* password, Address address); // default c'tor
+	Customer(const string& username, const string& password, Address address); // default c'tor
 	Customer(const Customer& other);									   // copy c'tor 
 	Customer(Customer&& other);											   // move c'tor
 	virtual ~Customer();											       // virtual d'	tor
@@ -19,7 +19,7 @@ public:
 	void order() const;
 	void addFeedback();
 	bool optionIsValid(int option) const ;
-	void leaveFeedback(int maxSize, char * feedback);
+	void leaveFeedback(int maxSize, string& feedback);
 	inline ShoppingCart& getCart() { return sCart; };
 	inline PurchaseHistory& getpHistory(){ return history; };
 

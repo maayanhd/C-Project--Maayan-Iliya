@@ -1,12 +1,11 @@
 #include "Seller.h"
-
 // constant variable for the maximal length of the feedback string
 constexpr int MAX_LENGTH_FEEDBACK = 150;
 constexpr int DAY_LENGTH = 2;
 constexpr int MONTH_LENGTH = 2;
 constexpr int YEAR_LENGTH = 4;
 
-Customer::Customer(const char* username, const char* password, Address a)
+Customer::Customer(const string& username, const string& password, Address a)
 :User(username, password, a), sCart(*this){ };
 
 Customer::~Customer() { }
@@ -19,7 +18,8 @@ Customer::Customer(Customer&& other) : User(move(other)), sCart(*this)
 void Customer::addFeedback()
 {
 	int option; // Maximal size of feedback
-	char ch, *feedback = new char[MAX_LENGTH_FEEDBACK+1];
+	char ch;
+	string feedback;
 	unsigned int* day = new unsigned int[DAY_LENGTH];
 	unsigned int* month = new unsigned int[MONTH_LENGTH];
 	unsigned int* year = new unsigned int[YEAR_LENGTH];
@@ -80,7 +80,6 @@ void Customer::addFeedback()
 	delete[] day;
 	delete[] month;
 	delete[] year;
-	delete[] feedback;
 }
 
 bool Customer::operator>(const Customer& other) const {
@@ -94,7 +93,7 @@ void Customer:: getValidDate(unsigned int *day, unsigned int * month, unsigned i
 	unsigned int defaultYear[YEAR_LENGTH] = { 2, 0, 0, 0 };
 	int dayNum, monthNum, yearNum, iterationsCounter = 1;
 	Date * date = new Date(defaultDay, defaultMonth, defaultYear);
-
+	cleanBuffer();
 	do
 	{	// Notices whether the input is valid or not
 		if (iterationsCounter > 1)
@@ -139,18 +138,14 @@ bool Customer::optionIsValid(int option) const
 {
 	return (option >= 1 && option <= history.getHistorySize());
 }
-void  Customer::leaveFeedback(int maxSize, char * feedback)
+void  Customer::leaveFeedback(int maxSize, string& feedback)
 {
 	bool isValid = true; // Allocating the feedback string to maximal size
 	do
 	{
-		cleanBuffer();
 		cout << "Please enter your Feedback:\n";
-		isValid = getString(feedback, maxSize); // Ask for input
-		if (!isValid)
-			cout << "Too many characters, please leave your feedback again.\n";
-		else
-			cout << "Thank you for your feedback, it is important to us.\n";
+		getline(std::cin, feedback);
+		cout << "Thank you for your feedback, it is important to us.\n";
 	} while (!isValid); // As long as the input isn't valid
 
 }

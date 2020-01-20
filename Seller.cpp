@@ -1,34 +1,29 @@
 #include "Seller.h"
 
-Seller::Seller(const char* userName, const char* password,Address a) : User(userName, password, a), availableProducts(NULL) ,feedbacks(NULL) {
+Seller::Seller(const string& userName, const string& password,Address a) : User(userName, password, a) ,feedbacks(NULL) {
 }
 Seller:: ~Seller()
 {
+	int size = availableProducts.getSize();
 	// Releasing each and every pointer to product 
-	for (int i = 0; i < numOfProducts; ++i)
-		delete this->availableProducts[i];
-	// Releasing the array of pointers to available products
-	delete[] availableProducts;
-	// Releasing array of pointers to feedbacks - the feedbacks released at the Product d'tor
+	for (int i = 0; i < size; ++i)
+		delete availableProducts[i];
 	delete[] this->feedbacks;
 
 }
 
 Seller::Seller(const Seller& other) :User(other)
 {
-	if (!other.availableProducts)	// In case the array isn't null
-		memcpy(this->availableProducts, other.availableProducts, other.numOfProducts);
-	else
-		this->availableProducts = nullptr;
+	
+	this->availableProducts = other.availableProducts;
 	if(!other.feedbacks)			// In case the array isn't null
-		memcpy(this->availableProducts, other.availableProducts, other.numOfFeedbacks);
+		memcpy(this->feedbacks, other.feedbacks, other.numOfFeedbacks);
 	else
 		this->feedbacks = nullptr;
 }
 Seller::Seller(Seller&& other) : User( move(other) )
 {
 	this->availableProducts = other.availableProducts;
-	other.availableProducts = nullptr;
 	this->feedbacks = other.feedbacks;
 	other.feedbacks = nullptr;
 }
@@ -51,29 +46,13 @@ int Seller::getNextIndexToInsert()
 }
 
 
-int Seller::getNextIndexToInsertProduct()
-{
-	// Allocating new array of pointers to products with one more room for the new pointer to product
-	Product ** tempProducts = new Product*[numOfProducts + 1];
-
-	for (int i = 0; i < numOfProducts; ++i)
-	{
-		tempProducts[i] = availableProducts[i]; // Copying the addresses of products to the new array
-	}
-	delete[] availableProducts;					// Releasing the old array of pointers to feedbacks
-	availableProducts = tempProducts;			// updating the number of products (including the new product that is about to be added)
-	++numOfProducts;							// updating the number of products 
-
-	return numOfProducts - 1;					// Returning the index of the next free place in the array
-}
-
-bool Seller::ProductExists(const char * nameOfProduct) const
+bool Seller::ProductExists(const string& nameOfProduct) const
 {
 	bool exists = false;
-
+	int numOfProducts = availableProducts.getSize();
 	for (int i = 0; i < numOfProducts && !exists; ++i)
 	{
-		if (strcmp(availableProducts[i]->getName(), nameOfProduct) == 0)
+		if (nameOfProduct.compare(availableProducts[i]->getName()) == 0)
 		{
 			exists = true;								// Product is already exists
 			cout << "A product with an identical name already exists in the seller's available products list\n";
@@ -82,13 +61,10 @@ bool Seller::ProductExists(const char * nameOfProduct) const
 	return exists;
 }
 
-void Seller::addProduct(char* prodName, float price, Category ctg)
+void Seller::addProduct(string& prodName, float price, Category ctg)
 {
-	Product * newProduct = nullptr;
-	const char * finalName = prodName;
-	newProduct = new Product(finalName, price, ctg,*this);
-	int nextIndexToInsert = getNextIndexToInsertProduct();
-	availableProducts[nextIndexToInsert] = newProduct;		// Inserting the product into the available products storage
+	Product * newProduct = new Product(prodName, price, ctg, *this);
+	availableProducts += newProduct;
 	cout << "Product Added successfully to the seller:\n";
 	cout << *this;										    // Printing the seller's details
 }
@@ -104,8 +80,9 @@ bool Seller::priceIsValid(float price) const
 
 void Seller::toOs(ostream& os) const
 {
+	int numOfProducts = availableProducts.getSize();
 	os << "My Available Products\n";
-	for (int i = 0; i < this->numOfProducts; ++i)
+	for (int i = 0; i < numOfProducts; ++i)
 	{
 		os << i << ". " << *(availableProducts[i]) << endl; // Using operator << in product class
 	}

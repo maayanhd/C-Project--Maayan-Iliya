@@ -1,61 +1,34 @@
 #include "Address.h"
 
 
-Address::Address(const char* countryName, const char* cityName, const char* streetName,const int* house)
+Address::Address(const string& countryName, const string& cityName, const string& streetName,const int* house)
 {
 
-	city = street = country = nullptr;
 	setCountry(countryName);
 	setCity(cityName);
 	setStreet(streetName);
 	setHouseInfo(house);
 }
 
-Address::Address(const Address& other) 
-{
-	city = street = country = nullptr;
-	setCountry(other.country);
-	setCity(other.city);
-	setStreet(other.street);
-	setHouseInfo(other.house);
-}
-
-Address::Address(Address && other)
-{
-	this->country = other.country;
-	this->city = other.city;
-	this->street = other.street;
-	setHouseInfo(other.house);
-	other.country = nullptr;
-	other.city = nullptr;
-	other.street = nullptr;
-	
-}
 
 Address ::~Address() 
 {
-	delete[] country;
-	delete[] city;
-	delete[] street;
 }
 
-void Address::setCountry(const char*countryName)
+void Address::setCountry(const string&countryName)
 {
-	delete[] country;
-	country = _strdup(countryName);
+	
+	country = countryName;
 
 }
-void Address:: setCity(const char*cityName)
+void Address:: setCity(const string& cityName)
 {
-
-	delete[] this->city;
-	this->city = _strdup(cityName);
+	city = cityName;
 }
 
-void Address :: setStreet(const char* streetName) 
+void Address :: setStreet(const string& streetName)
 {
-	delete[] street;
-	street = _strdup(streetName);
+	street = streetName;
 }
 void Address::setHouseInfo(const int* house) 
 {

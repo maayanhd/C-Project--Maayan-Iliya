@@ -2,31 +2,29 @@
 #define __ADDRESS_H
 #pragma warning(disable : 4996)
 #include "AuxFunctions.h"
-
+#include <string>
 class Address
 {
 public:
-	Address(const char* countryName, const char* cityName,
-		const char* streetName, const int* house); // default c'tor
-	Address(const Address&);					  // copy c'tor
-	Address(Address&&);							  // move c'tor
+	Address(const string& countryName, const string& cityName,
+		const string& streetName, const int* house); // default c'tor
 	~Address();									  // d'tor
 
 
 public:
-	void setCountry(const char* countryName);
-	void setCity(const char* cityName);
-	void setStreet(const char* streetName);
+	void setCountry(const string& countryName);
+	void setCity(const string& cityName);
+	void setStreet(const string& streetName);
 	void setHouseInfo(const int* house);
-	inline const char* getCountryName()						const
+	inline const string& getCountryName()						const
 	{
 		return country;
 	};
-	inline const char* getCityName()						const
+	inline const string& getCityName()						const
 	{
 		return city;
 	};
-	inline const char* getStreetName()						const
+	inline const string& getStreetName()						const
 	{
 		return street;
 	};
@@ -37,9 +35,9 @@ public:
 	void print()											const;
 
 private:
-	char* country; // country name
-	char* city;	   // The name of the city
-	char* street;  // The name of the street
+	string country; // country name
+	string city;	   // The name of the city
+	string street;  // The name of the street
 	int house[2];  // The house and entrance numbers
 
 	static constexpr int houseNumInd = 0;

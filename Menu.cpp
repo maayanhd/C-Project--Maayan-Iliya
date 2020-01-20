@@ -29,9 +29,8 @@ void Menu::printHeadLine() const
 }
 void Menu::newUser(bool isSeller, bool isCustomer) {
 	User * res;
-	char* username = nullptr, *password = nullptr;
-	char* tempusername=nullptr, *temppassword=nullptr;
-	char *country = nullptr, *city = nullptr, *street = nullptr;
+	string username, password;
+	string country, city, street;
 	int house[2];
 	int i = 0;
 	while (i != system.NOT_FOUND)  // Make sure that we don't have user with the same username
@@ -42,7 +41,6 @@ void Menu::newUser(bool isSeller, bool isCustomer) {
 		if (i != system.NOT_FOUND)
 		{
 			cout << "The username:" << username << " already exists in the system, please try again" << endl;
-			delete[] username;
 		}
 	}
 	cout << "Please Enter A Password\n";
@@ -77,34 +75,25 @@ void Menu::newUser(bool isSeller, bool isCustomer) {
 		res = new Seller(username, password, address);
 	}
 	system += res;
-	delete username;
-	delete password;
-	delete country;
-	delete city;
-	delete street;
 	
 }
 
 User* Menu::userIdent() {
-
-	char* username = new char[system.MAX_LENGTH];
+	string username;
 	User* user = nullptr;
 	int i;
 	cout << "Please enter a Username: " << endl;
-	getString(username, system.MAX_LENGTH);
+	std::getline(std::cin, username);
 	i = system.findUser(username);
 	while (i == system.NOT_FOUND)
 	{
 		cout << "The username you entered wasn't found, please try again or press 0 to return to the menu" << endl;
-		getString(username, system.MAX_LENGTH);
-		if (username[0] == '0') {
-			delete[] username;
+		std::getline(std::cin, username);
+		if (username[0] == '0')
 			return nullptr;
-		}
 		i = system.findUser(username);
 		
 	}
-	delete[] username;
 	return system.users[i];
 }
 
@@ -261,14 +250,13 @@ void Menu::addProduct() {
 	Category ctg;
 	int option;
 	float price;
-	char* nameOfProduct;
+	string nameOfProduct;
 	if (seller != nullptr) {
 		cout << " Please enter the name of the product you'd like to add:\n";
 		nameOfProduct = system.input(FREESTYLE, system.MAX_LENGTH);
 		while (seller->ProductExists(nameOfProduct)) // Validation of product name
 		{
 			cout << "a Product with an identical name has already been added to the seller, please try again.\n";
-			delete[] nameOfProduct;
 			nameOfProduct = system.input(FREESTYLE, system.MAX_LENGTH);
 		}
 		// Asking for a category
@@ -290,7 +278,6 @@ void Menu::addProduct() {
 			cin >> price;
 		}
 		seller->addProduct(nameOfProduct, price, ctg); // Adding the product to into the "list" of available products of the seller 
-		delete[] nameOfProduct;
 	}
 	else
 		cout << "No matching seller to the username you entered!\n";
@@ -327,15 +314,16 @@ void Menu::addToShoppingCart() {
 	Seller* currSeller = nullptr;
 	User* user = userIdent();
 	Customer* customer = dynamic_cast<Customer*>(user);
-	Product** prodArr = nullptr;
+	Array<Product*> prodArr;
 	Product* prod = nullptr;
 	int option = 1, choice;
 	int numOfProducts;
 	if (customer != nullptr)
 	{
-		if (system.numOfUsers > 0)
+		int size = system.users.size();
+		if (size > 0)
 			cout << "Choose one of the products listed below" << endl;
-		for (unsigned int i = 0; i < system.numOfUsers; ++i) {
+		for (unsigned int i = 0; i < size; ++i) {
 			currSeller = dynamic_cast<Seller*>(system.users[i]);
 			if (currSeller && (User*)currSeller!=(User*)customer)
 			{
@@ -359,7 +347,7 @@ void Menu::addToShoppingCart() {
 				cout << "The option you specified doesn't exist" << endl;
 			else {
 				unsigned int i;
-				for (i = 0; i < system.numOfUsers && choice >0; ++i) {
+				for (i = 0; i < size && choice >0; ++i) {
 					currSeller = dynamic_cast<Seller*>(system.users[i]);
 					if (currSeller && (User*)currSeller!=(User*)customer)
 					{
@@ -392,21 +380,22 @@ void Menu::order() {
 }
 
 void Menu::findProduct() {
-	char* prodName = new char[system.MAX_LENGTH];
+	string prodName;
 	int count = 0;
 	cout << "Enter a product name to find" << endl;
-	getString(prodName, system.MAX_LENGTH);
-	Product** prodArr;
+	getline(std::cin, prodName);
+	Array<Product*> prodArr;
 	Seller* currSeller;
-	int numOfProducts;
-	for (unsigned int i = 0; i < system.numOfUsers; ++i) {
+	int size = system.users.size();
+
+	for (unsigned int i = 0; i < size; ++i) {
 		currSeller = dynamic_cast<Seller*> (system.users[i]);
 		if (currSeller) {
-			numOfProducts = currSeller->getNumOfProducts();
+			size = currSeller->getNumOfProducts();
 			prodArr = currSeller->getProducts();
-			for (int j = 0; j < numOfProducts; ++j)
+			for (int j = 0; j < size; ++j)
 			{
-				if (strcmp(prodArr[j]->getName(), prodName) == 0) {
+				if (prodName.compare(prodArr[i]->getName()) == 0) {
 					cout << *(prodArr[j]);
 					count++;
 				}
@@ -415,6 +404,5 @@ void Menu::findProduct() {
 	}
 	if (count == 0)
 		cout << "This product wasn't found" << endl;
-	delete[] prodName;
 
 }

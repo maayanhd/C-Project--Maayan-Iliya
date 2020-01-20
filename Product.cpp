@@ -2,9 +2,8 @@
 
 
 int Product::counter = 0; // counter for the serial numbers of products 
-Product::Product(const char* prodName, float price, Category ctg,Seller& mySeller) : seller(mySeller),feedbacks(NULL) ,serial_number(++counter)
+Product::Product(const string& prodName, float price, Category ctg,Seller& mySeller) : seller(mySeller),feedbacks(NULL) ,serial_number(++counter)
 {
-	this->name = NULL; 
 	setName(prodName);
 	setPrice(price);
 	setCategory(ctg);
@@ -12,7 +11,6 @@ Product::Product(const char* prodName, float price, Category ctg,Seller& mySelle
 }
 Product::Product(const Product& other): seller(other.seller) , serial_number(++counter) 
 {
-	
 	setName(other.name);
 	setPrice(other.price);
 	setCategory(other.ctg);
@@ -22,11 +20,9 @@ Product :: Product(Product&& other):seller(other.seller),serial_number(++counter
 	this->name = other.name;
 	setCategory(other.ctg);
 	setPrice(other.price);
-	other.name = nullptr;
 }
 Product::~Product() 
 {
-	delete[] this->name;
 	for (int i = 0; i < numOfFeedbacks; ++i)
 		delete  feedbacks[i];
 	delete[] feedbacks;
@@ -47,10 +43,9 @@ void Product::setCategory(Category ctg)
 	this->ctg = ctg;
 
 }
-void Product:: setName(const char* name) 
+void Product:: setName(const string& name) 
 {
-	delete[] this->name;
-	this->name = strdup(name);
+	this->name = name;
 }
 
 

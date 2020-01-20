@@ -13,8 +13,9 @@ Customer_Seller:: ~Customer_Seller() {
 
 void Customer_Seller:: toOs(ostream& os) const 
 {
+	int numOfProducts = availableProducts.getSize();
 	os << "My Available Products:\n";
-	for (int i = 0; i < this->numOfProducts; ++i)
+	for (int i = 0; i < numOfProducts; ++i)
 	{
 		os << i+1 << ". " << *(availableProducts[i]) << endl; // Using operator << in product class
 	}
