@@ -18,8 +18,8 @@ public:
 public:
 	void order() const;
 	void addFeedback();
-	bool optionIsValid(int option) const ;
-	void leaveFeedback(int maxSize, string& feedback);
+	bool optionIsValid(unsigned int option) const ;
+	void leaveFeedback(string& feedback);
 	inline ShoppingCart& getCart() { return sCart; };
 	inline PurchaseHistory& getpHistory(){ return history; };
 
@@ -32,7 +32,6 @@ public:
 		virtual void toOs(ostream& os) const;
 
 	protected:
-		static constexpr int MAX_LENGTH = 21;
 		ShoppingCart sCart;
 		PurchaseHistory history;
 };

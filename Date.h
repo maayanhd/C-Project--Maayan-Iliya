@@ -3,9 +3,9 @@
 
 #pragma warning (disable:4996)
 #include <iostream>
-#include <string.h>
 #include "Array.h"
 #include <vector>
+#include <string>
 using namespace std;
 
 class Date

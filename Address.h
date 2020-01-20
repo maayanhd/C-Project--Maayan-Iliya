@@ -2,7 +2,10 @@
 #define __ADDRESS_H
 #pragma warning(disable : 4996)
 #include "AuxFunctions.h"
+#include "Array.h"
+#include <vector>
 #include <string>
+
 class Address
 {
 public:
@@ -42,7 +45,6 @@ private:
 
 	static constexpr int houseNumInd = 0;
 	static constexpr int entranceInd = 1;
-	static constexpr int MAX_LENGTH = 20;
 };
 
 

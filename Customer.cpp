@@ -1,6 +1,5 @@
 #include "Seller.h"
 // constant variable for the maximal length of the feedback string
-constexpr int MAX_LENGTH_FEEDBACK = 150;
 constexpr int DAY_LENGTH = 2;
 constexpr int MONTH_LENGTH = 2;
 constexpr int YEAR_LENGTH = 4;
@@ -26,7 +25,8 @@ void Customer::addFeedback()
 
 	bool answerIsValid = false;
 	Feedback *newFeedback = nullptr;
-	if (history.pHistorySize!=0) // The customer has already bought products
+	int historySize = history.prodArr.size();
+	if (historySize !=0) // The customer has already bought products
 	{
 		cout << "Choose a product to leave a feedback:\n";
 		// Printing the products that has been purchased by the customer
@@ -49,13 +49,12 @@ void Customer::addFeedback()
 				if (ch == 'y' || ch == 'Y')
 				{
 				    Seller & relevantSeller = history.prodArr[option - 1]->getSeller(); // Getting the relevant seller 
-					int indexToInsert = relevantSeller.getNextIndexToInsert(); // Finding the matching index to insert the feedback
-					leaveFeedback(MAX_LENGTH_FEEDBACK, feedback); // The process of leaving the feedback string 						
+					leaveFeedback(feedback); // The process of leaving the feedback string 						
 					getValidDate(day, month, year); // asking for the date
 
 					// Adding the feedback in the next free place in the feedbacks array of the seller
 					newFeedback = new Feedback(*this, feedback, history.prodArr[option - 1], day, month, year);
-					relevantSeller.getFeedbacks()[indexToInsert] = newFeedback;
+					relevantSeller.getFeedbacks().push_back (newFeedback);
 					history.prodArr[option - 1]->addFeedback(newFeedback);
 					history.myFeedbacks[option - 1] = newFeedback;
 					
@@ -134,11 +133,11 @@ bool Customer::dateIsValid(unsigned int *day, unsigned int * month, unsigned int
 }
 
 
-bool Customer::optionIsValid(int option) const
+bool Customer::optionIsValid(unsigned int option) const
 {
-	return (option >= 1 && option <= history.getHistorySize());
+	return (option >= 1 && option <= history.prodArr.size());
 }
-void  Customer::leaveFeedback(int maxSize, string& feedback)
+void  Customer::leaveFeedback(string& feedback)
 {
 	bool isValid = true; // Allocating the feedback string to maximal size
 	do
@@ -150,12 +149,9 @@ void  Customer::leaveFeedback(int maxSize, string& feedback)
 
 }
 void Customer::order() const
-	{
-	Product** products = sCart.getProducts();
-	int numOfProducts = sCart.getNumOfProducts();
+{
 	cout << "Customer details: " << endl;
 	cout<<*this;
-
 }
 void Customer::toOs(ostream& os) const
 {

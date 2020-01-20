@@ -14,13 +14,9 @@ public:
 	~ShoppingCart();
 
 public:
-	inline int getNumOfProducts()					const
-		{ return numOfProducts; };
-	bool setNumOfProducts(int updatedCountOfProducts);
 	void add(Product* prod);		// add product to the shopping cart
-	bool remove(int indToRemove);	// remove product from the shopping cart
 	void toEmpty();					// removes all the products from the shopping cart
-	inline Product** getProducts()					const 
+	inline const vector<Product*>& getProducts()	const 
 		{ return products; };
 	inline float getTotalPrice()					const 
 		{ return totalPrice; };
@@ -31,9 +27,7 @@ public:
 	
 private:
 	Customer& customer;
-	Product** changeArrSize(int newSize); // creates the copy of the ptr to products array but with the new size 
-	Product** products;					  //Cannot change the products, but can change the pointer 
-	int numOfProducts;
+	vector<Product*> products;					  //Cannot change the products, but can change the pointer 
 	float totalPrice;
 	
 };

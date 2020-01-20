@@ -7,7 +7,6 @@ Product::Product(const string& prodName, float price, Category ctg,Seller& mySel
 	setName(prodName);
 	setPrice(price);
 	setCategory(ctg);
-	numOfFeedbacks = 0;
 }
 Product::Product(const Product& other): seller(other.seller) , serial_number(++counter) 
 {
@@ -21,13 +20,14 @@ Product :: Product(Product&& other):seller(other.seller),serial_number(++counter
 	setCategory(other.ctg);
 	setPrice(other.price);
 }
-Product::~Product() 
+Product::~Product()
 {
-	for (int i = 0; i < numOfFeedbacks; ++i)
-		delete  feedbacks[i];
-	delete[] feedbacks;
+	int size = feedbacks.size();
+	for (int i = 0; i <size; i++) {
+		delete feedbacks[i];
+	}
+	//feedbacks.erase(feedbacks.begin(), feedbacks.end());
 }
-
 bool Product::setPrice(float price)
 {
 	if (price <= 0)
@@ -51,14 +51,7 @@ void Product:: setName(const string& name)
 
 void Product::addFeedback(Feedback *feedback) 
 {
-	// Allocating a new feedbacks array to make room for the new feedback
-	Feedback** arr = new Feedback*[numOfFeedbacks + 1];
-	for (int i = 0; i < numOfFeedbacks; ++i) // Copying addresses to existing feedbacks
-		arr[i] = feedbacks[i];
-	arr[numOfFeedbacks] = feedback;
-	delete[] feedbacks;						// Deleting the old array of feedbacks
-	feedbacks = arr;
-	numOfFeedbacks++;					    // Updating number of feedbacks (including the new feedback that is about to be added)
+	feedbacks.push_back(feedback);
 }
 
 ostream& operator<<(ostream& os, const Product& product)
@@ -69,9 +62,16 @@ ostream& operator<<(ostream& os, const Product& product)
 	os << "Category: " << categoryName[product.getCategory()] << endl;
 	os << "Feedbacks: "<<endl;
 
-	for (int i = 0; i < product.numOfFeedbacks; ++i)
+	int size = product.feedbacks.size(); // Number of feedbacks of the product
+	for (int i = 0; i < size; ++i)
 	{
 		os << i + 1 << ". " << *(product.feedbacks[i]) << endl;
 	}
 	return os;
 }
+
+bool Product:: operator== (const Product& product)
+{
+	return this->serial_number == product.serial_number;
+}
+

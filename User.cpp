@@ -40,7 +40,12 @@ void User::setPassword(const string& password)
 	this->password = password;
 }
 
+bool User:: operator==(const User& user)
+{
+	return this->username.compare(user.username) == 0;
+}
+
+
 User:: ~User()
 {
-
 }

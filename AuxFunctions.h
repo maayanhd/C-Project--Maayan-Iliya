@@ -5,6 +5,5 @@
 using namespace std;
 
 void cleanBuffer();
-bool getString(string& str, int maxSize);
 
 #endif

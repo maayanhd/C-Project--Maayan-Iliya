@@ -23,7 +23,7 @@ bool E_Commerce::isValid(const string& str,strtype type) const {
 	return true;
 
 }
-string E_Commerce:: input(strtype type, int maxSize) 
+string E_Commerce:: input(strtype type) 
 {
 	bool valid = false;
 	string res;
@@ -43,13 +43,16 @@ void E_Commerce:: operator+=(User* newUser) {
 	users.push_back(newUser);
 
 }
-int E_Commerce::findUser(const string& username) {
+User* E_Commerce::findUser(const string& username) {
 
-	for (unsigned int i = 0; i < numOfUsers; ++i) {
-		if ((username.compare(users[i]->getUserName())==0))
-			return i;
+	vector<User*>::iterator itr = users.begin();
+	vector<User*>::iterator itrEnd = users.end();
+		
+	for (;itr!=itrEnd; ++itr) {
+		if ((username.compare( (*itr)->getUserName() )==0 ))
+			return *itr;
 	}
-	return NOT_FOUND;
+	return NULL;
 }
 
 E_Commerce::E_Commerce()
@@ -58,10 +61,11 @@ E_Commerce::E_Commerce()
 }
 
 void E_Commerce ::emptyUsers(){
-	vector<User*> ::iterator itr = users.begin();
-	vector<User*> ::iterator itrEnd = users.end();
-	for (; itr != itrEnd; ++itr)
-		users.erase(itr);
+	int size = users.size();
+	for (int i = 0; i < size; i++) {
+		delete users[i];
+	}/*
+	users.erase(users.begin(), users.end());*/
 
 }
 

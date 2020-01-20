@@ -28,29 +28,29 @@ void Menu::printHeadLine() const
 	
 }
 void Menu::newUser(bool isSeller, bool isCustomer) {
-	User * res;
+	User * res = nullptr;
 	string username, password;
 	string country, city, street;
 	int house[2];
-	int i = 0;
-	while (i != system.NOT_FOUND)  // Make sure that we don't have user with the same username
+	bool isValid = false;
+	while (!isValid)  // Make sure that we don't have user with the same username
 	{
 		cout << "Please enter userName:\n";
-		username = system.input(MIXED, system.MAX_LENGTH);
-		i = system.findUser(username);
-		if (i != system.NOT_FOUND)
-		{
-			cout << "The username:" << username << " already exists in the system, please try again" << endl;
-		}
+		username = system.input(MIXED);
+		res = system.findUser(username);
+		if (res!=NULL)
+			cout << "The username:" << username << " already exists in the system, please try again" << endl;		
+		else
+			isValid = true;
 	}
 	cout << "Please Enter A Password\n";
-	password = system.input(FREESTYLE, system.MAX_LENGTH);
+	password = system.input(FREESTYLE);
 	cout << "Please Enter A Country\n";
-	country = system.input(LETTERS, system.MAX_LENGTH);
+	country = system.input(LETTERS);
 	cout << "Please Enter A City\n";
-	city = system.input(LETTERS, system.MAX_LENGTH);
+	city = system.input(LETTERS);
 	cout << "Please Enter A Street\n";
-	street = system.input(MIXED, system.MAX_LENGTH);
+	street = system.input(MIXED);
 	cout << "Enter the house number" << endl;
 	cin >> house[0];
 	cout << "Enter the entrance number" << endl;
@@ -81,20 +81,19 @@ void Menu::newUser(bool isSeller, bool isCustomer) {
 User* Menu::userIdent() {
 	string username;
 	User* user = nullptr;
-	int i;
 	cout << "Please enter a Username: " << endl;
 	std::getline(std::cin, username);
-	i = system.findUser(username);
-	while (i == system.NOT_FOUND)
+	user= system.findUser(username);
+	while (user==NULL)
 	{
 		cout << "The username you entered wasn't found, please try again or press 0 to return to the menu" << endl;
 		std::getline(std::cin, username);
 		if (username[0] == '0')
 			return nullptr;
-		i = system.findUser(username);
+		user = system.findUser(username);
 		
 	}
-	return system.users[i];
+	return user;
 }
 
 void Menu::show(bool& exit) {
@@ -236,9 +235,13 @@ void Menu::compareCustomers() {
 void Menu:: showAllCustomersSellers() const
 {
 	Customer_Seller* customerSeller = nullptr;
-	for (unsigned int i = 0; i < system.numOfUsers; ++i)
+	
+	vector <User*> ::const_iterator itr = system.users.begin();
+	vector <User*> ::const_iterator itrEnd = system.users.end();
+	
+	for ( ; itr!=itrEnd; ++itr)
 	{
-		customerSeller = dynamic_cast<Customer_Seller*>(system.users[i]);
+		customerSeller = dynamic_cast<Customer_Seller*>(*itr);
 		if (customerSeller)
 			cout << *(customerSeller) << endl;
 	}
@@ -253,11 +256,11 @@ void Menu::addProduct() {
 	string nameOfProduct;
 	if (seller != nullptr) {
 		cout << " Please enter the name of the product you'd like to add:\n";
-		nameOfProduct = system.input(FREESTYLE, system.MAX_LENGTH);
+		nameOfProduct = system.input(FREESTYLE);
 		while (seller->ProductExists(nameOfProduct)) // Validation of product name
 		{
 			cout << "a Product with an identical name has already been added to the seller, please try again.\n";
-			nameOfProduct = system.input(FREESTYLE, system.MAX_LENGTH);
+			nameOfProduct = system.input(FREESTYLE);
 		}
 		// Asking for a category
 		cout << " Please choose a category for the product:\n" << "choose an option by pressing the relevant number:\n";
@@ -320,15 +323,18 @@ void Menu::addToShoppingCart() {
 	int numOfProducts;
 	if (customer != nullptr)
 	{
-		int size = system.users.size();
-		if (size > 0)
+		if (!system.users.empty())
 			cout << "Choose one of the products listed below" << endl;
-		for (unsigned int i = 0; i < size; ++i) {
-			currSeller = dynamic_cast<Seller*>(system.users[i]);
+
+		vector<User*>::iterator itr = system.users.begin();
+		vector<User*>::iterator itrEnd = system.users.end();
+
+		for (; itr != itrEnd ; ++itr) {
+			currSeller = dynamic_cast<Seller*>(*itr);
 			if (currSeller && (User*)currSeller!=(User*)customer)
 			{
 				prodArr = currSeller->getProducts();
-				numOfProducts = currSeller->getNumOfProducts();
+				numOfProducts = prodArr.getSize();
 				for (int j = 0; j < numOfProducts; ++j) {
 					cout << option << ". ";
 					cout<<*(prodArr[j]);
@@ -346,12 +352,12 @@ void Menu::addToShoppingCart() {
 			if (choice > option)
 				cout << "The option you specified doesn't exist" << endl;
 			else {
-				unsigned int i;
-				for (i = 0; i < size && choice >0; ++i) {
-					currSeller = dynamic_cast<Seller*>(system.users[i]);
+				vector<User*>::iterator itr = system.users.begin(); // Updating the iterator of users
+				for(; itr != itrEnd && choice > 0; ++itr) {
+					currSeller = dynamic_cast<Seller*>(*itr);
 					if (currSeller && (User*)currSeller!=(User*)customer)
 					{
-						numOfProducts = currSeller->getNumOfProducts();
+						numOfProducts = currSeller->getProducts().getSize(); // Using iterator to het number of products 
 						choice -= numOfProducts;
 					}
 				}
@@ -386,16 +392,18 @@ void Menu::findProduct() {
 	getline(std::cin, prodName);
 	Array<Product*> prodArr;
 	Seller* currSeller;
-	int size = system.users.size();
+	unsigned int size = system.users.size();
+	vector<User*>::iterator itr = system.users.begin();
+	vector<User*>::iterator itrEnd = system.users.end();
 
-	for (unsigned int i = 0; i < size; ++i) {
-		currSeller = dynamic_cast<Seller*> (system.users[i]);
+	for (; itr != itrEnd; ++itr) {
+		currSeller = dynamic_cast<Seller*> (*itr);
 		if (currSeller) {
-			size = currSeller->getNumOfProducts();
+
 			prodArr = currSeller->getProducts();
-			for (int j = 0; j < size; ++j)
+			for (unsigned int j = 0; j < size; ++j)
 			{
-				if (prodName.compare(prodArr[i]->getName()) == 0) {
+				if (prodName.compare( (*itr)->getUserName() ) == 0) {
 					cout << *(prodArr[j]);
 					count++;
 				}

@@ -8,43 +8,19 @@ Seller:: ~Seller()
 	// Releasing each and every pointer to product 
 	for (int i = 0; i < size; ++i)
 		delete availableProducts[i];
-	delete[] this->feedbacks;
 
 }
 
 Seller::Seller(const Seller& other) :User(other)
 {
-	
 	this->availableProducts = other.availableProducts;
-	if(!other.feedbacks)			// In case the array isn't null
-		memcpy(this->feedbacks, other.feedbacks, other.numOfFeedbacks);
-	else
-		this->feedbacks = nullptr;
+		feedbacks = other.feedbacks;
 }
 Seller::Seller(Seller&& other) : User( move(other) )
 {
 	this->availableProducts = other.availableProducts;
 	this->feedbacks = other.feedbacks;
-	other.feedbacks = nullptr;
 }
-
-
-int Seller::getNextIndexToInsert()
-{
-	// Allocating new array of pointers to feedbacks with one more room for the new pointer to feedback
-	Feedback ** tempFeedbacks = new Feedback *[numOfFeedbacks + 1];
-
-	for (int i = 0; i < numOfFeedbacks; ++i)
-	{
-		tempFeedbacks[i] = feedbacks[i]; // Copying the addresses of feedbacks to the new array
-	}
-	delete[] feedbacks;					 // Releasing the old array of pointers to feedbacks 
-	feedbacks = tempFeedbacks;			 // setting the feedbacks array to be the new array 
-	++numOfFeedbacks;					 // updating the number of feedbacks (including the new feedback that is about to be added)
-
-	return numOfFeedbacks - 1;			 // Returning the index of the next free place in the array 
-}
-
 
 bool Seller::ProductExists(const string& nameOfProduct) const
 {
@@ -86,8 +62,6 @@ void Seller::toOs(ostream& os) const
 	{
 		os << i << ". " << *(availableProducts[i]) << endl; // Using operator << in product class
 	}
-
-
 }
 
 

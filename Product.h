@@ -3,8 +3,11 @@
 #pragma warning (disable:4996)
 
 #include <iostream>
-#include <string.h>
+#include "Array.h"
+#include <vector>
+#include <string>
 using namespace std;
+
  
 class Seller; 
 class Feedback;
@@ -40,6 +43,7 @@ class Product
 
 	public:
 		friend ostream& operator<<(ostream& os, const Product& product);
+		bool operator== (const Product& product);
 
 	private:
 		static int counter;			// Keeps counting added products (in the entire system)
@@ -49,8 +53,7 @@ class Product
 		Category ctg;
 
 		Seller & seller;			// ref to the seller of this product 
-		Feedback** feedbacks;		// Array of pointers to feedbacks of this product
-		int numOfFeedbacks;
+		vector <Feedback*> feedbacks;		// Array of pointers to feedbacks of this product
 	};
 
 

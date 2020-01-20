@@ -28,6 +28,7 @@ class User // Abstract class
 	public:
 		virtual void toOs(ostream& os) const = 0;
 		friend ostream& operator<<(ostream& os, const User& user);
+		bool operator==(const User& user);
 };
 
 

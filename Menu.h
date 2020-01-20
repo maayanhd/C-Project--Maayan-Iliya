@@ -30,4 +30,5 @@ public:
 private:
 	E_Commerce system;
 };
+
 #endif
