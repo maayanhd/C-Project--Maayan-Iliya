@@ -38,9 +38,52 @@ string E_Commerce:: input(strtype type)
 	
 	return res;
 }
-void E_Commerce:: operator+=(User* newUser) {
+void E_Commerce::save() {
+
+	ofstream outFile("Users.txt", ios::trunc);
+	for (auto user : users) {
+		outFile << *user;
+	}
+	outFile.close();
+
+}
+
+void E_Commerce::load() {
+	ifstream inFile("Users.txt", ios::_Nocreate);
+	char delim;
+	int identType;
+	string username, password, country, city, street;
+	int houseInfo[2];
+	while (!inFile.eof()) {
+		inFile >> identType;
+		getline(inFile, username, ',');
+		getline(inFile, password, ',');
+		getline(inFile, country, ',');
+		getline(inFile, city, ',');
+		getline(inFile, street, ',');
+		inFile >> houseInfo[0];
+		inFile >> delim;
+		inFile >> houseInfo[1];
+		Address address(country, city, street, houseInfo);
+		if (identType == 0) {
+			users.push_back(new Seller(username, password, address));
+		}
+		else if (identType == 1) {
+			users.push_back(new Customer(username, password, address));
+		}
+		else
+		{
+			Customer c(username, password, address);
+			Seller s(username, password, address);
+			users.push_back(new Customer_Seller(c,s));
+		}
 	
-	users.push_back(newUser);
+	}
+	inFile.close();
+}
+void E_Commerce:: operator+=( User& newUser) {
+	
+	users.push_back(&newUser);
 
 }
 User* E_Commerce::findUser(const string& username) {
@@ -57,16 +100,11 @@ User* E_Commerce::findUser(const string& username) {
 
 E_Commerce::E_Commerce()
 {
-
 }
 
 void E_Commerce ::emptyUsers(){
-	int size = users.size();
-	for (int i = 0; i < size; i++) {
-		delete users[i];
-	}/*
-	users.erase(users.begin(), users.end());*/
-
+	for (auto user:users)
+		delete user;
 }
 
 E_Commerce::~E_Commerce()

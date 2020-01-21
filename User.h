@@ -2,6 +2,10 @@
 #define __USER_H 
 #include "Address.h"
 
+class Customer_Seller;
+class Customer;
+class Seller;
+
 class User // Abstract class
 {
 	protected: 

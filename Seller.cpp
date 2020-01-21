@@ -14,7 +14,7 @@ Seller:: ~Seller()
 Seller::Seller(const Seller& other) :User(other)
 {
 	this->availableProducts = other.availableProducts;
-		feedbacks = other.feedbacks;
+	this->feedbacks = other.feedbacks;
 }
 Seller::Seller(Seller&& other) : User( move(other) )
 {

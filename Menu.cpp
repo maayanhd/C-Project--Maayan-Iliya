@@ -63,7 +63,7 @@ void Menu::newUser(bool isSeller, bool isCustomer) {
 	}
 	Address address(country, city, street, house);
 	if (isSeller && isCustomer) {
-		Customer c(username, password, address); // PROBLEM
+		Customer c(username, password, address);
 		Seller s(username, password, address);
 		res = new Customer_Seller(c, s);
 	}
@@ -74,7 +74,7 @@ void Menu::newUser(bool isSeller, bool isCustomer) {
 	{
 		res = new Seller(username, password, address);
 	}
-	system += res;
+	system += *res;
 	
 }
 
@@ -116,7 +116,8 @@ void Menu::show(bool& exit) {
 	cout << "10. Show All Customers that are Sellers" << endl;
 	cout << "11.Find product by name" << endl;
 	cout << "12.Operator menu" << endl;
-	cout << "13.Exit" << endl << endl;
+	cout << "13. Load from previous save" << endl;
+	cout << "14.Exit" << endl << endl;
 	cin >> input;
 	cleanBuffer();
 	} while (cin.fail());
@@ -162,6 +163,10 @@ void Menu::show(bool& exit) {
 		operatorMenu();
 		break;
 	case 13:
+		system.load();
+		break;
+	case 14:
+		system.save();
 		exit = true;
 		break;
 	}

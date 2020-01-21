@@ -18,14 +18,15 @@ class E_Commerce
 		~E_Commerce();  
 		friend class Menu;
     
-		
+		void save();
+		void load();
 		string input(strtype type);
 		void emptyUsers();
 		User* findUser(const string& username);
 		bool isValid(const string& str,strtype type)		const;
 
 public:
-	void operator+=(User* newUser);
+	void operator+=(User& newUser);
 
 
 };
