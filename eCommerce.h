@@ -18,8 +18,8 @@ class E_Commerce
 		~E_Commerce();  
 		friend class Menu;
     
-		void save();
-		void load();
+		void save(); // saves the users information in file
+		void load(); // loads and creates users from file
 		string input(strtype type);
 		void emptyUsers();
 		User* findUser(const string& username);
@@ -27,10 +27,7 @@ class E_Commerce
 
 public:
 	void operator+=(User& newUser);
-
-
 };
-
 
 #endif
 

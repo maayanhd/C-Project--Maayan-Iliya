@@ -23,7 +23,7 @@ ostream& operator<<(ostream& os, const User& user)
 			identType = 0;
 
 		os << identType << user.getUserName() << "," << user.getPassword() << ",";
-		os << user.address.getCountryName() << "," << user.address.getCountryName() << ",";
+		os << user.address.getCountryName() << "," << user.address.getCityName() << ",";
 		os << user.address.getStreetName() << "," << (user.address.getHouseInfo())[0] << ",";
 		os << (user.address.getHouseInfo())[1] << endl;
 		

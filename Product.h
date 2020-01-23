@@ -23,7 +23,7 @@ class Product
 			Category ctg ,Seller& mySeller);		// c'tor
 		Product(const Product&);				// copy c'tor
 		Product(Product&&);						// move c'tor
-		~Product();								// d'tor
+		~Product();							// d'tor
 
 	public:
 		inline const string& getName()											const
