@@ -1,0 +1,7 @@
+1Maayan,1234,Israel,tel aviv,Pinsker,25,3
+1Ilia,234h,Israel,Bat Yam,Daniel,17,1
+2Nethan,nLiEretzAcheret,Uganda,talefeobanun,147,4,1
+0Peleg,1234,Israel,tel aviv,ein charod,9,3
+0dodo,abcd,Israel,Afula,Hateenim,5,2
+0Nissim,!ab34c?,United kingdom,Manchesster,The block,11,1
+0Nissim,!ab34c?,United kingdom,Manchesster,The block,11,1

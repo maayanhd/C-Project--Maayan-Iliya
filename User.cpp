@@ -1,53 +1,69 @@
 #include "User.h"
 
+#include "Customer_Seller.h"
 ostream& operator<<(ostream& os, const User& user)
 {
-	
-	os << "UserName: " << user.getUserName() << endl;
-	os << "Password: " << user.getPassword() << endl;
-	os << "Address: " << user.address.getStreetName();
-	os << " " << (user.address.getHouseInfo())[0] << "/";
-	os << (user.address.getHouseInfo())[1] << ", ";
-	os << user.address.getCityName() << ", " << user.address.getCountryName() << endl;
-	user.toOs(os);
+	if (typeid(os) != typeid(ofstream)) {
+		os << "UserName: " << user.getUserName() << endl;
+		os << "Password: " << user.getPassword() << endl;
+		os << "Address: " << user.address.getStreetName();
+		os << " " << (user.address.getHouseInfo())[0] << "/";
+		os << (user.address.getHouseInfo())[1] << ", ";
+		os << user.address.getCityName() << ", " << user.address.getCountryName() << endl;
+		user.toOs(os);
+	}
+	else
+	{
+		int identType;
+		if (typeid(user) == typeid(Customer_Seller))// save Customer-Seller as2
+			identType = 2;
+		else if (typeid(user) == typeid(Customer))// Save Customer as 1 
+			identType = 1; 
+		else // Save Seller as 0
+			identType = 0;
+
+		os << identType << user.getUserName() << "," << user.getPassword() << ",";
+		os << user.address.getCountryName() << "," << user.address.getCityName() << ",";
+		os << user.address.getStreetName() << "," << (user.address.getHouseInfo())[0] << ",";
+		os << (user.address.getHouseInfo())[1] << endl;
+		
+	}
 	return os;
 }
 
-User::User(const char* username, const char* password,Address a)
-	:address(a) {
-	this->username = this->password = nullptr;
+User::User(const string& username, const string& password,Address a)
+	:address(a) 
+{
 	setUserName(username);
 	setPassword(password);
 };
 
 User::User(const User& other): address(other.address) {
-	username = password = nullptr;
 	setUserName(other.username);
 	setPassword(other.password);
 
 }
-User::User(User&& other) : address(other.address) {
-	this->username = other.username;
-	this->password = other.password;
-	other.username = nullptr;
-	other.password = nullptr;
+User::User(User&& other) : address(move(other.address)) {
+    username = move(other.username);
+	password = move(other.password);
 
 }
 
-void User::setUserName(const char* username)
+void User::setUserName(const string& username)
 {
-	delete[] this->username;
-	this->username = strdup(username);
+	this->username = username;
 }
-void User::setPassword(const char* password)
+void User::setPassword(const string& password)
 {
-	delete[] this->password;
-	this->password = strdup(password);
+	this->password = password;
 }
+
+bool User:: operator==(const User& user)
+{
+	return this->username.compare(user.username) == 0;
+}
+
 
 User:: ~User()
 {
-	// Releasing the strings of username and password 
-	delete[] this->username;
-	delete[] this->password;
 }

@@ -11,14 +11,12 @@ public:
 	PurchaseHistory();
 	~PurchaseHistory();
 
-	void add(Product** products, int numOfProducts);
+	void add(vector<Product*>& products);
 	void setHistorySize(int size);
-	inline int getHistorySize() const	   { return pHistorySize; }
 	void print() const;
 	
 private:
-	int pHistorySize;
-	Product** prodArr;				// Products purchased by the customer 
-	Feedback** myFeedbacks;			// Pointers to feedbacks of purchased products, myFeedbacks[i] related to prodArr[i]
+	vector<Product*> prodArr;				// Products purchased by the customer 
+	vector<Feedback*> myFeedbacks;			// Pointers to feedbacks of purchased products, myFeedbacks[i] related to prodArr[i]
 };
 #endif

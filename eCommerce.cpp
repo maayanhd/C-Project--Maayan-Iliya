@@ -1,20 +1,9 @@
 #include "eCommerce.h"
 
 
-void E_Commerce:: changeUsersArrSize()
-{
-	maxSize *= 2;
-	User** newArr = new User*[maxSize];
-	for (unsigned int i = 0; i < numOfUsers; ++i)
-		newArr[i] = users[i];
-	delete[] users;
-	this->users = newArr;
-    
-}
+bool E_Commerce::isValid(const string& str,strtype type) const {
 
-bool E_Commerce::isValid(const char* str,strtype type) const {
-
-	int len = strlen(str);
+	int len = str.length();
 	for (int i = 0; i < len; i++) {
 		switch (type)
 		{
@@ -34,52 +23,88 @@ bool E_Commerce::isValid(const char* str,strtype type) const {
 	return true;
 
 }
-char* E_Commerce:: input(strtype type, int maxSize) 
+string E_Commerce:: input(strtype type) 
 {
 	bool valid = false;
-	char* res = new char[maxSize];
+	string res;
 	int iterationsCounter = 1;
 	do {
 		if (iterationsCounter > 1)
 			cout << "Invalid input, please try again\n";
-		valid = getString(res, maxSize);  
-		if (valid)						 // in case the string is valid - in manners of length
-			valid = isValid(res, type);  // content of string validation
+		getline(std::cin, res);  
+	    valid = isValid(res, type);  // content of string validation
 		++iterationsCounter;
 	} while (!valid);
 	
 	return res;
 }
-void E_Commerce:: operator+=(User* newUser) {
-	if (numOfUsers == maxSize)
-		changeUsersArrSize();
-	users[numOfUsers++] = newUser;
+void E_Commerce::save() {
+
+	ofstream outFile("Users.txt", ios::trunc);
+	for (auto user : users) {
+		outFile << *user;
+	}
+	outFile.close();
 
 }
-int E_Commerce::findUser(const char* username) {
 
-	for (unsigned int i = 0; i < numOfUsers; ++i) {
-		if (strcmp(username, users[i]->getUserName()) == 0)
-			return i;
+void E_Commerce::load() {
+	ifstream inFile("Users.txt", ios::_Nocreate);
+	char delim;
+	int identType;
+	string username, password, country, city, street;
+	int houseInfo[2];
+	while (!inFile.eof()) {
+		inFile >> identType;
+		getline(inFile, username, ',');
+		getline(inFile, password, ',');
+		getline(inFile, country, ',');
+		getline(inFile, city, ',');
+		getline(inFile, street, ',');
+		inFile >> houseInfo[0];
+		inFile >> delim;
+		inFile >> houseInfo[1];
+		Address address(country, city, street, houseInfo);
+		if (identType == 0) {
+			users.push_back(new Seller(username, password, address));
+		}
+		else if (identType == 1) {
+			users.push_back(new Customer(username, password, address));
+		}
+		else
+		{
+			Customer c(username, password, address);
+			Seller s(username, password, address);
+			users.push_back(new Customer_Seller(c,s));
+		}
+	
 	}
-	return NOT_FOUND;
+	inFile.close();
+}
+void E_Commerce:: operator+=( User& newUser) {
+	
+	users.push_back(&newUser);
+
+}
+User* E_Commerce::findUser(const string& username) {
+
+	vector<User*>::iterator itr = users.begin();
+	vector<User*>::iterator itrEnd = users.end();
+		
+	for (;itr!=itrEnd; ++itr) {
+		if ((username.compare( (*itr)->getUserName() )==0 ))
+			return *itr;
+	}
+	return NULL;
 }
 
 E_Commerce::E_Commerce()
 {
-	numOfUsers = 0;
-	maxSize = 1;
-	users = new User*[maxSize];
 }
 
 void E_Commerce ::emptyUsers(){
-
-	for (unsigned int i = 0; i < numOfUsers; ++i) {
-		delete users[i];
-	}
-	delete[] users;
-	numOfUsers = 0;
-	maxSize = 1;
+	for (auto user:users)
+		delete user;
 }
 
 E_Commerce::~E_Commerce()

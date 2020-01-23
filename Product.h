@@ -3,8 +3,11 @@
 #pragma warning (disable:4996)
 
 #include <iostream>
-#include <string.h>
+#include "Array.h"
+#include <vector>
+#include <string>
 using namespace std;
+
  
 class Seller; 
 class Feedback;
@@ -16,14 +19,14 @@ class Product
 {
 	public:
 
-		Product(const char* prodName, float price, 
+		Product(const string& prodName, float price,
 			Category ctg ,Seller& mySeller);		// c'tor
 		Product(const Product&);				// copy c'tor
 		Product(Product&&);						// move c'tor
-		~Product();								// d'tor
+		~Product();							// d'tor
 
 	public:
-		inline char* getName()											const 
+		inline const string& getName()											const
 			{ return name; };
 		inline unsigned int getSerialNumber()							const 
 			{ return serial_number; };
@@ -35,22 +38,22 @@ class Product
 			{ return price; };											
 		bool setPrice(float price);										
 		void setCategory(Category ctg);									
-		void setName(const char* name);									
+		void setName(const string& name);
 		void addFeedback(Feedback* feedback);
 
 	public:
 		friend ostream& operator<<(ostream& os, const Product& product);
+		bool operator== (const Product& product);
 
 	private:
 		static int counter;			// Keeps counting added products (in the entire system)
-		char* name;
+		string name;
 		float price;				// in NIS
 		unsigned int serial_number; // Only using a common counter to produce the serial numbers 
 		Category ctg;
 
 		Seller & seller;			// ref to the seller of this product 
-		Feedback** feedbacks;		// Array of pointers to feedbacks of this product
-		int numOfFeedbacks;
+		vector <Feedback*> feedbacks;		// Array of pointers to feedbacks of this product
 	};
 
 

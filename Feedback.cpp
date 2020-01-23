@@ -1,6 +1,6 @@
 #include "Customer.h"
 
-Feedback::Feedback(const Customer& customer, char * feedback, Product * pProduct, 
+Feedback::Feedback(const Customer& customer, string& feedback, Product * pProduct, 
 	unsigned int* day, unsigned int* month, unsigned int* year): dateWritten(day, month, year), refCustomer(customer)
 {
 	setProduct(pProduct);
@@ -16,19 +16,14 @@ Feedback::Feedback(Feedback && other):refCustomer(other.getCustomer()), dateWrit
 {
 	this->pProduct = other.pProduct;
 	this->feedback = other.feedback;
-	other.feedback = nullptr;
 }
 Feedback::~Feedback()
 {
-	 // Releasing the string represents a feedback 
-	delete[] feedback;
 }
 
-void Feedback:: setFeedback(char* feedback)   // Type is allocated in eCommerce
+void Feedback:: setFeedback(const string& feedback)   // Type is allocated in eCommerce
 {
-	int length = strlen(feedback) + 1;
-	this->feedback= new char[length];		  // Allocating the feedback field 
-	memcpy(this->feedback, feedback, length); // Copying the string
+	this->feedback = feedback; // Copying the string
 }
 ostream& operator<<(ostream& os, const Feedback& feedback)
 {

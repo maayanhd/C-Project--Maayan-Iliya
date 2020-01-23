@@ -2,81 +2,43 @@
 
 ShoppingCart::ShoppingCart(Customer& myCustomer): customer(myCustomer)
 { // We want an empty cart
-	products = nullptr; // empty shopping cart
-	setNumOfProducts(0);
 	totalPrice = 0;
 }
 
 ShoppingCart::~ShoppingCart() 
 {
-  delete[] products; // Removes only the array, we losing the pointer to the products, but they still exist on the seller side //
-}
-
-bool ShoppingCart::setNumOfProducts(int updatedCountOfProducts) 
-{
-	if (updatedCountOfProducts < 0)
-	{
-		cout << "That value should be positive" << endl;
-		return false;
-	}
-	numOfProducts = updatedCountOfProducts;
-	return true;
 }
 
 void ShoppingCart:: add(Product* prod) 
 {
-	Product** newProdArr = changeArrSize(getNumOfProducts()+1); // add one more slot for new product
-	newProdArr[numOfProducts] = prod; // add the new product 
+	products.push_back(prod);
 	totalPrice += prod->getPrice();
-	delete[] products;
-	products = newProdArr;
-	numOfProducts++;
 }
 
-Product** ShoppingCart ::changeArrSize(int newSize) 
-{
-	Product** newProdArr = new Product*[newSize];
-	for (int i = 0; i < numOfProducts; i++)
-		newProdArr[i] = products[i];
-	return newProdArr;
-}
 bool ShoppingCart::existsIn(Product* prod)  const{
 
-	for (int i = 0; i < numOfProducts; ++i) {
-		if (prod->getSerialNumber() == products[i]->getSerialNumber())
+	vector<Product*>::const_iterator itr = products.begin();
+	vector<Product*>::const_iterator itrEnd = products.end();
+	for (; itr != itrEnd; ++itr)
+	{
+		if (*prod == *(*itr))
 			return true;
 	}
-	return false;
+	return false;	
 }
 void ShoppingCart :: toEmpty() 
 {
 	PurchaseHistory& tempHistory = customer.getpHistory();
-	tempHistory.add(products, numOfProducts);
-	delete[] products;
-	products = nullptr;
-	setNumOfProducts(0);
+	tempHistory.add(products);
+	products.clear();
 	totalPrice = 0;
 };
-
-bool ShoppingCart::remove(int indToRemove) 
-{
-	if (numOfProducts <= 0 || indToRemove >= numOfProducts)
-	{
-		cout << "The product you specified is not in your shopping cart" << endl;
-		return false;
-	}
-	totalPrice -= products[indToRemove]->getPrice();
-		products[indToRemove] = products[numOfProducts]; // Taking the last product in the array to replace the deleted product//
-		
-		changeArrSize(numOfProducts - 1);
-		
-		return true;
-}
 
 ostream& operator<<(ostream& os, const ShoppingCart& sCart)
 {
 	os << "Shopping cart:\n";
-	for (int i = 0; i < sCart.numOfProducts; ++i)
+	int size = sCart.products.size();
+	for (int i = 0; i < size; ++i)
 	{
 		os << i + 1 << ". " << *(sCart.products[i]) << endl; // Using operator << of Product class
 	}
