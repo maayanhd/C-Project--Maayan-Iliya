@@ -11,8 +11,4 @@ int main()
 			menu.show(exit);
 		}
 	}
-	if (_CrtDumpMemoryLeaks())
-		cout << "ass holes!\n";
-	else
-		cout << "awesome man!\n";
 }
