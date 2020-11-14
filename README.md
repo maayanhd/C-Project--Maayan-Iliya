@@ -1,4 +1,4 @@
-# C-Project--Maayan-Iliya
+# eCommerce Grocery Delivery System
 
 A C++ Console application used to simulate a system of customers, sellers and product in an OOP fashion (semi-E-commerce style) - provides a menu of 14 options: 
   making a New customer account, 
